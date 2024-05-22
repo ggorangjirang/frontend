@@ -1,7 +1,6 @@
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
-    // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -13,16 +12,17 @@ module.exports = {
       xl: "1440px",
     },
     colors: {
-      primary: "#edb946",
-      secondary: "#234D95",
-      black: "#0a162b",
-      gray: "#7D7D7D",
-      gray-border: "#CECECE",
-      warning:"E13C45",
-      background: {
-        white: "ffffff",
-        blue:"5A88D8",
-        blue-light:"BDCFEF"
+      "primary": "#edb946",
+      "secondary": "#234D95",
+      "black": "#0a162b",
+      "gray": "#7D7D7D",
+      "gray-border": "#CECECE",
+        "white": "#ffffff",
+      "warning":"E13C45",
+      "background": {
+        "white": "#ffffff",
+        "blue":"#5A88D8",
+        "blue-light":"#BDCFEF"
       },
     },
     fontSize: {
@@ -36,6 +36,9 @@ module.exports = {
         "5xl": "3.052rem",
       }
     }
+  },
+  variants: {
+    display:['group-hover']
   },
   plugins: [],
 };
