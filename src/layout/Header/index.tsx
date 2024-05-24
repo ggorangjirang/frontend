@@ -7,7 +7,7 @@ type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <nav className="flex h-[160px] w-screen flex-col items-center">
+    <nav className="flex h-[160px] w-screen flex-col items-center z-50">
       <div className="flex h-[120px] items-center justify-center gap-20 py-5">
         <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
         <div className="flex">
