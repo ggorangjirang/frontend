@@ -1,5 +1,5 @@
 deploy:
-  before_script:
+  script:
     - node -v
     - npm run build
   tags:
