@@ -1,0 +1,6 @@
+deploy:
+  before_script:
+    - node -v
+    - npm run build
+  tags:
+    - deploy
