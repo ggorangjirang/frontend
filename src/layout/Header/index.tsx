@@ -3,7 +3,7 @@ import React from "react";
 
 type Props = {};
 
-export default function Hearder({}: Props) {
+export default function Header({}: Props) {
   return (
     <div className="flex h-[160px] w-screen flex-col items-center">
       <div className="flex h-[120px] justify-center py-5">
