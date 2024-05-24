@@ -19,20 +19,20 @@ export default function Header({}: Props) {
         <div className="flex w-full justify-center gap-6 rounded">
           <div className="flex items-center justify-center gap-1 ">
             <SVGIcon name="Basket" width={24} height={24} color="secondary"></SVGIcon>
-            <div className="flex w-full flex-col items-center justify-center">
-              <div className="flex h-full w-5 items-center  justify-center rounded bg-secondary text-[12px] text-white">0</div>
-              <span className="w-full text-[12px] text-text hover:text-primary">장바구니</span>
+            <div className="flex w-full flex-col items-center justify-center cursor-pointer">
+              <div className="flex h-full w-5 items-center  justify-center rounded bg-secondary text-[12px] text-white cursor-pointer">0</div>
+              <span className="w-full text-[12px] text-text hover:text-primary cursor-pointer">장바구니</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
-          <div className="flex items-center justify-center gap-1 ">
+          <div className="flex items-center justify-center gap-1  cursor-pointer">
             <SVGIcon name="User" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
-          <div className="flex items-center justify-center gap-1 ">
+          <div className="flex items-center justify-center gap-1 cursor-pointer">
             <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
