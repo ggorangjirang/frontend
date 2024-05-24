@@ -15,7 +15,7 @@ module.exports = {
       "transparent": 'transparent',
       "primary": "#edb946",
       "secondary": "#234D95",
-      "black": "#0a162b",
+      "text": "#0a162b",
       "gray": "#7D7D7D",
       "gray-border": "#CECECE",
         "white": "#ffffff",
@@ -26,7 +26,6 @@ module.exports = {
         "blue-light":"#BDCFEF"
       },
     },
-    fontSize: {
       fontSize: {
         sm: "0.8rem",
         base: "1rem",
@@ -35,8 +34,7 @@ module.exports = {
         "3xl": "1.953rem",
         "4xl": "2.441rem",
         "5xl": "3.052rem",
-      }
-    }
+      },
   },
   variants: {
     display:['group-hover']

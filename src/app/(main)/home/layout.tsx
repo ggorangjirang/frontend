@@ -1,12 +1,16 @@
 import Wrapper from "@/layout/Wrapper";
 import React, { ReactNode } from "react";
-
-
+import Header from '@/layout/Header';
 
 interface Props {
-    children: ReactNode;
-  }
-  
+  children: ReactNode;
+}
+
 export default function layout({ children }: Readonly<Props>) {
-  return <Wrapper>{children}</Wrapper>;
+  return (
+    <Wrapper>
+      <Header />
+      {children}
+    </Wrapper>
+  );
 }
