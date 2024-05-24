@@ -4,5 +4,7 @@ deploy:
     - npm install next
   script:
     - npm run build
+    - mv out html
+    - rsync -avz --delete html/ elice@34.64.229.17:/home/elice/nginx/html/
   tags:
     - deploy
