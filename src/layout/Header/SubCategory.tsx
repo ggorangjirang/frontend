@@ -10,7 +10,7 @@ export const SubCategory = ({subCategory}:Props) => {
       <ul className="top-0 block w-full rounded-b-md bg-white shadow">
         {subCategory.map((item)=>{
             return (
-                <li className=" flex  h-[40px] w-[250px] cursor-pointer items-center justify-center hover:text-primary">
+                <li className=" flex  h-[40px] w-[250px] cursor-pointer items-center justify-center hover:text-primary" key={item}>
                 {item}
               </li>
             )
