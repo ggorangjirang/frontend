@@ -1,4 +1,6 @@
 deploy:
+  before_script:
+    - export PATH="/home/ubuntu/.nvm/versions/node/v20.12.2/bin:$PATH"
   script:
     - node -v
     - npm run build
