@@ -2,9 +2,14 @@ deploy:
   before_script:
     - export PATH="/home/ubuntu/.nvm/versions/node/v20.12.2/bin:$PATH"
     - npm install next
+    - chmod 400 $SSH_KEY
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
+    - eval "$(ssh-agent -s)"
+    - ssh-add $SSH_KEY
   script:
     - npm run build
     - mv out html
-    - rsync -avz --delete html/ elice@34.64.229.17:/home/elice/nginx/html/
+    - rsync -avz --delete -e "ssh -i $SSH_KEY" html/ elice@34.64.229.17:/home/elice/nginx/html/
   tags:
     - deploy
