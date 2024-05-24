@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import Provider from "@/layout/Provider";
-import Wrapper from "@/layout/Wrapper";
+import { pretendard } from "@/assets/font";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,8 +15,8 @@ interface Props {
 
 export default function RootLayout({ children }: Readonly<Props>) {
   return (
-    <html lang="ko">
-      <body className="bg-indigo-400">
+    <html lang="ko" className={pretendard.variable}>
+      <body className="bg-indigo-400 font-pretendard" >
         <Provider>
           {children}
         </Provider>
