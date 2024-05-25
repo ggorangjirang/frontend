@@ -14,4 +14,8 @@ export const pageConfig: Record<string, PageConfig> = {
         showHeader: false,
         title: "유저 페이지",
     },
+    "/categories": {
+        showHeader: true,
+        title: "카테고리 리스트 페이지",
+    },
 };
