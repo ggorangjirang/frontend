@@ -13,7 +13,7 @@ const DUMMY = {
 
 export default function ProductCard({}: Props) {
   return (
-    <div className="flex w-[250px] flex-col justify-center gap-y-2 align-middle">
+    <div className="flex w-[250px] flex-col justify-center gap-y-2 align-middle cursor-pointer z-0">
       <Image
         className="rounded-lg border border-gray-border"
         src={DUMMY.imgUrl}
