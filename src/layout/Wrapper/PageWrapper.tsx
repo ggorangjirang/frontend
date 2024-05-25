@@ -1,13 +1,9 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from "react";
 
 interface Props {
-    children: ReactNode;
-  }
-  
-export default function PageWrapper({children}:Props) {
-  return (
-    <div className="w-[1240px]  flex flex-wrap gap-x-20  justify-center align-middle ">
-        {children}
-    </div>
-  )
+  children: ReactNode;
+}
+
+export default function PageWrapper({ children }: Props) {
+  return <div className="flex w-[1240px] flex-wrap justify-center gap-x-20 align-middle">{children}</div>;
 }
