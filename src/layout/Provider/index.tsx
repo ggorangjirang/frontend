@@ -3,9 +3,13 @@ import { ReactNode } from "react";
 import { RecoilRoot } from "recoil";
 
 interface Props {
-    children: ReactNode;
+  children: ReactNode;
 }
 
-export default function Provider({children}: Props) {
-  return <RecoilRoot>{children}</RecoilRoot>;
+export default function Provider({ children }: Props) {
+  return (
+    <RecoilRoot>
+      <div>{children}</div>
+    </RecoilRoot>
+  );
 }
