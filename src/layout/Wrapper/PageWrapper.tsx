@@ -6,7 +6,7 @@ interface Props {
   
 export default function PageWrapper({children}:Props) {
   return (
-    <div className="w-[1240px] flex flex-wrap gap-x-20 gap-y-16 justify-center align-middle">
+    <div className="w-[1240px]  flex flex-wrap gap-x-20  justify-center align-middle ">
         {children}
     </div>
   )

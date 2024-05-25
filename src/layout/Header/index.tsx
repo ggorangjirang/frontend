@@ -3,9 +3,19 @@ import Image from "next/image";
 import React from "react";
 import { SubCategory } from "./SubCategory";
 
-type Props = {};
+type Props = {
+  setHover: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function Header({}: Props) {
+export default function Header({ setHover }: Props) {
+  function onMouseEnter() {
+    setHover(true);
+  }
+
+  function onMouseLeave() {
+    setHover(false);
+  }
+
   return (
     <nav className="flex h-[160px] w-screen flex-col items-center z-50">
       <div className="flex h-[120px] items-center justify-center gap-20 py-5">
@@ -19,20 +29,22 @@ export default function Header({}: Props) {
         <div className="flex w-full justify-center gap-6 rounded">
           <div className="flex items-center justify-center gap-1 ">
             <SVGIcon name="Basket" width={24} height={24} color="secondary"></SVGIcon>
-            <div className="flex w-full flex-col items-center justify-center cursor-pointer">
-              <div className="flex h-full w-5 items-center  justify-center rounded bg-secondary text-[12px] text-white cursor-pointer">0</div>
-              <span className="w-full text-[12px] text-text hover:text-primary cursor-pointer">장바구니</span>
+            <div className="flex w-full cursor-pointer flex-col items-center justify-center">
+              <div className="flex h-full w-5 cursor-pointer  items-center justify-center rounded bg-secondary text-[12px] text-white">
+                0
+              </div>
+              <span className="w-full cursor-pointer text-[12px] text-text hover:text-primary">장바구니</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
-          <div className="flex items-center justify-center gap-1  cursor-pointer">
+          <div className="flex cursor-pointer items-center justify-center  gap-1">
             <SVGIcon name="User" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
-          <div className="flex items-center justify-center gap-1 cursor-pointer">
+          <div className="flex cursor-pointer items-center justify-center gap-1">
             <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
@@ -41,7 +53,12 @@ export default function Header({}: Props) {
         </div>
       </div>
       <div className="flex w-full justify-center border-y border-gray-border">
-        <ul className="items-centertext-white flex h-[40px] w-[1000px]">
+        
+        <ul
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          className="items-centertext-white flex h-[40px] w-[1000px]"
+        >
           <li className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold">
             사료
             <div className=" absolute bottom-0 left-[118px] hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
@@ -63,7 +80,9 @@ export default function Header({}: Props) {
             <SubCategory subCategory={["의류", "넥카라"]} />
           </li>
         </ul>
+
       </div>
+
     </nav>
   );
 }
