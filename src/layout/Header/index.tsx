@@ -9,26 +9,43 @@ import { pageConfig } from "../../../pagesConfig";
 
 type Props = {};
 
+export type SubCategories = {
+  name: string;
+  code: number;
+};
+
 type DummyCategories = {
   main: string;
-  sub: string[];
+  sub: SubCategories[];
 };
 const DUMMYCATEGORIES: Record<string, DummyCategories> = {
   food: {
     main: "사료",
-    sub: ["강아지 사료", "고양이 사료"],
+    sub: [
+      { name: "강아지 사료", code: 1 },
+      { name: "고양이 사료", code: 2 },
+    ],
   },
   snack: {
     main: "간식",
-    sub: ["강아지 간식", "고양이 간식"],
+    sub: [
+      { name: "강아지 간식", code: 3 },
+      { name: "고양이 간식", code: 4 },
+    ],
   },
   cleaner: {
     main: "배변/위생",
-    sub: ["배변패드", "고양이 모래"],
+    sub: [
+      { name: "배변패드", code: 5 },
+      { name: "고양이 모래", code: 6 },
+    ],
   },
   fashion: {
     main: "패션",
-    sub: ["의류", "넥카라"],
+    sub: [
+      { name: "의류", code: 7 },
+      { name: "넥카라", code: 8 },
+    ],
   },
 };
 
@@ -92,7 +109,7 @@ export default function Header({}: Props) {
               {Object.keys(DUMMYCATEGORIES).map((key, index) => {
                 return (
                   <li
-                    key={key}
+                    key={key+index}
                     className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold"
                   >
                     <div

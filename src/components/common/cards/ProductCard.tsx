@@ -21,8 +21,8 @@ export default function ProductCard({ imgSize = 250 }: ProductCardProps) {
         height={imgSize}
         alt={DUMMY.title}
       ></Image>
-      <div className={`w-[${imgSize}px] h-full px-2`}>
-        <div className="text-base font-bold leading-tight text-secondary">{DUMMY.title}</div>
+      <div className={` h-full px-2`}  style={{ width: `${imgSize}px` }}>
+        <div className="flex flex-wrap text-base font-bold leading-tight text-secondary">{DUMMY.title}</div>
         <div className="flex items-center justify-start gap-3 leading-tight">
           <div className="text-sm text-warning">{DUMMY.discount}</div>
           <div className="text-sm leading-tight text-gray line-through">{DUMMY.originPrice.toLocaleString()}원</div>

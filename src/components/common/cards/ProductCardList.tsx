@@ -7,9 +7,9 @@ export interface ProductCardProps {
   w?:number;
 }
 
-export default function ProductCardList({ imgSize = 250, gapX = 14, w = 1240}: ProductCardProps) {
+export default function ProductCardList({ imgSize = 250, gapX = 56, w = 1240}: ProductCardProps) {
   return (
-    <div className={`flex w-[${w}px] flex-wrap justify-center gap-${gapX} align-middle`}>
+    <div className={`flex flex-wrap justify-center align-middle`} style={{width:w, gap:gapX}}>
       <ProductCard imgSize={imgSize}></ProductCard>
       <ProductCard imgSize={imgSize}></ProductCard>
       <ProductCard imgSize={imgSize}></ProductCard>
