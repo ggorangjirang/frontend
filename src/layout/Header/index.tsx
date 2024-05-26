@@ -9,6 +9,29 @@ import { pageConfig } from "../../../pagesConfig";
 
 type Props = {};
 
+type DummyCategories = {
+  main: string;
+  sub: string[];
+};
+const DUMMYCATEGORIES: Record<string, DummyCategories> = {
+  food: {
+    main: "사료",
+    sub: ["강아지 사료", "고양이 사료"],
+  },
+  snack: {
+    main: "간식",
+    sub: ["강아지 간식", "고양이 간식"],
+  },
+  cleaner: {
+    main: "배변/위생",
+    sub: ["배변패드", "고양이 모래"],
+  },
+  fashion: {
+    main: "패션",
+    sub: ["의류", "넥카라"],
+  },
+};
+
 export default function Header({}: Props) {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
@@ -66,26 +89,21 @@ export default function Header({}: Props) {
               onMouseLeave={onMouseLeave}
               className="items-centertext-white flex h-[40px] w-[1000px]"
             >
-              <li className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold">
-                사료
-                <div className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
-                <SubCategory subCategory={["강아지 사료", "고양이 사료"]} />
-              </li>
-              <li className="dropdown group relative box-content block w-1/4 cursor-pointer  py-2  text-center font-bold  ">
-                간식
-                <div className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
-                <SubCategory subCategory={["강아지 간식", "강아지 간식"]} />
-              </li>
-              <li className="dropdown group relative z-50 box-content block w-1/4 cursor-pointer  py-2  text-center font-bold  ">
-                배변/위생
-                <div className=" absolute bottom-0 left-[118px] hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
-                <SubCategory subCategory={["배변패드", "고양이 모래"]} />
-              </li>
-              <li className="dropdown group relative box-content block w-1/4 cursor-pointer  py-2  text-center font-bold  ">
-                패션
-                <div className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
-                <SubCategory subCategory={["의류", "넥카라"]} />
-              </li>
+              {Object.keys(DUMMYCATEGORIES).map((key, index) => {
+                return (
+                  <li
+                    key={key}
+                    className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold"
+                  >
+                    <div
+                      key={`arrow${index}`}
+                      className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block"
+                    />
+                    {DUMMYCATEGORIES[key].main}
+                    <SubCategory key={key} subCategory={DUMMYCATEGORIES[key].sub} />
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </nav>
