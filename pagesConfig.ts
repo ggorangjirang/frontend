@@ -18,4 +18,8 @@ export const pageConfig: Record<string, PageConfig> = {
         showHeader: true,
         title: "카테고리 리스트 페이지",
     },
+    "/products": {
+        showHeader: true,
+        title: "상품 상세 페이지",
+    },
 };

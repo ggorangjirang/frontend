@@ -125,7 +125,7 @@ export default function Header({}: Props) {
           </div>
         </nav>
         <div
-          className={`absolute top-[160px] z-30  h-full w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible  bg-black opacity-0 "} `}
+          className={`absolute top-[160px] z-30 h-dvh w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible  bg-black opacity-0 "} `}
           style={{ transitionProperty: "opacity, visibility" }}
         ></div>
       </>

@@ -1,6 +1,7 @@
 import ProductCardList from "@/components/common/cards/ProductCardList";
 import { DefaultLayoutProps } from "@/components/common/type/LayoutType";
 import { FILTERS } from "@/constants/Filters";
+import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import React from "react";
 
 //데이터 받아오면 쿼리스트링으로 데이터 요청한 후 받아온다
@@ -16,14 +17,14 @@ const categories = {
 
 export default function layout({ children }: DefaultLayoutProps) {
   return (
-    <div>
-      <div className="mt-8 flex flex-row justify-between  gap-8">
-        <div className="flex h-full w-[180px] cursor-pointer flex-col items-center justify-center border-b border-b-gray-border py-1 align-middle text-sm text-text">
+    <PageWrapper>
+      <div className="mt-8 flex flex-row gap-8 ">
+        <div className=" flex h-fit w-[180px] flex-col justify-start border-b border-b-gray-border py-1 text-sm text-text">
           <div className="flex w-full items-center justify-center border-b border-b-gray-border  py-1  text-[14px]">
             사료
           </div>
-          <ul className="w-full pt-1">
-            <li className="flex w-full justify-center py-1 align-middle hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold">
+          <ul className="flex flex-col w-full pt-1 h-fit">
+            <li className="flex w-full h-fit justify-center py-1 align-middle hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold">
               {categories.main}
             </li>
             {categories["subCategories"].map((item) => (
@@ -52,6 +53,6 @@ export default function layout({ children }: DefaultLayoutProps) {
           {children}
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
