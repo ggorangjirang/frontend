@@ -1,5 +1,5 @@
-import SignUpComponent from "@/components/users/signup";
+import UserComponent from "@/components/users/signup";
 
 export default function SignUp() {
-  return <SignUpComponent />
+  return <UserComponent signup={true} />;
 }
