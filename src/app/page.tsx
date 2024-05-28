@@ -1,13 +1,19 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import "./globals.css";
+"use client";
 
-export default function Home() {
+import ProductCardListSet from "@/components/common/cards/ProductCardListSet";
+import Slider from "@/components/main/Slider";
+import PageWrapper from "@/layout/Wrapper/PageWrapper";
+import React, { useState } from "react";
+
+type Props = {};
+
+export default function page({}: Props) {
   return (
-    <main>
-      <div className="max-w-xl">
-        <h1 className="underline">asdsadasdas</h1>
-      </div>
-    </main>
+    <PageWrapper>
+      <Slider></Slider>
+      <ProductCardListSet title="선착순 한정세일"></ProductCardListSet>
+      <ProductCardListSet title="실시간 인기상품"></ProductCardListSet>
+      <ProductCardListSet title="맞춤 추천"></ProductCardListSet>
+    </PageWrapper>
   );
 }
