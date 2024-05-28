@@ -14,15 +14,15 @@
     "tsconfigRootDir": "frontend2"
   },
   "ignorePatterns": ["node_modules/"],
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
-    "react/react-in-jsx-scope": "off",
     "prettier/prettier": [
       "error",
       {
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   },
   "settings": {
     "react": {

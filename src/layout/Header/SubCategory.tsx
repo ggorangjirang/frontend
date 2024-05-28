@@ -8,7 +8,7 @@ type Props = {
 
 export const SubCategory = ({ subCategory }: Props) => {
   return (
-    <div className="dropdown-menu absolute top-full z-50 hidden h-full text-black group-hover:block group-hover:border-t group-hover:border-t-primary">
+    <div className="dropdown-menu text-black absolute top-full z-50 hidden h-full group-hover:block group-hover:border-t group-hover:border-t-primary">
       <ul className="top-0 block w-full rounded-b-md bg-white shadow">
         {subCategory.map((item) => {
           return (

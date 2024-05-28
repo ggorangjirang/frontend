@@ -24,6 +24,7 @@ const DUMMY = {
 type Props = {};
 
 export default function page({}: Props) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [count, setCount] = useState<number>(1);
 
   return (
@@ -72,9 +73,13 @@ export default function page({}: Props) {
               <TextBig bold={true}>51,000 원</TextBig>
             </div>
           </div>
-          <div className="flex flex-row justify-between align-middle mt-16 mb-32">
-            <ButtonIcon bgColor="bg-primary" name="Basket" color="white" size={28}>장바구니 담기</ButtonIcon>
-            <ButtonIcon bgColor="bg-secondary" name="ArrowRight" color="white" size={28}>바로 구매</ButtonIcon>
+          <div className="mb-32 mt-16 flex flex-row justify-between align-middle">
+            <ButtonIcon bgColor="bg-primary" name="Basket" color="white" size={28}>
+              장바구니 담기
+            </ButtonIcon>
+            <ButtonIcon bgColor="bg-secondary" name="ArrowRight" color="white" size={28}>
+              바로 구매
+            </ButtonIcon>
           </div>
         </div>
       </div>
