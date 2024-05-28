@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 interface InputProps {
   className?: string;
@@ -9,7 +10,7 @@ interface InputProps {
   type: "submit" | "reset" | "button";
 }
 
-const Button: React.FC<InputProps> = ({ value, className, height, width, type }) => {
+export const Button: React.FC<InputProps> = ({ value, className, height, width, type }) => {
   return (
     <button
       type={type}
@@ -20,4 +21,11 @@ const Button: React.FC<InputProps> = ({ value, className, height, width, type })
   );
 };
 
-export default Button;
+export const KakaoButton = () => {
+  return (
+    <button className="mb-[12px] flex h-[46px] w-[327px] items-center justify-center rounded-[12px] bg-[#FFEB00] text-[16px] font-medium text-[#3C1E1E]">
+      <Image src="/kakao.png" alt={""} width={16} height={16} />
+      <span className="ml-[8px]">카카오 로그인</span>
+    </button>
+  );
+};
