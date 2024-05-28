@@ -18,9 +18,7 @@ export default function RootLayout({ children }: Readonly<Props>) {
   return (
     <html lang="ko">
       <body className="bg-indigo-400">
-        <Provider>
-          {children}
-        </Provider>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

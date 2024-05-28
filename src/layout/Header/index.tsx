@@ -13,27 +13,27 @@ export default function Header({}: Props) {
         <div className="flex">
           <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
           <div className="flex h-9 w-[60px] cursor-pointer items-center justify-center rounded-r-md bg-secondary hover:opacity-80">
-            <SVGIcon name="Search" width={32} height={32} color={"white"} ></SVGIcon>
+            <SVGIcon name="Search" width={32} height={32} color={"white"}></SVGIcon>
           </div>
         </div>
         <div className="flex w-full justify-center gap-6 rounded">
           <div className="flex items-center justify-center gap-1 ">
             <SVGIcon name="Basket" width={24} height={24} color="secondary"></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
-              <div className="text-sm flex h-4 w-5 items-center justify-center rounded bg-secondary text-white">0</div>
+              <div className="flex h-4 w-5 items-center justify-center rounded bg-secondary text-sm text-white">0</div>
               <span className="w-full text-[12px] text-text hover:text-primary">장바구니</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
           <div className="flex items-center justify-center gap-1 ">
-            <SVGIcon name="User"  width={24} height={24}></SVGIcon>
+            <SVGIcon name="User" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
             </div>
           </div>
           <div className="border border-l-0 border-r"></div>
           <div className="flex items-center justify-center gap-1 ">
-            <SVGIcon name="Signup"  width={24} height={24}></SVGIcon>
+            <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
             <div className="flex w-full flex-col items-center justify-center">
               <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
             </div>

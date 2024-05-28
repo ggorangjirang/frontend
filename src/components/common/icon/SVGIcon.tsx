@@ -2,10 +2,10 @@ import Image from "next/image";
 import React, { SVGProps } from "react";
 import * as Icons from "@/assets/index";
 
-const themeColor ={
-  secondary : "#0A162B",
-  white:"#fff"
-}
+const themeColor = {
+  secondary: "#0A162B",
+  white: "#fff",
+};
 
 type IconProps = SVGProps<SVGElement> & {
   name: keyof typeof Icons;
@@ -14,12 +14,12 @@ type IconProps = SVGProps<SVGElement> & {
   color?: keyof typeof themeColor;
   size?: number;
 };
-export default function SVGIcon({ name, width = 32, height = 32, size, color = "secondary" ,  ...props }: IconProps) {
+export default function SVGIcon({ name, width = 32, height = 32, size, color = "secondary", ...props }: IconProps) {
   const Icon = Icons[name];
   const sizeProps = { width, height };
   return (
-    <div className="h-full flex justify-center items-center" >
-      <Icon {...props} color={themeColor[color]}  {...sizeProps}></Icon>
+    <div className="flex h-full items-center justify-center">
+      <Icon {...props} color={themeColor[color]} {...sizeProps}></Icon>
     </div>
   );
 }

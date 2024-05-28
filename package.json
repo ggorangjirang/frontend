@@ -1,5 +1,5 @@
 {
-  "name": "elice6-next-frontend",
+  "name": "frontend2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "next": "^14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.5",
     "recoil": "^0.7.7",
     "typescript-eslint": "^7.10.0"
   },

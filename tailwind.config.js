@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    extend: {},
+    extend: {
+      lineHeight: {
+        '100': '100%',
+      },
+    },
     screens: {
       sm: "480px",
       md: "768px",
@@ -32,6 +36,10 @@ module.exports = {
       "3xl": "1.953rem",
       "4xl": "2.441rem",
       "5xl": "3.052rem",
+      textbig: "26px",
+      texttitle: "22px",
+      textmedium: "16px",
+      textsmall: "12px"
     },
   },
   variants: {
