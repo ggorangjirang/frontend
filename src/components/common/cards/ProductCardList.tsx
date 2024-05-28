@@ -1,17 +1,23 @@
-import React from 'react'
-import ProductCard from './ProductCard'
+import React from "react";
+import ProductCard from "./ProductCard";
 
-export default function ProductCardList() {
+export interface ProductCardProps {
+  imgSize?: number;
+  gapX?: number;
+  w?:number;
+}
+
+export default function ProductCardList({ imgSize = 250, gapX = 56, w = 1240}: ProductCardProps) {
   return (
-    <div className="w-[1240px] flex flex-wrap gap-x-20 gap-y-16 justify-center align-middle">
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
-      <ProductCard></ProductCard>
+    <div className={`flex flex-wrap justify-center align-middle`} style={{width:w, gap:gapX}}>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
+      <ProductCard imgSize={imgSize}></ProductCard>
     </div>
-  )
+  );
 }

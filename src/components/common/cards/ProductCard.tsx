@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-type Props = {};
+import { ProductCardProps } from "./ProductCardList";
 
 const DUMMY = {
   imgUrl: "/testImg.png",
@@ -11,24 +11,24 @@ const DUMMY = {
   option: "품절",
 };
 
-export default function ProductCard({}: Props) {
+export default function ProductCard({ imgSize = 250 }: ProductCardProps) {
   return (
-    <div className="flex w-[250px] flex-col justify-center gap-y-2 align-middle">
+    <div className={`w-[${imgSize}px] z-0 flex cursor-pointer flex-col justify-center gap-y-2 align-middle`}>
       <Image
         className="rounded-lg border border-gray-border"
         src={DUMMY.imgUrl}
-        width={250}
-        height={250}
+        width={imgSize}
+        height={imgSize}
         alt={DUMMY.title}
       ></Image>
-      <div className="fw-full h-full px-2">
-        <div className="text-base font-bold text-secondary leading-tight">{DUMMY.title}</div>
+      <div className={` h-full px-2`}  style={{ width: `${imgSize}px` }}>
+        <div className="flex flex-wrap text-base font-bold leading-tight text-secondary">{DUMMY.title}</div>
         <div className="flex items-center justify-start gap-3 leading-tight">
           <div className="text-sm text-warning">{DUMMY.discount}</div>
-          <div className="text-sm text-gray line-through leading-tight">{DUMMY.originPrice.toLocaleString()}원</div>
+          <div className="text-sm leading-tight text-gray line-through">{DUMMY.originPrice.toLocaleString()}원</div>
         </div>
-        <div className="text-base font-bold text-price leading-tight">{DUMMY.price.toLocaleString()}원</div>
-        <span className="border p-[1px] align-middle text-[12px] text-gray leading-tight">임시품절</span>
+        <div className="text-base font-bold leading-tight text-price">{DUMMY.price.toLocaleString()}원</div>
+        <span className="border p-[1px] align-middle text-[12px] leading-tight text-gray">임시품절</span>
       </div>
     </div>
   );
