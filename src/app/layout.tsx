@@ -13,7 +13,7 @@ export default function RootLayout({ children }: Readonly<DefaultLayoutProps>) {
       <body className="h-full font-pretendard">
         <Provider>
           <Wrapper>
-            <Header  />
+            <Header />
             {children}
           </Wrapper>
         </Provider>

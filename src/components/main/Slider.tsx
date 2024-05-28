@@ -16,7 +16,7 @@ import Image from "next/image";
 type Props = {};
 
 export default function Slider({}: Props) {
-  SwiperCore.use([Navigation,Autoplay]);
+  SwiperCore.use([Navigation, Autoplay]);
   return (
     <Swiper
       navigation={true}
@@ -25,7 +25,7 @@ export default function Slider({}: Props) {
       autoplay={true}
       spaceBetween={50} // 슬라이스 사이 간격
       slidesPerView={1} // 보여질 슬라이스 수
-      modules={[Navigation, Pagination,Autoplay]}
+      modules={[Navigation, Pagination, Autoplay]}
     >
       <SwiperSlide className="swiper-slide">
         <Image src={"/slides/slide1.png"} alt="slide1" width={1140} height={420} />

@@ -1,5 +1,4 @@
 import ProductCardList from "@/components/common/cards/ProductCardList";
-import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import React from "react";
 
 type Props = {};

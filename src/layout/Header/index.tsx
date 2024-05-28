@@ -109,7 +109,7 @@ export default function Header({}: Props) {
               {Object.keys(DUMMYCATEGORIES).map((key, index) => {
                 return (
                   <li
-                    key={key+index}
+                    key={key + index}
                     className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold"
                   >
                     <div
