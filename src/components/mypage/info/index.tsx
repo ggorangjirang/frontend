@@ -42,14 +42,12 @@ const MyPageInfoComponent = () => {
     console.log(data);
     console.log(address, zonecode, addressDetail);
     // 기존 비밀번호가 db 내부 비밀번호와 일치해야만 수정이 가능함
-    // 질문 이런 유효성검사는 회원가입이랑 중복되는데 공통컴포넌트로 빼볼 수는 없는지?
     if (true) {
       // true 수정 곧
       if (data.newPassword !== data.newPasswordAgain) {
         alert("비밀번호가 일치하지 않습니다.");
         return;
       }
-      // 전화번호 형식 확인
       const phoneNumberPattern = /^(010-\d{4}-\d{4}|0\d{1,2}-\d{3,4}-\d{4})$/;
       if (!phoneNumberPattern.test(data.phone)) {
         alert("전화번호 형식이 올바르지 않습니다. 올바른 형식: 010-1234-5678 또는 02-123-4567");
@@ -69,8 +67,6 @@ const MyPageInfoComponent = () => {
       console.error("Daum Postcode API is not loaded.");
     }
   };
-  // Button 질문 width와 height에 props로 보냈는데 적용되지 않음
-  // 141~151 코드 질문 margin Bottom 설정 안했는데 페이지에는 margin bottom 안보임
   return (
     <PageWrapper>
       <div className="absolute mt-[24px] flex h-auto w-[1440px]">
@@ -165,7 +161,7 @@ const MyPageInfoComponent = () => {
                 />
               </div>
             </div>
-            <Button value={"저장"} width="" height="" className="mt-[22px] h-[38px] w-[188px]" type="submit" />
+            <Button value={"저장"} className="mt-[22px] text-white" type="submit" size="mypage" />
           </form>
         </div>
       </div>

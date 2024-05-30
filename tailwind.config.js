@@ -17,7 +17,7 @@ module.exports = {
       transparent: "transparent",
       primary: "#edb946",
       secondary: "#234D95",
-      black:"#000",
+      black: "#000",
       text: "#0a162b",
       gray: "#7D7D7D",
       "gray-border": "#CECECE",
@@ -41,7 +41,7 @@ module.exports = {
       textbig: "26px",
       texttitle: "22px",
       textmedium: "16px",
-      textsmall: "12px"
+      textsmall: "12px",
     },
   },
   variants: {

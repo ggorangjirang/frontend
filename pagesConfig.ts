@@ -26,4 +26,12 @@ export const pageConfig: Record<string, PageConfig> = {
     showHeader: true,
     title: "마이 페이지",
   },
+  "/mypage/view": {
+    showHeader: true,
+    title: "내 리뷰 조회 페이지",
+  },
+  "/mypage/write": {
+    showHeader: true,
+    title: "내 리뷰 작성성 페이지",
+  },
 };

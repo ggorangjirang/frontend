@@ -2,21 +2,27 @@
 import React from "react";
 import Image from "next/image";
 
-interface InputProps {
+interface ButtonProps {
   className?: string;
   value: string;
-  height: string;
-  width: string;
   type: "submit" | "reset" | "button";
+  size: keyof SizeVariants;
 }
-
-export const Button: React.FC<InputProps> = ({ value, className, height, width, type }) => {
+interface SizeVariants {
+  mypage: string;
+  users: string;
+}
+export const Button: React.FC<ButtonProps> = ({ value, className, type, size }) => {
+  const sizeVariants = {
+    mypage: "w-[188px] h-[38px]",
+    users: "w-[327px] h-[46px]",
+  };
   return (
     <button
       type={type}
-      className={`h-[${height}px] w-[${width}px] mb-[12px] cursor-pointer rounded-[12px] border bg-primary text-center text-texttitle font-semibold text-white ${className}`}
+      className={`${sizeVariants[size]} mb-[12px] cursor-pointer rounded-[12px] border bg-primary text-center text-texttitle font-semibold ${className}`}
     >
-      <p className={`leading-[${height}px]`}>{value}</p>
+      <p>{value}</p>
     </button>
   );
 };

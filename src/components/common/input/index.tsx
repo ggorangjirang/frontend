@@ -22,3 +22,4 @@ const Input: React.FC<InputProps> = ({ type, placeholder, className, register, r
 };
 
 export default Input;
+

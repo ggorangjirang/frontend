@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, KakaoButton } from "@/components/common/button";
 import { wrapFormAsync } from "@/utils/asyncFunc";
+import { isPhoneNumberValid } from "@/utils/validation";
 
 interface Props {
   signup: boolean;
@@ -37,8 +38,7 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
       return;
     }
     // 전화번호 형식 확인
-    const phoneNumberPattern = /^(010-\d{4}-\d{4}|0\d{1,2}-\d{3,4}-\d{4})$/;
-    if (!phoneNumberPattern.test(data.phone)) {
+    if (!isPhoneNumberValid(data.phone)) {
       alert("전화번호 형식이 올바르지 않습니다. 올바른 형식: 010-1234-5678 또는 02-123-4567");
       return;
     }
@@ -91,7 +91,7 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
                 </div>
               ))}
               <div className="flex w-full flex-col items-center justify-center">
-                <Button value={"회원가입"} width="327" height="46" className="text-center" type="submit" />
+                <Button value={"회원가입"} className="text-center text-white" type="submit" size="users" />
                 <KakaoButton />
               </div>
             </form>
@@ -111,7 +111,7 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
                 </div>
               ))}
               <div className="flex w-full flex-col items-center justify-center">
-                <Button value={"로그인"} width="327" height="46" className="" type="submit" />
+                <Button value={"로그인"} className="text-white" type="submit" size="users" />
                 <KakaoButton />
               </div>
             </form>
