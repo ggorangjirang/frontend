@@ -1,7 +1,7 @@
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
 
 const commonFetch = (url: string, options?: RequestInit): Promise<any> => {
-  return fetch(``, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
     ...options,
     mode: "cors",
   })
@@ -17,7 +17,7 @@ const commonFetch = (url: string, options?: RequestInit): Promise<any> => {
     });
 };
 
-export const getFectch = (url: string, options?: RequestInit): Promise<any> => {
+export const getFetch = (url: string, options?: RequestInit): Promise<any> => {
   return commonFetch(url, {
     ...options,
     headers: options?.headers,
