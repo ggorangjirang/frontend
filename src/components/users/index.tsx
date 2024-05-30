@@ -81,11 +81,17 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
               {fieldsSignUp.map((field) => (
                 <div key={field.name} className="flex h-auto w-[468px] justify-between">
                   <p className="text-texttitle font-semibold leading-[46px] text-primary">{field.label}</p>
-                  <Input type={field.type} placeholder={field.placeholder} register={registerSignUp(field.name)} />
+                  <Input
+                    required={true}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    register={registerSignUp(field.name)}
+                    className="mb-[12px] h-[46px] w-[327px] pl-[24px]"
+                  />
                 </div>
               ))}
               <div className="flex w-full flex-col items-center justify-center">
-                <Button value={"회원가입"} width={327} height={46} className="text-center" type="submit" />
+                <Button value={"회원가입"} width="327" height="46" className="text-center" type="submit" />
                 <KakaoButton />
               </div>
             </form>
@@ -95,11 +101,17 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
               {fieldsLogin.map((field) => (
                 <div key={field.name} className="flex h-auto w-[468px] justify-between">
                   <p className="text-texttitle font-semibold leading-[46px] text-primary">{field.label}</p>
-                  <Input type={field.type} placeholder={field.placeholder} register={registerLogin(field.name)} />
+                  <Input
+                    required={true}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    register={registerLogin(field.name)}
+                    className="mb-[12px] h-[46px] w-[327px] pl-[24px]"
+                  />
                 </div>
               ))}
               <div className="flex w-full flex-col items-center justify-center">
-                <Button value={"로그인"} width={327} height={46} className="text-center" type="submit" />
+                <Button value={"로그인"} width="327" height="46" className="" type="submit" />
                 <KakaoButton />
               </div>
             </form>

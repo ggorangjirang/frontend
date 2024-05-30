@@ -1,4 +1,4 @@
-import UserComponent from "@/components/users/signup";
+import UserComponent from "@/components/users";
 
 export default function SignUp() {
   return <UserComponent signup={true} />;

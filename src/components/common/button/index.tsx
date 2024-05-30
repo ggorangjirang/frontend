@@ -5,8 +5,8 @@ import Image from "next/image";
 interface InputProps {
   className?: string;
   value: string;
-  height: number;
-  width: number;
+  height: string;
+  width: string;
   type: "submit" | "reset" | "button";
 }
 
