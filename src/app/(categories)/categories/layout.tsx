@@ -1,4 +1,3 @@
-import ProductCardList from "@/components/common/cards/ProductCardList";
 import { DefaultLayoutProps } from "@/components/common/type/LayoutType";
 import { FILTERS } from "@/constants/Filters";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
@@ -23,8 +22,8 @@ export default function layout({ children }: DefaultLayoutProps) {
           <div className="flex w-full items-center justify-center border-b border-b-gray-border  py-1  text-[14px]">
             사료
           </div>
-          <ul className="flex flex-col w-full pt-1 h-fit">
-            <li className="flex w-full h-fit justify-center py-1 align-middle hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold">
+          <ul className="flex h-fit w-full flex-col pt-1">
+            <li className="flex h-fit w-full justify-center py-1 align-middle hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold">
               {categories.main}
             </li>
             {categories["subCategories"].map((item) => (
