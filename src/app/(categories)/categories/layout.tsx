@@ -3,10 +3,6 @@ import { FILTERS } from "@/constants/Filters";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import React from "react";
 
-//데이터 받아오면 쿼리스트링으로 데이터 요청한 후 받아온다
-//1. 카테고리 받아와서 표시
-//2. 내용 불러와서 표시
-
 const categories = {
   main: "전체",
   subCategories: ["강아지 사료", "고양이 사료"],

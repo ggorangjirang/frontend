@@ -158,7 +158,7 @@ export default function Page({}: Props) {
             {/* 후기블록 */}
             <div className="my-12 grid  h-[180px] w-full grid-cols-[1fr_2fr_1fr] justify-center border">
               <div className="flex  h-full flex-row  justify-around bg-primary ">
-                <Image src="/logo2.png" width={75} height={75} alt="img" className="rounded"/>
+                <Image src="/logo2.png" width={75} height={75} alt="img" className="rounded" />
                 <div className="flex flex-col items-start">
                   <div>날짜</div>
                   <div>아이디</div>
