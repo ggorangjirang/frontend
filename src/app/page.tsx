@@ -12,17 +12,17 @@ export default function Page({}: Props) {
   const [limitedData, setLimitedData] = useState<Product[] | undefined>([]);
   const [bestSellingData, setBestSellingData] = useState<Product[] | undefined>([]);
 
-  async function initProducts() {
-    const limitedSaledata = await getProductListLimitedSaleRandom({});
-    const bestSellingdata = await getProductListBestSellingRandom({});
-
-    setLimitedData(limitedSaledata);
-    setBestSellingData(bestSellingdata);
-  }
-
   useEffect(() => {
+    async function initProducts() {
+      const limitedSaledata = await getProductListLimitedSaleRandom({});
+      const bestSellingdata = await getProductListBestSellingRandom({});
+
+      setLimitedData(limitedSaledata);
+      setBestSellingData(bestSellingdata);
+    }
+
     initProducts();
-  }, [limitedData, bestSellingData]);
+  }, []);
   return (
     <PageWrapper>
       <Slider></Slider>
