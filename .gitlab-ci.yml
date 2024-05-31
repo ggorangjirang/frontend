@@ -7,8 +7,7 @@ deploy:
     - ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
     - eval "$(ssh-agent -s)"
     - ssh-add $SSH_KEY
-    - export NODE_OPTIONS=--max_old_space_size=800
-    - node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))' | cat
+    - export NODE_OPTIONS="--max-old-space-size=1024"
   script:
     - npm run build
     - mv out html
