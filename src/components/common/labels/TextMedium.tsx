@@ -1,15 +1,15 @@
 import React, { ReactNode } from "react";
-import { DefaultLayoutProps } from "../type/LayoutType";
 
 type Props = {
   text: string;
   gray?: Boolean;
+  color?: boolean;
   style?: React.CSSProperties;
 };
 
-export default function TextMedium({ gray = false, text, style={} }: Props) {
+export default function TextMedium({ gray = false, text, color = false, style = {} }: Props) {
   return (
-    <div className={`text-base ${gray ? "text-gray" : " text-text "}`} style={style}>
+    <div className={`text-base  ${gray ? "text-gray" : color ? "text-secondary" : "text-text"} `} style={style}>
       {text}
     </div>
   );

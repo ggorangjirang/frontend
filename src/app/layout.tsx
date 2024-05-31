@@ -2,7 +2,7 @@ import Provider from "@/layout/Provider";
 import "./globals.css";
 import { pretendard } from "@/assets/font";
 import Wrapper from "@/layout/Wrapper";
-import React, { useState } from "react";
+import React from "react";
 import Header from "@/layout/Header";
 import { DefaultLayoutProps } from "@/components/common/type/LayoutType";
 

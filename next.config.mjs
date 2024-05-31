@@ -28,7 +28,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: "export",
+  env:{
+    API_BASE_URL:process.env.API_BASE_URL,
+  },
+  output: "export"
   // ...other config
 };
 export default nextConfig;

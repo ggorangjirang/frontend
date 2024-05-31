@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
+import Link from "next/link";
 
 type Props = {};
 
@@ -66,8 +67,10 @@ export default function Header({}: Props) {
     showHeader && (
       <>
         <nav className="z-50 flex h-[160px] w-screen flex-col items-center">
-          <div className="flex h-[120px] items-center justify-center gap-20 py-5">
-            <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+          <div className="flex h-[120px] w-[1240px] items-center justify-center gap-20 py-5">
+            <Link href={"/"} className="h-full w-full">
+              <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+            </Link>
             <div className="flex">
               <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
               <div className="flex h-9 w-[60px] cursor-pointer items-center justify-center rounded-r-md bg-secondary hover:opacity-80">
