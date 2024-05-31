@@ -8,7 +8,7 @@ deploy:
     - eval "$(ssh-agent -s)"
     - ssh-add $SSH_KEY
     - export NODE_OPTIONS=--max_old_space_size=800
-    - node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))'
+    - node -e 'console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))' | cat
   script:
     - npm run build
     - mv out html
