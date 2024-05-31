@@ -30,7 +30,7 @@ export default function Page({}: Props) {
     }
 
     initProduct();
-  }, [productDetailInfo, productId]);
+  }, [productId]);
 
   return (
     productDetailInfo && (
@@ -100,6 +100,59 @@ export default function Page({}: Props) {
               </ButtonIcon>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col items-center gap-14" id="description">
+          {/* 상품상세 블록 */}
+          <div className="flex h-12 w-full flex-row">
+            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
+              <a href="#description">
+                <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
+              </a>
+            </div>
+            <div className="flex w-1/2 border-collapse items-center justify-center border ">
+              <a href="#review">
+                <TextMedium text="상품후기" />
+              </a>
+            </div>
+          </div>
+          <div className="flex w-full flex-col items-start justify-center px-4">
+            <Image src={"/logo2.png"} width={250} height={100} alt={"로고"} />
+            <div className="mt-4 w-full border-t pt-4">
+              <TextMedium text="상품설명" style={{ fontWeight: "bold" }} />
+              <div id={"description"} className="">
+                {productDetailInfo?.description}
+              </div>
+            </div>
+            <div
+              className={"flex items-center justify-center py-8"}
+              style={{ width: "100%", height: "100%", position: "relative" }}
+            >
+              <Image
+                src={productDetailInfo?.descriptionImageUrl!}
+                width={0}
+                height={0}
+                loading="lazy"
+                alt={"상품설명 이미지"}
+                objectFit="cover"
+                style={{ width: "auto", height: "100%" }} // optional
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 상품후기 블록 */}
+        <div className="flex h-12 w-full flex-row" id="review">
+          <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
+            <a href="#description">
+              <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
+            </a>
+          </div>
+          <div className="flex w-1/2 border-collapse items-center justify-center border ">
+            <a href="#review">
+              <TextMedium text="상품후기" />
+            </a>
+          </div>
+          <div></div>
         </div>
       </PageWrapper>
     )
