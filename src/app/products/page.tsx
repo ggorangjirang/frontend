@@ -140,19 +140,34 @@ export default function Page({}: Props) {
           </div>
         </div>
 
-        {/* 상품후기 블록 */}
-        <div className="flex h-12 w-full flex-row" id="review">
-          <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
-            <a href="#description">
-              <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
-            </a>
+        <div className="items-align flex flex-col justify-center">
+          {/* 상품후기 블록 */}
+          <div className="flex h-12 w-full flex-row" id="review">
+            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
+              <a href="#description">
+                <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
+              </a>
+            </div>
+            <div className="flex w-1/2 border-collapse items-center justify-center border ">
+              <a href="#review">
+                <TextMedium text="상품후기" />
+              </a>
+            </div>
           </div>
-          <div className="flex w-1/2 border-collapse items-center justify-center border ">
-            <a href="#review">
-              <TextMedium text="상품후기" />
-            </a>
+          <div className="items-align flex flex-col justify-center ">
+            {/* 후기블록 */}
+            <div className="my-12 grid  h-[180px] w-full grid-cols-[1fr_2fr_1fr] justify-center border">
+              <div className="flex  h-full flex-row  justify-around bg-primary ">
+                <Image src="/logo2.png" width={75} height={75} alt="img" className="rounded"/>
+                <div className="flex flex-col items-start">
+                  <div>날짜</div>
+                  <div>아이디</div>
+                </div>
+              </div>
+              <div className="bg-secondary">후기작성칸</div>
+              <div className="bg-gray">사진</div>
+            </div>
           </div>
-          <div></div>
         </div>
       </PageWrapper>
     )
