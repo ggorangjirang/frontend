@@ -1,5 +1,5 @@
+import { Product } from "@/apis/product";
 import ProductCard from "./ProductCard";
-import { Product } from "@/apis/product/product";
 
 interface Props {
   title: string;

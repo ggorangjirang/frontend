@@ -12,8 +12,8 @@ import TextBig from "@/components/common/labels/TextBig";
 import CountSpinner from "@/components/common/input/CountSpinner/CountSpinner";
 import ButtonIcon from "@/components/common/Buttons/ButtonIcon";
 import { useSearchParams } from "next/navigation";
-import { PropductDetail, getProduct } from "@/apis/product/product";
 import { formatDate } from "@/utils/time";
+import { PropductDetail, getProduct } from "@/apis/product";
 
 export default function Page() {
   const [count, setCount] = useState(1);
@@ -29,6 +29,8 @@ export default function Page() {
 
     initProduct();
   }, [productId]);
+
+  if (!productDetailInfo) return <></>;
 
   return (
     productDetailInfo && (

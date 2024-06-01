@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { FILTERS } from "@/constants/Filters";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
+import { FILTERS } from "@/constants/filterConfig";
 
 const categories = {
   main: "전체",

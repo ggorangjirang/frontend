@@ -1,6 +1,6 @@
 "use client";
 
-import { Product, getProductListBestSellingRandom, getProductListLimitedSaleRandom } from "@/apis/product/product";
+import { Product, getProductListBestSellingRandom, getProductListLimitedSaleRandom } from "@/apis/product";
 import ProductCardListSet from "@/components/common/cards/ProductCardListSet";
 import Slider from "@/components/main/Slider";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
