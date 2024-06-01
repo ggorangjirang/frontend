@@ -7,6 +7,7 @@ deploy:
     - ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
     - eval "$(ssh-agent -s)"
     - ssh-add $SSH_KEY
+    - export NODE_OPTIONS="--max-old-space-size=3500"
   script:
     - npm run build
     - mv out html
