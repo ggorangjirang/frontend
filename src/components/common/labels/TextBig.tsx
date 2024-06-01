@@ -1,7 +1,7 @@
-import React from "react";
-import { DefaultLayoutProps } from "../type/LayoutType";
+import { ReactNode } from "react";
 
-interface Props extends DefaultLayoutProps {
+interface Props {
+  children: ReactNode;
   bold?: boolean;
 }
 

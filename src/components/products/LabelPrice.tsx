@@ -1,6 +1,5 @@
-import React from "react";
-import { DefaultLayoutProps } from "../common/type/LayoutType";
+import { ReactNode } from "react";
 
-export default function LabelPrice({ children }: DefaultLayoutProps) {
+export default function LabelPrice({ children }: { children: ReactNode }) {
   return <div className="text-[18px] font-bold text-price">{children}</div>;
 }

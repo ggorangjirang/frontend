@@ -1,14 +1,12 @@
 "use client";
 
-import { Product, getProductListBestSellingRandom, getProductListLimitedSaleRandom } from "@/apis/product";
+import { Product, getProductListBestSellingRandom, getProductListLimitedSaleRandom } from "@/apis/product/product";
 import ProductCardListSet from "@/components/common/cards/ProductCardListSet";
 import Slider from "@/components/main/Slider";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-type Props = {};
-
-export default function Page({}: Props) {
+export default function Page() {
   const [limitedData, setLimitedData] = useState<Product[] | undefined>([]);
   const [bestSellingData, setBestSellingData] = useState<Product[] | undefined>([]);
 

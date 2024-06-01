@@ -1,11 +1,9 @@
-import React, { ReactNode } from "react";
-
-type Props = {
+interface Props {
   text: string;
   gray?: Boolean;
   color?: boolean;
   style?: React.CSSProperties;
-};
+}
 
 export default function TextMedium({ gray = false, text, color = false, style = {} }: Props) {
   return (

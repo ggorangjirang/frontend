@@ -18,6 +18,4 @@ export function formatDate(dateString: string) {
   return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
-const inputDateString = "2024-12-31";
-const formattedDateString = formatDate(inputDateString);
-console.log(formattedDateString); // 출력: "2024년 12월 31일"
+// 출력: "2024년 12월 31일"

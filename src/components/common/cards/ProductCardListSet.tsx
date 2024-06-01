@@ -1,6 +1,5 @@
-import React from "react";
 import ProductCard from "./ProductCard";
-import { Product, getProductListResponse } from "@/apis/product";
+import { Product } from "@/apis/product/product";
 
 interface Props {
   title: string;

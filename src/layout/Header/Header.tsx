@@ -2,23 +2,21 @@
 
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 
-type Props = {};
-
-export type SubCategories = {
+export interface SubCategories {
   name: string;
   code: number;
-};
+}
 
-type DummyCategories = {
+interface DummyCategories {
   main: string;
   sub: SubCategories[];
-};
+}
 const DUMMYCATEGORIES: Record<string, DummyCategories> = {
   food: {
     main: "사료",
@@ -50,18 +48,18 @@ const DUMMYCATEGORIES: Record<string, DummyCategories> = {
   },
 };
 
-export default function Header({}: Props) {
+export default function Header() {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState<boolean>();
 
-  function onMouseEnter() {
+  const onMouseEnter = () => {
     setHover(true);
-  }
+  };
 
-  function onMouseLeave() {
+  const onMouseLeave = () => {
     setHover(false);
-  }
+  };
 
   return (
     showHeader && (
@@ -128,7 +126,7 @@ export default function Header({}: Props) {
           </div>
         </nav>
         <div
-          className={`absolute top-[160px] z-30 h-dvh w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible  bg-black opacity-0 "} `}
+          className={`absolute top-[160px] z-30 h-dvh w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible bg-black opacity-0 "} `}
           style={{ transitionProperty: "opacity, visibility" }}
         ></div>
       </>

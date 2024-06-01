@@ -1,8 +1,10 @@
-import React from "react";
-import { DefaultLayoutProps } from "../type/LayoutType";
 import SVGIcon, { IconProps } from "../icon/SVGIcon";
+import { ReactNode } from "react";
 
-type Props = DefaultLayoutProps & IconProps & { bgColor: string };
+interface Props extends IconProps {
+  children: ReactNode;
+  bgColor: string;
+}
 
 export default function ButtonIcon({ children, name, size, color: iconColor, bgColor = "#6e6e69" }: Props) {
   return (

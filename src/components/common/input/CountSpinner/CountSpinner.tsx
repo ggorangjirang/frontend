@@ -1,10 +1,8 @@
-import React from "react";
-
-type Props = {
+interface Props {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
   maximum?: number;
-};
+}
 
 /*
 사용법 :     

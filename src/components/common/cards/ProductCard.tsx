@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import { ProductCardProps } from "./ProductCardList";
 import Link from "next/link";
 

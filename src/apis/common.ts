@@ -1,6 +1,4 @@
-import { RequestInit } from "next/dist/server/web/spec-extension/request";
-
-const commonFetch = (url: string, options?: RequestInit): Promise<any> => {
+const commonFetch = (url: string, options: RequestInit = {}): Promise<any> => {
   options = options ?? {};
   return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`, {
     ...options,
@@ -12,19 +10,19 @@ const commonFetch = (url: string, options?: RequestInit): Promise<any> => {
       return response.json();
     })
     .catch((err) => {
-      console.log(err.message);
+      console.error(err.message);
       throw err;
     });
 };
 
-export const getFetch = (url: string, options?: RequestInit): Promise<any> => {
+export const getFetch = (url: string, options: RequestInit = {}): Promise<any> => {
   return commonFetch(url, {
     ...options,
     headers: options?.headers,
   });
 };
 
-export const postFetch = (url: string, param: { [key: string]: any }, options?: RequestInit): Promise<any> => {
+export const postFetch = (url: string, param: { [key: string]: any }, options: RequestInit = {}): Promise<any> => {
   return commonFetch(url, {
     ...options,
     method: "POST",

@@ -1,5 +1,5 @@
-import { API_URLS } from "@/constants/api_url_config";
-import { getFetch } from "./common";
+import { API_URLS } from "@/constants/apiUrlConfig";
+import { getFetch } from "../common";
 
 export interface Product {
   productId: number;
@@ -60,7 +60,6 @@ export interface getProductListRandomResponse {}
 
 //선착순 한정세일 api
 export const getProductListLimitedSaleRandom = async (data?: getProductListRequest): Promise<Product[]> => {
-  console.log(process.env.API_BASE_URL);
   return getFetch(`${API_URLS.products}/limited-sale/random`);
 };
 

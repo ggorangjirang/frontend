@@ -7,17 +7,15 @@ import ProductInfo from "@/components/products/ProductInfo";
 import Tag from "@/components/products/Tag";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TextBig from "@/components/common/labels/TextBig";
 import CountSpinner from "@/components/common/input/CountSpinner/CountSpinner";
 import ButtonIcon from "@/components/common/Buttons/ButtonIcon";
 import { useSearchParams } from "next/navigation";
-import { PropductDetail, getProduct } from "@/apis/product";
+import { PropductDetail, getProduct } from "@/apis/product/product";
 import { formatDate } from "@/utils/time";
 
-type Props = {};
-
-export default function Page({}: Props) {
+export default function Page() {
   const [count, setCount] = useState(1);
   const productId = useSearchParams().get("productId") ?? "";
   const [productDetailInfo, setProductDetailInfo] = useState<PropductDetail>();

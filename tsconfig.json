@@ -30,7 +30,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./frontend2/**/*",
-    "postcss.config.js"
+    "postcss.config.js",
+    "src/assets/index.js",
+    "src/assets/index.mjs"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,16 +1,13 @@
-import { DefaultLayoutProps } from "@/components/common/type/LayoutType";
+import { ReactNode } from "react";
 import { FILTERS } from "@/constants/Filters";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
-import React from "react";
 
 const categories = {
   main: "전체",
   subCategories: ["강아지 사료", "고양이 사료"],
 };
 
-//Q: layout 하고 pages를 어떻게 구분할까 ..? children한테는 인자를 줄 수 없으니 ...
-
-export default function layout({ children }: DefaultLayoutProps) {
+export default function CategoriesLayout({ children }: { children: ReactNode }) {
   return (
     <PageWrapper>
       <div className="mt-8 flex flex-row gap-8 ">

@@ -1,10 +1,9 @@
-import React from "react";
-import { SubCategories } from ".";
+import { SubCategories } from "./Header";
 import Link from "next/link";
 
-type Props = {
+interface Props {
   subCategory: SubCategories[];
-};
+}
 
 export const SubCategory = ({ subCategory }: Props) => {
   return (

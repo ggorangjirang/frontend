@@ -1,6 +1,5 @@
-import React from "react";
-import { DefaultLayoutProps } from "../type/LayoutType";
+import { ReactNode } from "react";
 
-export default function ProductTitleLabel({ children }: DefaultLayoutProps) {
+export default function ProductTitleLabel({ children }: { children: ReactNode }) {
   return <div className="mb-7 mt-8 text-2xl font-bold text-text">{children}</div>;
 }

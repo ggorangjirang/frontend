@@ -1,5 +1,5 @@
 "use client";
-import Wrapper from "@/layout/Wrapper";
+import Wrapper from "@/layout/Wrapper/Wrapper";
 import Input from "@/components/common/input";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
