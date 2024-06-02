@@ -13,24 +13,28 @@ import CountSpinner from "@/components/common/input/CountSpinner/CountSpinner";
 import ButtonIcon from "@/components/common/Buttons/ButtonIcon";
 import { useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils/time";
-import { PropductDetail, getProduct } from "@/apis/product";
+import { PropductDetail, Review, getProduct, getProductReview } from "@/apis/product";
+import ProductReview from "@/components/products/ProductReview";
 
 export default function Page() {
   const [count, setCount] = useState(1);
   const productId = useSearchParams().get("productId") ?? "";
   const [productDetailInfo, setProductDetailInfo] = useState<PropductDetail>();
+  const [productReviewsInfo, setProductReviewsInfo] = useState<Review[]>();
 
   //리뷰 받아오기
   useEffect(() => {
     async function initProduct() {
-      const data = await getProduct(productId);
-      setProductDetailInfo(data);
+      const Productdata = await getProduct(productId);
+      const productReviewsData = await getProductReview(productId);
+      setProductDetailInfo(Productdata);
+      setProductReviewsInfo(productReviewsData);
     }
 
     initProduct();
   }, [productId]);
 
-  if (!productDetailInfo) return <></>;
+  if (!productDetailInfo || !productReviewsInfo) return <></>;
 
   return (
     productDetailInfo && (
@@ -101,22 +105,22 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-14" id="description">
+        <div className="flex flex-col items-center gap-14 " id="description">
           {/* 상품상세 블록 */}
-          <div className="flex h-12 w-full flex-row">
-            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
+          <div className="mb-10 flex h-12 w-full flex-row">
+            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t border-gray">
               <a href="#description">
                 <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
               </a>
             </div>
-            <div className="flex w-1/2 border-collapse items-center justify-center border ">
+            <div className="flex w-1/2 border-collapse items-center justify-center border  border-gray ">
               <a href="#review">
                 <TextMedium text="상품후기" />
               </a>
             </div>
           </div>
           <div className="flex w-full flex-col items-start justify-center px-4">
-            <Image src={"/logo2.png"} width={250} height={100} alt={"로고"} />
+            <Image src={"/imgs/logos/logo2.png"} width={250} height={100} alt={"로고"} />
             <div className="mt-4 w-full border-t pt-4">
               <TextMedium text="상품설명" style={{ fontWeight: "bold" }} />
               <div id={"description"} className="">
@@ -140,33 +144,25 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="items-align flex flex-col justify-center">
+        <div className="items-align mt-24 flex flex-col justify-center">
           {/* 상품후기 블록 */}
-          <div className="flex h-12 w-full flex-row" id="review">
-            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t ">
+          <div className="mb-10 flex h-12 w-full flex-row" id="review">
+            <div className="color flex w-1/2 items-center justify-center border border-gray ">
               <a href="#description">
-                <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
+                <TextMedium text="상품정보" />
               </a>
             </div>
-            <div className="flex w-1/2 border-collapse items-center justify-center border ">
+            <div className="flex w-1/2 items-center justify-center border-r border-t border-gray">
               <a href="#review">
-                <TextMedium text="상품후기" />
+                <TextMedium text="상품후기" color={true} style={{ fontWeight: "bold" }} />
               </a>
             </div>
           </div>
-          <div className="items-align flex flex-col justify-center ">
-            {/* 후기블록 */}
-            <div className="my-12 grid  h-[180px] w-full grid-cols-[1fr_2fr_1fr] justify-center border">
-              <div className="flex  h-full flex-row  justify-around bg-primary ">
-                <Image src="/logo2.png" width={75} height={75} alt="img" className="rounded" />
-                <div className="flex flex-col items-start">
-                  <div>날짜</div>
-                  <div>아이디</div>
-                </div>
-              </div>
-              <div className="bg-secondary">후기작성칸</div>
-              <div className="bg-gray">사진</div>
-            </div>
+          <div className="items-align flex flex-col justify-center  gap-6 ">
+            {/* 후기블록 table로 구현하면 더 좋을듯*/}
+            {productReviewsInfo.map((review) => {
+              return <ProductReview key={review.reviewId} review={review}></ProductReview>;
+            })}
           </div>
         </div>
       </PageWrapper>
