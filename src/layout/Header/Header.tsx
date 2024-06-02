@@ -67,7 +67,13 @@ export default function Header() {
         <nav className="z-50 flex h-[160px] w-screen flex-col items-center">
           <div className="flex h-[120px] w-[1240px] items-center justify-center gap-20 py-5">
             <Link href={"/"} className="h-full w-full">
-              <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+              <Image
+                src={"/imgs/logos/logo2.png"}
+                width={203}
+                height={80}
+                alt="logo"
+                style={{ width: 203, height: 80 }}
+              />
             </Link>
             <div className="flex">
               <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
