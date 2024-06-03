@@ -11,9 +11,11 @@ interface ButtonProps {
 interface SizeVariants {
   mypage: string;
   users: string;
+  review: string;
 }
 export const Button: React.FC<ButtonProps> = ({ value, className, type, size }) => {
   const sizeVariants = {
+    review: "w-[170px] h-[38px]",
     mypage: "w-[188px] h-[38px]",
     users: "w-[327px] h-[46px]",
   };

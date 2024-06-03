@@ -53,8 +53,32 @@ const UserComponent: React.FC<Props> = ({ signup }) => {
   };
 
   const onSubmitLogin: SubmitHandler<LoginData> = async (data: LoginData): Promise<void> => {
-    console.log(data);
-    // 로그인 처리
+    await new Promise((r) => setTimeout(r, 1000));
+
+    const response = await fetch("로그인 서버 주소", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: data.id,
+        password: data.password,
+      }),
+    });
+    const result = await response.json();
+
+    // if (response.status === 200) {
+    //   setLoginCheck(false);
+    //   // Store token in local storage
+    //   sessionStorage.setItem("token", result.token);
+    //   sessionStorage.setItem("email", result.email); // 여기서 userid를 저장합니다.
+    //   sessionStorage.setItem("role", result.role); // 여기서 role를 저장합니다.
+    //   sessionStorage.setItem("storeid", result.storeId); // 여기서 role를 저장합니다.
+    //   console.log("로그인성공, 이메일주소:" + result.email);
+    //   navigate("/"); // 로그인 성공시 홈으로 이동합니다.
+    // } else {
+    //   setLoginCheck(true);
+    // }
   };
 
   const fieldsSignUp: { label: string; name: keyof SignUpData; type: string; placeholder: string }[] = [
