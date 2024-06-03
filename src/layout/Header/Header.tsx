@@ -1,12 +1,13 @@
 "use client";
-
+//추후 ISR로 변환..!
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
+import { getSubCategories, subCategoriesRes } from "@/apis/categories";
 
 export interface SubCategories {
   name: string;
@@ -51,7 +52,8 @@ const DUMMYCATEGORIES: Record<string, DummyCategories> = {
 export default function Header() {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
-  const [hover, setHover] = useState<boolean>();
+  const [hover, setHover] = useState(false);
+  const [categories, setCategories] = useState<subCategoriesRes>();
 
   const onMouseEnter = () => {
     setHover(true);
@@ -60,6 +62,32 @@ export default function Header() {
   const onMouseLeave = () => {
     setHover(false);
   };
+
+  useEffect(() => {
+    const initCategories = async () => {
+      const categoriesData = await getSubCategories();
+      const rebuildedCategories = [];
+      categories?.map((categories, index) => {
+        const main: { categoryId: 0; categoryName: "string" }[] = [];
+        const sub: { categoryId: number; subCategoryId: number; subCategoryName: "string" }[] = [];
+        const hasMain = main.map((mainCategory) => {
+          mainCategory.categoryId === categories.categoryId ? true : false;
+        });
+        if (!hasMain) main.push({ categoryId: categories.categoryId, categoryName: categories.categoryName });
+        sub.push({
+          categoryId: categories.categoryId,
+          subCategoryId: categories.subcategoryId,
+          subCategoryName: categories.subcategoryName,
+        });
+        rebuildedCategories.push({ main: main, sub: sub });
+      });
+
+      setCategories(categoriesData);
+    };
+    initCategories();
+  }, []);
+
+  console.log(categories);
 
   return (
     showHeader && (
