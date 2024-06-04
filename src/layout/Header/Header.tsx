@@ -2,58 +2,18 @@
 //추후 ISR로 변환..!
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
-import { getSubCategories, subCategoriesRes } from "@/apis/categories";
-
-export interface SubCategories {
-  name: string;
-  code: number;
-}
-
-interface DummyCategories {
-  main: string;
-  sub: SubCategories[];
-}
-const DUMMYCATEGORIES: Record<string, DummyCategories> = {
-  food: {
-    main: "사료",
-    sub: [
-      { name: "강아지 사료", code: 1 },
-      { name: "고양이 사료", code: 2 },
-    ],
-  },
-  snack: {
-    main: "간식",
-    sub: [
-      { name: "강아지 간식", code: 3 },
-      { name: "고양이 간식", code: 4 },
-    ],
-  },
-  cleaner: {
-    main: "배변/위생",
-    sub: [
-      { name: "배변패드", code: 5 },
-      { name: "고양이 모래", code: 6 },
-    ],
-  },
-  fashion: {
-    main: "패션",
-    sub: [
-      { name: "의류", code: 7 },
-      { name: "넥카라", code: 8 },
-    ],
-  },
-};
+import { Categories, getSubCategories } from "@/apis/categories";
 
 export default function Header() {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
-  const [categories, setCategories] = useState<subCategoriesRes>();
+  const [categories, setCategories] = useState<Categories[]>();
 
   const onMouseEnter = () => {
     setHover(true);
@@ -66,28 +26,12 @@ export default function Header() {
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-      const rebuildedCategories = [];
-      categories?.map((categories, index) => {
-        const main: { categoryId: 0; categoryName: "string" }[] = [];
-        const sub: { categoryId: number; subCategoryId: number; subCategoryName: "string" }[] = [];
-        const hasMain = main.map((mainCategory) => {
-          mainCategory.categoryId === categories.categoryId ? true : false;
-        });
-        if (!hasMain) main.push({ categoryId: categories.categoryId, categoryName: categories.categoryName });
-        sub.push({
-          categoryId: categories.categoryId,
-          subCategoryId: categories.subcategoryId,
-          subCategoryName: categories.subcategoryName,
-        });
-        rebuildedCategories.push({ main: main, sub: sub });
-      });
 
       setCategories(categoriesData);
     };
+
     initCategories();
   }, []);
-
-  console.log(categories);
 
   return (
     showHeader && (
@@ -141,19 +85,33 @@ export default function Header() {
               onMouseLeave={onMouseLeave}
               className="items-centertext-white flex h-[40px] w-[1000px]"
             >
-              {Object.keys(DUMMYCATEGORIES).map((key, index) => {
+              {categories?.map((category, index) => {
                 return (
-                  <li
-                    key={key + index}
+                  <Link
+                    suppressHydrationWarning
                     className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold"
+                    id="NavMainCategory"
+                    key={category.main[0].categoryId}
+                    href={{ pathname: "/categories", query: { categoryId: category.main[0].categoryId } }}
                   >
-                    <div
-                      key={`arrow${index}`}
-                      className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block"
-                    />
-                    {DUMMYCATEGORIES[key].main}
-                    <SubCategory key={key} subCategory={DUMMYCATEGORIES[key].sub} />
-                  </li>
+                    <li key={category.main[0].categoryId}>
+                      <div
+                        key={`arrow${index}`}
+                        className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block"
+                      />
+
+                      {category.main[0].categoryName}
+                      <div>
+                        <Suspense>
+                          <SubCategory
+                            key={index}
+                            subCategory={category.sub}
+                            mainCategoryId={category.main[0].categoryId}
+                          />
+                        </Suspense>
+                      </div>
+                    </li>
+                  </Link>
                 );
               })}
             </ul>

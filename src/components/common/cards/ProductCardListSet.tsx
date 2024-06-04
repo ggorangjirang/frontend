@@ -8,7 +8,6 @@ interface Props {
 
 export default function ProductCardListSet({ title, data }: Props) {
   const content = data;
-  console.log(data);
   return (
     content && (
       <div className="border-b border-gray-border last:border-b-0 ">
@@ -16,7 +15,7 @@ export default function ProductCardListSet({ title, data }: Props) {
           <div>{title}</div>
         </div>
         <div className="b my-2 flex w-[1240px] flex-wrap justify-center gap-14 gap-x-20 align-middle ">
-          {content.map((cardInfo, index) => {
+          {content.map((cardInfo) => {
             return <ProductCard cardInfo={cardInfo} key={cardInfo.productId}></ProductCard>;
           })}
           <div className="mb-12 flex h-12 w-60 cursor-pointer items-center justify-center rounded-full border border-gray-border text-gray hover:opacity-55">

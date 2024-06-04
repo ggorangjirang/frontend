@@ -8,17 +8,19 @@ export interface ProductCardProps {
   w?: number;
 }
 
-export default function ProductCardList({ imgSize = 250, gapX = 56, w = 1240 }: ProductCardProps) {
+export interface ProductCardListProps {
+  productList: Product[];
+  imgSize?: number;
+  gapX?: number;
+  w?: number;
+}
+
+export default function ProductCardList({ productList, imgSize = 250, gapX = 56, w = 1240 }: ProductCardListProps) {
   return (
-    <div className={`flex flex-wrap justify-center align-middle`} style={{ width: w, gap: gapX }}>
-      {/* <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard>
-      <ProductCard imgSize={imgSize}></ProductCard> */}
+    <div className={`flex flex-wrap justify-start align-middle`} style={{ width: w, gap: gapX }}>
+      {productList.map((cardInfo) => {
+        return <ProductCard key={cardInfo.productId} cardInfo={cardInfo} gapX={gapX} imgSize={imgSize}></ProductCard>;
+      })}
     </div>
   );
 }
