@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Mousewheel, Keyboard, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "./styles.css";
 import SwiperCore from "swiper";
 // Import Swiper styles
@@ -13,9 +12,7 @@ import Image from "next/image";
 
 // import required modules
 
-type Props = {};
-
-export default function Slider({}: Props) {
+export default function Slider() {
   SwiperCore.use([Navigation, Autoplay]);
   return (
     <Swiper

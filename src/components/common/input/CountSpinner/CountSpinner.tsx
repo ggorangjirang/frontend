@@ -1,9 +1,8 @@
-import React from "react";
-
-type Props = {
+interface Props {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
-};
+  maximum?: number;
+}
 
 /*
 사용법 :     
@@ -13,9 +12,9 @@ type Props = {
 
 
 */
-export default function CountSpinner({ count, setCount }: Props) {
+export default function CountSpinner({ count, setCount, maximum = 99999 }: Props) {
   function onClickPlus() {
-    setCount((prev) => prev + 1);
+    setCount((prev) => (prev >= maximum ? prev : prev + 1));
   }
 
   function onClickMinus() {

@@ -1,9 +1,9 @@
-import React from 'react'
-import { DefaultLayoutProps } from '../common/type/LayoutType'
+import { ReactNode } from "react";
 
-
-export default function Tag({children}: DefaultLayoutProps) {
+export default function Tag({ children }: { children: ReactNode }) {
   return (
-    <div className='text-gray border border-gray-border text-[12px] flex px-2 py-1 justify-center items-center'>{children}</div>
-  )
+    <div className="flex items-center justify-center border border-gray-border px-2 py-1 text-[12px] text-gray">
+      {children}
+    </div>
+  );
 }

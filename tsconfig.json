@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@assets/*": ["./public/*"]
+      "@assets/*": ["./public/imgs/*"]
     }
   },
   "include": [
@@ -30,7 +30,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./frontend2/**/*",
-    "postcss.config.js"
-, "src/utils/validation.js"  ],
+    "postcss.config.js",
+    "src/utils/validation.js",
+    "src/assets/index.js",
+    "src/assets/index.mjs"
+  ],
   "exclude": ["node_modules"]
 }

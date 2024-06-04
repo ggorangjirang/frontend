@@ -1,19 +1,18 @@
-import Image from "next/image";
-import React, { SVGProps } from "react";
-import * as Icons from "@/assets/index";
+import { SVGProps } from "react";
+import * as Icons from "@/assets/index.mjs";
 
 const themeColor = {
   secondary: "#0A162B",
   white: "#fff",
 };
 
-export type IconProps = SVGProps<SVGElement> & {
+export interface IconProps extends SVGProps<SVGElement> {
   name: keyof typeof Icons;
   width?: number;
   height?: number;
   color?: keyof typeof themeColor;
   size?: number;
-};
+}
 export default function SVGIcon({ name, width = 32, height = 32, size, color = "secondary", ...props }: IconProps) {
   const Icon = Icons[name];
   const sizeProps = { width: size ? size : width, height: size ? size : height };

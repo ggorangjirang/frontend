@@ -2,22 +2,21 @@
 
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
+import Link from "next/link";
 
-type Props = {};
-
-export type SubCategories = {
+export interface SubCategories {
   name: string;
   code: number;
-};
+}
 
-type DummyCategories = {
+interface DummyCategories {
   main: string;
   sub: SubCategories[];
-};
+}
 const DUMMYCATEGORIES: Record<string, DummyCategories> = {
   food: {
     main: "사료",
@@ -49,25 +48,27 @@ const DUMMYCATEGORIES: Record<string, DummyCategories> = {
   },
 };
 
-export default function Header({}: Props) {
+export default function Header() {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState<boolean>();
 
-  function onMouseEnter() {
+  const onMouseEnter = () => {
     setHover(true);
-  }
+  };
 
-  function onMouseLeave() {
+  const onMouseLeave = () => {
     setHover(false);
-  }
+  };
 
   return (
     showHeader && (
       <>
         <nav className="z-50 flex h-[160px] w-screen flex-col items-center">
-          <div className="flex h-[120px] items-center justify-center gap-20 py-5">
-            <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+          <div className="flex h-[120px] w-[1240px] items-center justify-center gap-20 py-5">
+            <Link href={"/"} className="h-full w-full">
+              <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+            </Link>
             <div className="flex">
               <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
               <div className="flex h-9 w-[60px] cursor-pointer items-center justify-center rounded-r-md bg-secondary hover:opacity-80">
@@ -125,7 +126,7 @@ export default function Header({}: Props) {
           </div>
         </nav>
         <div
-          className={`absolute top-[160px] z-30 h-dvh w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible  bg-black opacity-0 "} `}
+          className={`absolute top-[160px] z-30 h-dvh w-full  transition-opacity delay-150 duration-300 ease-in-out ${hover ? "bg-black  opacity-75" : " invisible bg-black opacity-0 "} `}
           style={{ transitionProperty: "opacity, visibility" }}
         ></div>
       </>

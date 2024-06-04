@@ -3,3 +3,4 @@ export { default as User } from "@assets/icons/user.svg";
 export { default as Search } from "@assets/icons/search.svg";
 export { default as Signup } from "@assets/icons/signup.svg";
 export { default as ArrowRight } from "@assets/icons/arrow-right.svg";
+export { default as Plus } from "@assets/icons/plus.svg";

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 interface InputProps {
   type: string;
@@ -7,19 +6,20 @@ interface InputProps {
   className?: string;
   register: any;
   required?: boolean;
+  value?: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, placeholder, className, register, required }) => {
+const Input: React.FC<InputProps> = ({ type, placeholder, className, register, required, value }) => {
   return (
     <input
       required={required}
       {...register}
       type={type}
       placeholder={placeholder}
+      value={value}
       className={`rounded-[12px] border border-gray-border text-textmedium placeholder-gray ${className}`}
     />
   );
 };
 
 export default Input;
-
