@@ -1,6 +1,6 @@
 "use client";
 
-import { SubCategoryItem } from "./Header";
+import { SubCategoryItem } from "@/apis/categories";
 import { useRouter } from "next/navigation";
 
 interface Props {

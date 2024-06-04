@@ -102,13 +102,11 @@ export default function Header() {
 
                       {category.main[0].categoryName}
                       <div>
-                        <Suspense>
-                          <SubCategory
-                            key={index}
-                            subCategory={category.sub}
-                            mainCategoryId={category.main[0].categoryId}
-                          />
-                        </Suspense>
+                        <SubCategory
+                          key={index}
+                          subCategory={category.sub}
+                          mainCategoryId={category.main[0].categoryId}
+                        />
                       </div>
                     </li>
                   </Link>

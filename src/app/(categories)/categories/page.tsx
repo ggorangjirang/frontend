@@ -3,22 +3,25 @@
 import { Categories, getSubCategories } from "@/apis/categories";
 import { Product, getMainProductList, getSubProductList } from "@/apis/product";
 import ProductCardList from "@/components/common/cards/ProductCardList";
-import SideBar from "@/components/products/SideBar";
+import SideBar from "@/components/products/CategorySideBar";
 import { FILTERS } from "@/constants/filterConfig";
+import Pagenation from "@/layout/Pagenation/Pagenation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const [productList, setProductList] = useState<Product[]>();
-  const [sideBarList, setSideBarList] = useState<Categories[]>();
+  const [sideBarList, setSideBarList] = useState<Categories>();
   const categoryId = searchParams.get("categoryId") ?? "";
   const subCategoryId = searchParams.get("subCategoryId") ?? 0;
 
   useEffect(() => {
     const initProduct = async () => {
       let data;
-      if (subCategoryId === 0) data = await getMainProductList(categoryId);
+      if (subCategoryId === 0) {
+        data = await getMainProductList(categoryId);
+      }
       if (subCategoryId !== 0) data = await getSubProductList(subCategoryId);
 
       setProductList(data?.content);
@@ -30,7 +33,9 @@ export default function Page() {
   useEffect(() => {
     const initNavData = async () => {
       let data = await getSubCategories();
-      setSideBarList(data);
+      const currentCategory = data.filter((item) => item.main[0].categoryId === Number(categoryId))[0];
+
+      setSideBarList(currentCategory);
     };
 
     initNavData();
@@ -40,13 +45,7 @@ export default function Page() {
     productList &&
     sideBarList && (
       <>
-        {
-          <SideBar
-            title={sideBarList[Number(categoryId) - 1].main[0].categoryName}
-            labelNames={sideBarList[Number(categoryId) - 1].sub}
-            firstLabelName="전체"
-          ></SideBar>
-        }
+        {<SideBar categoryData={sideBarList} selected={Number(subCategoryId)}></SideBar>}
         <div>
           <div className="mb-8 flex w-[1000px] cursor-pointer flex-col items-end border-b border-b-gray-border pb-3 text-[14px] text-text ">
             <ul className="bg-gray-100 flex ">
@@ -60,7 +59,8 @@ export default function Page() {
               ))}
             </ul>
           </div>
-          <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>;
+          <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>
+          <Pagenation pageSize={16} totalPage={2} current={0} displayLimit={5}></Pagenation>
         </div>
       </>
     )
