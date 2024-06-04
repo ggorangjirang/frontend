@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      lineHeight: {
+        100: "100%",
+      },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
       },

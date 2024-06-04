@@ -31,6 +31,7 @@
     ".next/types/**/*.ts",
     "./frontend2/**/*",
     "postcss.config.js",
+    "src/utils/validation.js",
     "src/assets/index.js",
     "src/assets/index.mjs"
   ],

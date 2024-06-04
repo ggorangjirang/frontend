@@ -5,16 +5,19 @@ interface InputProps {
   placeholder: string;
   className?: string;
   register: any;
+  required?: boolean;
+  value?: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, placeholder, className, register }) => {
+const Input: React.FC<InputProps> = ({ type, placeholder, className, register, required, value }) => {
   return (
     <input
-      required
+      required={required}
       {...register}
       type={type}
       placeholder={placeholder}
-      className={`mb-[12px] h-[46px] w-[327px] rounded-[12px] border border-gray-border pl-[24px] text-textmedium placeholder-gray ${className}`}
+      value={value}
+      className={`rounded-[12px] border border-gray-border text-textmedium placeholder-gray ${className}`}
     />
   );
 };
