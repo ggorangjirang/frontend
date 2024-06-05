@@ -58,7 +58,7 @@ export type getProductListResponse = {
   size: number;
   content: Product[];
   number: number;
-  pagable: Pagable;
+  pageable: Pagable;
   numberOfElements: number;
   first: boolean;
   last: boolean;

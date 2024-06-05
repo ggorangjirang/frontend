@@ -1,13 +1,13 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Categories, getSubCategories } from "@/apis/categories";
 import { Pagable, Product, getMainProductList, getSubProductList } from "@/apis/product";
 import ProductCardList from "@/components/common/cards/ProductCardList";
 import SideBar from "@/components/products/CategorySideBar";
 import { FILTERS } from "@/constants/filterConfig";
 import Pagenation from "@/layout/Pagenation/Pagenation";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export type PageInfo = {
   page: number;
@@ -17,37 +17,44 @@ export type PageInfo = {
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const [productList, setProductList] = useState<Product[]>();
-  const [sideBarList, setSideBarList] = useState<Categories>();
   const categoryId = searchParams.get("categoryId") ?? "";
   const subCategoryId = searchParams.get("subCategoryId") ?? 0;
-  const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 1, totalPages: 5, totalElements: 80 });
+
+  const [productList, setProductList] = useState<Product[]>();
+  const [sideBarList, setSideBarList] = useState<Categories>();
+  const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
 
   useEffect(() => {
     const initProduct = async () => {
       let data;
+      const targetPage = pageInfo?.page ?? 1;
       if (subCategoryId === 0) {
-        data = await getMainProductList(categoryId, pageInfo.page - 1);
+        data = await getMainProductList(categoryId, targetPage);
       }
-      if (subCategoryId !== 0) data = await getSubProductList(subCategoryId, pageInfo.page - 1);
-
+      if (subCategoryId !== 0) data = await getSubProductList(subCategoryId, targetPage);
+      const targetPageInfo = {
+        page: data!.pageable.pageNumber,
+        totalPages: data!.totalPages,
+        totalElements: data!.totalElements,
+      };
+      setPageInfo(targetPageInfo);
       setProductList(data?.content);
-      setPageInfo({ ...pageInfo, totalPages: data?.totalPages!, totalElements: data?.totalElements! });
     };
 
     initProduct();
-  }, [categoryId, pageInfo.page, subCategoryId]);
+  }, [categoryId, pageInfo?.page, subCategoryId]);
 
   useEffect(() => {
-    const initNavData = async () => {
-      let data = await getSubCategories();
-      const currentCategory = data.filter((item) => item.main[0].categoryId === Number(categoryId))[0];
-      setPageInfo((prev) => ({ ...prev, page: 1 }));
-      setSideBarList(currentCategory);
-    };
-
-    initNavData();
-  }, [categoryId, subCategoryId]);
+    if (categoryId && subCategoryId) {
+      const initNavData = async () => {
+        let data = await getSubCategories();
+        const currentCategory = data.filter((item) => item.main[0].categoryId === Number(categoryId))[0];
+        setSideBarList(currentCategory);
+      };
+      initNavData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     productList &&
@@ -68,14 +75,16 @@ export default function Page() {
             </ul>
           </div>
           <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>
-          <Pagenation
-            pageSize={16}
-            totalPage={pageInfo.totalPages}
-            pageInfo={pageInfo}
-            setPageInfo={setPageInfo}
-            limit={5}
-            requestFn={() => {}}
-          ></Pagenation>
+          {pageInfo !== null && (
+            <Pagenation
+              pageSize={16}
+              totalPage={pageInfo.totalPages}
+              pageInfo={pageInfo}
+              setPageInfo={setPageInfo}
+              limit={5}
+              requestFn={() => {}}
+            />
+          )}
         </div>
       </>
     )
