@@ -30,7 +30,7 @@ export type PropductDetail = {
   soldOut: boolean;
 } & Product;
 
-type Pagable = {
+export type Pagable = {
   offset: number;
   sort: Sort[];
   pageNumber: number;
