@@ -5,7 +5,7 @@ import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/common/button";
+import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
 
 interface ChangeInfoData {
   password: string;
@@ -161,7 +161,7 @@ const MyPageInfoComponent = () => {
                 />
               </div>
             </div>
-            <Button value={"저장"} className="mt-[22px] text-white" type="submit" size="mypage" />
+            <ButtonPrimary value={"저장"} className="mt-[22px] text-white" type="submit" size="mypage" />
           </form>
         </div>
       </div>
