@@ -3,17 +3,11 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { Pagable, Product, getMainProductList, getSubProductList } from "@/apis/product";
+import { Product, getMainProductList, getSubProductList } from "@/apis/product";
 import ProductCardList from "@/components/common/cards/ProductCardList";
 import SideBar from "@/components/products/CategorySideBar";
 import { FILTERS } from "@/constants/filterConfig";
-import Pagenation from "@/layout/Pagenation/Pagenation";
-
-export type PageInfo = {
-  page: number;
-  totalPages: number;
-  totalElements: number;
-};
+import Pagination, { PageInfo } from "@/layout/Pagenation/Pagination";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -27,11 +21,14 @@ export default function Page() {
   useEffect(() => {
     const initProduct = async () => {
       let data;
-      const targetPage = pageInfo?.page ?? 1;
+      const targetPage = pageInfo?.page ?? 0;
+
       if (subCategoryId === 0) {
         data = await getMainProductList(categoryId, targetPage);
       }
+
       if (subCategoryId !== 0) data = await getSubProductList(subCategoryId, targetPage);
+
       const targetPageInfo = {
         page: data!.pageable.pageNumber,
         totalPages: data!.totalPages,
@@ -45,16 +42,13 @@ export default function Page() {
   }, [categoryId, pageInfo?.page, subCategoryId]);
 
   useEffect(() => {
-    if (categoryId && subCategoryId) {
-      const initNavData = async () => {
-        let data = await getSubCategories();
-        const currentCategory = data.filter((item) => item.main[0].categoryId === Number(categoryId))[0];
-        setSideBarList(currentCategory);
-      };
-      initNavData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const initNavData = async () => {
+      let data = await getSubCategories();
+      const currentCategory = data.filter((item) => item.main[0].categoryId === Number(categoryId))[0];
+      setSideBarList(currentCategory);
+    };
+    initNavData();
+  }, [categoryId, subCategoryId]);
 
   return (
     productList &&
@@ -76,13 +70,12 @@ export default function Page() {
           </div>
           <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>
           {pageInfo !== null && (
-            <Pagenation
+            <Pagination
               pageSize={16}
               totalPage={pageInfo.totalPages}
               pageInfo={pageInfo}
               setPageInfo={setPageInfo}
               limit={5}
-              requestFn={() => {}}
             />
           )}
         </div>
