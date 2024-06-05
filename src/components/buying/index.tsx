@@ -3,12 +3,18 @@ import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import { ChangeEvent, useEffect, useState } from "react";
 import BoughtElement from "../common/bought";
 import { formatNumber } from "@/utils/formatNumber";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Script from "next/script";
+
 const temp = [
   { title: "상품1", description: "설명1", count: 1, img: "/testImg.png", price: 7000, discount: 5000 },
   { title: "상품2", description: "설명2", count: 2, img: "/testImg.png", price: 5000, discount: 2200 },
 ];
 const box = 3000;
+declare const window: typeof globalThis & {
+  IMP: any;
+  daum: any;
+};
 const BuyingComponent = () => {
   const router = useRouter();
   const totalPrice = temp.reduce((sum, item) => sum + item.price, 0);
@@ -43,14 +49,6 @@ const BuyingComponent = () => {
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
-
-    if (!isChecked) {
-      // 체크되었을 때 실행할 로직
-      console.log("Checkbox is checked");
-    } else {
-      // 체크 해제되었을 때 실행할 로직
-      console.log("Checkbox is unchecked");
-    }
   };
 
   const onClickAddr = () => {
@@ -66,15 +64,42 @@ const BuyingComponent = () => {
     }
   };
 
-  const onClickPay = () => {
+  const onClickPay = (): void => {
     if (selectedValue === "kakao") {
       if (typeof window !== "undefined") {
-        router.push("/");
+        const IMP = window.IMP;
+        IMP.init("imp27255777");
+        // 결제 내역 수정 예정
+        IMP.request_pay(
+          {
+            pg: "kakaopay",
+            pay_method: "card",
+            name: "노르웨이 회전 의자",
+            amount: 100,
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            m_redirect_url: "/",
+          },
+          (rsp: { success: boolean }) => {
+            if (rsp.success === true) {
+              router.push("/bought");
+            } else {
+              alert("결제에 실패했습니다. 다시 시도해주세요.");
+            }
+          }
+        );
       }
+    } else {
+      router.push("/bought");
     }
   };
   return (
     <PageWrapper>
+      <Script src="https://code.jquery.com/jquery-1.12.4.min.js" strategy="lazyOnload" />
+      <Script src="https://cdn.iamport.kr/v1/iamport.js" strategy="lazyOnload" />
       <div className="mt-[64px] flex h-auto w-[1440px] flex-col px-[3%]">
         <p className="mb-[19px] text-texttitle  font-semibold text-primary">주문 목록</p>
         <div className="h-[1px] w-full border border-gray-border" />

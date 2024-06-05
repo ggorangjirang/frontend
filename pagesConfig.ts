@@ -38,4 +38,8 @@ export const pageConfig: Record<string, PageConfig> = {
     showHeader: true,
     title: "주문 페이지",
   },
+  "/bought": {
+    showHeader: true,
+    title: "주문 완료 안내창 페이지",
+  },
 };
