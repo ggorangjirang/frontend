@@ -7,30 +7,43 @@ type Props = {
   pageSize: number;
 };
 
-const generateArray = ({ totalPage: 17, limit: 5, current: 3  }) => {
-  const arr = Array.from({ length: limit }, (_, i) => i + 1);
+const generateArray = ({ totalPage, limit, current }: { totalPage: 17; limit: 5; current: 3 }) => {
+  const arr = Array.from({ length: totalPage }, (_, i) => i + 1);
   const slicedArray = Array(Math.ceil(totalPage / limit))
     .fill(0)
     .map(() => arr.splice(0, limit));
 
-  console.log(slicedArray);
-  return slicedArray;
+  const selected = Math.floor(current / limit);
+  return slicedArray[selected];
 };
 
-export default function Pagenation({ limit, current, totalPage, pageSize }: Props) {
+export default function Pagenation({ limit, current = 3, totalPage, pageSize }: Props) {
   const [page, setPage] = useState();
   const numbers = generateArray({ totalPage: 17, limit: 5, current: 3 });
 
+  console.log(numbers);
+  console.log(current);
   return (
-    <div className="h-full, my-8 flex w-full flex-row justify-center align-middle">
-      <div className="mx-3 hover:cursor-pointer">{`<`} </div>
-      {}
-      <div className="mx-3 hover:cursor-pointer">1</div>
-      <div className="mx-3 hover:cursor-pointer">2</div>
-      <div className="mx-3 hover:cursor-pointer">3</div>
-      <div className="mx-3 hover:cursor-pointer">4</div>
-      <div className="mx-3 hover:cursor-pointer">5</div>
-      <div className="mx-3 hover:cursor-pointer">{`>`} </div>
+    <div className="my-8 flex h-8 w-full flex-row items-center justify-center">
+      <div className="flex h-8 w-8 items-center justify-center rounded-full hover:cursor-pointer hover:bg-secondary hover:text-white">
+        {`<`}
+      </div>
+      {numbers.map((item) => (
+        <div
+          key={item}
+          className={`mx-2 flex h-8 w-8 items-center justify-center rounded-full 
+          hover:cursor-pointer hover:bg-secondary hover:text-white 
+          ${item === current ? "bg-secondary text-white" : ""}`}
+        >
+          {item}
+        </div>
+      ))}
+      <div
+        className="flex h-8 w-8 items-center justify-center rounded-full 
+      hover:cursor-pointer hover:bg-secondary hover:text-white"
+      >
+        {`>`}
+      </div>
     </div>
   );
 }

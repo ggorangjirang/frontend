@@ -60,7 +60,7 @@ export default function Page() {
             </ul>
           </div>
           <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>
-          <Pagenation pageSize={16} totalPage={2} current={0} displayLimit={5}></Pagenation>
+          <Pagenation pageSize={16} totalPage={2} current={3} limit={5}></Pagenation>
         </div>
       </>
     )
