@@ -8,6 +8,7 @@ deploy:
     - eval "$(ssh-agent -s)"
     - ssh-add $SSH_KEY
     - export NODE_OPTIONS="--max-old-space-size=3500"
+    - cat $ENV_LOCAL > .env.local
   script:
     - npm run build
     - mv out html

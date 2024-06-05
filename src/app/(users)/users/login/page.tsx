@@ -1,5 +1,5 @@
-import UserComponent from "@/components/users/signup";
+import LoginComponent from "@/components/users/login";
 
 export default function Login() {
-  return <UserComponent signup={false} />;
+  return <LoginComponent />;
 }
