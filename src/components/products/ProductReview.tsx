@@ -15,7 +15,7 @@ export default function ProductReview({ review }: Props) {
         <div className="text-sm text-gray">{`${formatDate(review.createdAt)} ${formatTime(review.createdAt)}`}</div>
       </div>
       <div className="border-l border-l-gray-border px-5">
-        <TextMedium text={`${review.title}`} style={{ fontWeight: "bold" }}></TextMedium>
+        <TextMedium style={{ fontWeight: "bold" }}>{review.title}</TextMedium>
         <div className="">{review.content}</div>
       </div>
       <div className="h-[160px] w-[160px] rounded-lg" style={{ width: "100%", height: "100%", position: "relative" }}>

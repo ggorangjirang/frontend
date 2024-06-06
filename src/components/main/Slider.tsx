@@ -7,7 +7,6 @@ import SwiperCore from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 import Image from "next/image";
 
 // import required modules
