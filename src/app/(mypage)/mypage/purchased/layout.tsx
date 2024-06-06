@@ -1,5 +1,5 @@
+import { ReactNode } from "react";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
-import React, { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;

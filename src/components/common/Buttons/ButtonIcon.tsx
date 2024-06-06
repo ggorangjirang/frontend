@@ -10,6 +10,7 @@ interface Props extends IconProps {
 interface MediumButtonProps {
   children: ReactNode;
   type: "submit" | "reset" | "button";
+  bgColor?: string;
 }
 
 interface ButtonProps {
@@ -57,11 +58,11 @@ export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, s
   );
 };
 
-export const ButtonMedium = ({ type, children }: MediumButtonProps) => {
+export const ButtonMedium = ({ type, children, bgColor = "bg-primary" }: MediumButtonProps) => {
   return (
     <button
       type={type}
-      className="h-auto w-auto cursor-pointer rounded-[12px] bg-primary px-3 py-1 text-center text-base text-white hover:opacity-80"
+      className={`h-auto w-auto cursor-pointer rounded-[12px] ${bgColor} px-3 py-1 text-center text-base text-white hover:opacity-80`}
     >
       {children}
     </button>
