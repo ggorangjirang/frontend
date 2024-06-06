@@ -7,6 +7,11 @@ interface Props extends IconProps {
   bgColor: string;
 }
 
+interface MediumButtonProps {
+  children: ReactNode;
+  type: "submit" | "reset" | "button";
+}
+
 interface ButtonProps {
   className?: string;
   value: string;
@@ -52,6 +57,16 @@ export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, s
   );
 };
 
+export const ButtonMedium = ({ type, children }: MediumButtonProps) => {
+  return (
+    <button
+      type={type}
+      className="h-auto w-auto cursor-pointer rounded-[12px] bg-primary px-3 py-1 text-center text-base text-white hover:opacity-80"
+    >
+      {children}
+    </button>
+  );
+};
 export const KakaoButton = () => {
   return (
     <button className="mb-[12px] flex h-[46px] w-[327px] items-center justify-center rounded-[12px] bg-[#FFEB00] text-[16px] font-medium text-[#3C1E1E]">

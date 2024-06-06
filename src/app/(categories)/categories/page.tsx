@@ -20,13 +20,10 @@ export default function Page() {
 
   useEffect(() => {
     const initProduct = async () => {
-      let data;
       const targetPage = pageInfo?.page ?? 0;
+      let data;
 
-      if (subCategoryId === 0) {
-        data = await getMainProductList(categoryId, targetPage);
-      }
-
+      if (subCategoryId === 0) data = await getMainProductList(categoryId, targetPage);
       if (subCategoryId !== 0) data = await getSubProductList(subCategoryId, targetPage);
 
       const targetPageInfo = {
@@ -34,6 +31,7 @@ export default function Page() {
         totalPages: data!.totalPages,
         totalElements: data!.totalElements,
       };
+
       setPageInfo(targetPageInfo);
       setProductList(data?.content);
     };
