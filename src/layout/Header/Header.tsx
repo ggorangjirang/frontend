@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
 
 export default function Header() {
-  const pathName = usePathname();
+  const pathName = usePathname().split("/")[1];
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();

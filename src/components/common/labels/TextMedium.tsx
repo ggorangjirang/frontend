@@ -1,14 +1,16 @@
+import { ReactNode } from "react";
+
 interface Props {
-  text: string;
+  children: ReactNode;
   gray?: Boolean;
   color?: boolean;
   style?: React.CSSProperties;
 }
 
-export default function TextMedium({ gray = false, text, color = false, style = {} }: Props) {
+export default function TextMedium({ gray = false, children, color = false, style = {} }: Props) {
   return (
     <div className={`text-base  ${gray ? "text-gray" : color ? "text-secondary" : "text-text"} `} style={style}>
-      {text}
+      {children}
     </div>
   );
 }
