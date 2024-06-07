@@ -53,8 +53,9 @@ export default function Header() {
                 <SVGIcon name="Search" width={32} height={32} color={"white"}></SVGIcon>
               </div>
             </div>
+            {/* 장바구니 */}
             <div className="flex w-full justify-center gap-6 rounded">
-              <div className="flex items-center justify-center gap-1 ">
+              <Link href="/basket" className="flex items-center justify-center gap-1 ">
                 <SVGIcon name="Basket" width={24} height={24} color="secondary"></SVGIcon>
                 <div className="flex w-full cursor-pointer flex-col items-center justify-center">
                   <div className="flex h-full w-5 cursor-pointer  items-center justify-center rounded bg-secondary text-[12px] text-white">
@@ -62,21 +63,23 @@ export default function Header() {
                   </div>
                   <span className="w-full cursor-pointer text-[12px] text-text hover:text-primary">장바구니</span>
                 </div>
-              </div>
+              </Link>
+              {/* 로그인 */}
               <div className="border border-l-0 border-r"></div>
-              <div className="flex cursor-pointer items-center justify-center  gap-1">
+              <Link href="/users/login" className="flex cursor-pointer items-center justify-center gap-1">
                 <SVGIcon name="User" width={24} height={24}></SVGIcon>
                 <div className="flex w-full flex-col items-center justify-center">
                   <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
                 </div>
-              </div>
+              </Link>
               <div className="border border-l-0 border-r"></div>
-              <div className="flex cursor-pointer items-center justify-center gap-1">
+              {/* 회원가입 */}
+              <Link href="users/signup" className="flex cursor-pointer items-center justify-center gap-1">
                 <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
                 <div className="flex w-full flex-col items-center justify-center">
                   <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
           <div className="flex w-full justify-center border-y border-gray-border">
