@@ -1,57 +1,19 @@
 "use client";
-
+//추후 ISR로 변환..!
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
-
-export interface SubCategories {
-  name: string;
-  code: number;
-}
-
-interface DummyCategories {
-  main: string;
-  sub: SubCategories[];
-}
-const DUMMYCATEGORIES: Record<string, DummyCategories> = {
-  food: {
-    main: "사료",
-    sub: [
-      { name: "강아지 사료", code: 1 },
-      { name: "고양이 사료", code: 2 },
-    ],
-  },
-  snack: {
-    main: "간식",
-    sub: [
-      { name: "강아지 간식", code: 3 },
-      { name: "고양이 간식", code: 4 },
-    ],
-  },
-  cleaner: {
-    main: "배변/위생",
-    sub: [
-      { name: "배변패드", code: 5 },
-      { name: "고양이 모래", code: 6 },
-    ],
-  },
-  fashion: {
-    main: "패션",
-    sub: [
-      { name: "의류", code: 7 },
-      { name: "넥카라", code: 8 },
-    ],
-  },
-};
+import { Categories, getSubCategories } from "@/apis/categories";
 
 export default function Header() {
   const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
-  const [hover, setHover] = useState<boolean>();
+  const [hover, setHover] = useState(false);
+  const [categories, setCategories] = useState<Categories[]>();
 
   const onMouseEnter = () => {
     setHover(true);
@@ -61,13 +23,29 @@ export default function Header() {
     setHover(false);
   };
 
+  useEffect(() => {
+    const initCategories = async () => {
+      const categoriesData = await getSubCategories();
+
+      setCategories(categoriesData);
+    };
+
+    initCategories();
+  }, []);
+
   return (
     showHeader && (
       <>
         <nav className="z-50 flex h-[160px] w-screen flex-col items-center">
           <div className="flex h-[120px] w-[1240px] items-center justify-center gap-20 py-5">
             <Link href={"/"} className="h-full w-full">
-              <Image src={"/logo2.png"} width={203} height={80} alt="logo"></Image>
+              <Image
+                src={"/imgs/logos/logo2.png"}
+                width={203}
+                height={80}
+                alt="logo"
+                style={{ width: 203, height: 80 }}
+              />
             </Link>
             <div className="flex">
               <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
@@ -107,19 +85,31 @@ export default function Header() {
               onMouseLeave={onMouseLeave}
               className="items-centertext-white flex h-[40px] w-[1000px]"
             >
-              {Object.keys(DUMMYCATEGORIES).map((key, index) => {
+              {categories?.map((category, index) => {
                 return (
-                  <li
-                    key={key + index}
+                  <Link
+                    suppressHydrationWarning
                     className="dropdown group relative box-content block w-1/4 cursor-pointer py-2 text-center font-bold"
+                    id="NavMainCategory"
+                    key={category.main[0].categoryId}
+                    href={{ pathname: "/categories", query: { categoryId: category.main[0].categoryId } }}
                   >
-                    <div
-                      key={`arrow${index}`}
-                      className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block"
-                    />
-                    {DUMMYCATEGORIES[key].main}
-                    <SubCategory key={key} subCategory={DUMMYCATEGORIES[key].sub} />
-                  </li>
+                    <li key={category.main[0].categoryId}>
+                      <div
+                        key={`arrow${index}`}
+                        className=" absolute bottom-0 left-[118px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block"
+                      />
+
+                      {category.main[0].categoryName}
+                      <div>
+                        <SubCategory
+                          key={index}
+                          subCategory={category.sub}
+                          mainCategoryId={category.main[0].categoryId}
+                        />
+                      </div>
+                    </li>
+                  </Link>
                 );
               })}
             </ul>

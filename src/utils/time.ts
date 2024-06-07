@@ -18,4 +18,20 @@ export function formatDate(dateString: string) {
   return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
-// 출력: "2024년 12월 31일"
+//출력: Time (Korea): 19:42:31
+
+export function formatTime(dateString: string) {
+  // 문자열을 Date 객체로 변환
+  const date = new Date(dateString);
+
+  // 한국 시간으로 변환 (UTC+9)
+  let koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+
+  const koreaIsoDateString = koreaDate.toISOString().slice(0, 19); // 초까지만 포함, 밀리초 제거
+
+  // ISO 문자열을 분리하여 날짜와 시간 추출
+  const timePart = koreaIsoDateString.split("T")[1];
+  // 원하는 형식으로 변환
+
+  return timePart;
+}
