@@ -20,7 +20,7 @@ export default function Page() {
   const [count, setCount] = useState(1);
   const productId = useSearchParams().get("productId") ?? "";
   const [productDetailInfo, setProductDetailInfo] = useState<PropductDetail>();
-  const [productReviewsInfo, setProductReviewsInfo] = useState<Review[]>();
+  const [productReviewsInfo, setProductReviewsInfo] = useState<Review[]>([]);
 
   //리뷰 받아오기
   useEffect(() => {
@@ -57,19 +57,19 @@ export default function Page() {
           <div className="w-[700px]">
             <div className="flex flex-col gap-1">
               <div>
-                <TextMedium text={`${productDetailInfo?.categoryName} > ${productDetailInfo?.subcategoryName}`} />
+                <TextMedium>{`${productDetailInfo?.categoryName} > ${productDetailInfo?.subcategoryName}`}</TextMedium>
                 <TextBig bold={true}>{productDetailInfo?.name}</TextBig>
               </div>
-              <TextMedium text="1억개의 상품 후기" />
+              <TextMedium>
+                {productReviewsInfo.length > 0 ? `${productReviewsInfo.length}개의 상품후기` : ""}
+              </TextMedium>
             </div>
             <div className="mb-6 mt-4 flex flex-col gap-8 border-y border-gray px-8 py-10">
               <ProductInfo>
                 <LabelInfo text={"판매가"} />
-                <TextMedium
-                  text={`${productDetailInfo?.price.toLocaleString()} 원`}
-                  gray={true}
-                  style={{ textDecoration: "line-through" }}
-                />
+                <TextMedium gray={true} style={{ textDecoration: "line-through" }}>
+                  {`${productDetailInfo?.price.toLocaleString()} 원`}
+                </TextMedium>
               </ProductInfo>
               <ProductInfo>
                 <LabelInfo text={"할인가"} />
@@ -84,14 +84,14 @@ export default function Page() {
             </div>
             <div className="flex items-center justify-between bg-[#F4F4F4] px-9 py-8">
               <div className="flex flex-col gap-6">
-                <TextMedium text="수량"></TextMedium>
+                <TextMedium>수량</TextMedium>
                 <div className="flex flex-col items-center gap-3">
                   <CountSpinner count={count} setCount={setCount} maximum={productDetailInfo.stock} />
                   <div className="text-base font-bold text-primary">{`재고 ${productDetailInfo?.stock}개 남음`}</div>
                 </div>
               </div>
               <div className="flex flex-col text-right">
-                <TextMedium text="총 상품금액" gray={true} />
+                <TextMedium gray={true}>총 상품금액</TextMedium>
                 <TextBig bold={true}>{`${(count * productDetailInfo?.discountedPrice).toLocaleString()}`}원</TextBig>
               </div>
             </div>
@@ -110,19 +110,21 @@ export default function Page() {
           <div className="mb-10 flex h-12 w-full flex-row">
             <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t border-gray">
               <a href="#description">
-                <TextMedium text="상품정보" color={true} style={{ fontWeight: "bold" }} />
+                <TextMedium color={true} style={{ fontWeight: "bold" }}>
+                  상품정보
+                </TextMedium>
               </a>
             </div>
             <div className="flex w-1/2 border-collapse items-center justify-center border  border-gray ">
               <a href="#review">
-                <TextMedium text="상품후기" />
+                <TextMedium>상품후기</TextMedium>
               </a>
             </div>
           </div>
           <div className="flex w-full flex-col items-start justify-center px-4">
             <Image src={"/imgs/logos/logo2.png"} width={250} height={100} alt={"로고"} />
             <div className="mt-4 w-full border-t pt-4">
-              <TextMedium text="상품설명" style={{ fontWeight: "bold" }} />
+              <TextMedium style={{ fontWeight: "bold" }}>상품설명</TextMedium>
               <div id={"description"} className="">
                 {productDetailInfo?.description}
               </div>
@@ -149,12 +151,14 @@ export default function Page() {
           <div className="mb-10 flex h-12 w-full flex-row" id="review">
             <div className="color flex w-1/2 items-center justify-center border border-gray ">
               <a href="#description">
-                <TextMedium text="상품정보" />
+                <TextMedium>상품정보</TextMedium>
               </a>
             </div>
             <div className="flex w-1/2 items-center justify-center border-r border-t border-gray">
               <a href="#review">
-                <TextMedium text="상품후기" color={true} style={{ fontWeight: "bold" }} />
+                <TextMedium color={true} style={{ fontWeight: "bold" }}>
+                  상품후기
+                </TextMedium>
               </a>
             </div>
           </div>
