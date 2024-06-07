@@ -1,5 +1,5 @@
 {
-  "name": "elice6-next-frontend",
+  "name": "frontend2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,26 +9,33 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/eslint-plugin-next": "^14.2.3",
     "@svgr/webpack": "^8.1.0",
+    "axios": "^1.7.2",
     "next": "14.2.3",
     "react": "^18",
+    "react-daum-postcode": "^3.1.3",
     "react-dom": "^18",
-    "recoil": "^0.7.7",
     "swiper": "^11.1.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.3.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",
-    "eslint": "^8",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
+    "react-hook-form": "^7.51.5",
+    "recoil": "^0.7.7",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.10.0"
   }
 }

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -7,7 +8,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,9 +20,20 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@assets/*":["./public/*"]
+      "@assets/*": ["./public/imgs/*"]
     }
   },
-  "include": [  "svgr.d.ts","next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "svgr.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./frontend2/**/*",
+    "postcss.config.js",
+    "src/utils/validation.js",
+    "src/assets/index.js",
+    "src/assets/index.mjs"
+  ],
   "exclude": ["node_modules"]
 }
