@@ -2,25 +2,38 @@ import { Plus } from "@/assets/index.mjs";
 import { ButtonPrimary } from "../common/Buttons/ButtonIcon";
 import Input from "@/components/common/input";
 import { wrapFormAsync } from "@/utils/asyncFunc";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { isWriteState } from "@/recoil/atoms/authState";
-
-interface ReviewData {
-  title: string;
-  content: string;
-}
+import { Review, postReview } from "@/apis/review";
 
 const ViewTemplate = () => {
   const fileRef = useRef<HTMLInputElement>(null);
-  const { register, handleSubmit } = useForm<ReviewData>();
+  const { register, handleSubmit, setValue } = useForm<Review>();
   const [isWrite] = useRecoilState(isWriteState);
-  const onSubmitReview: SubmitHandler<ReviewData> = async (data: ReviewData): Promise<void> => {
-    console.log(data);
+  const [profileImage, setProfileImage] = useState<File | null>();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setProfileImage(e.target.files[0]);
+      setValue("profileImage", e.target.files[0]); // setValue로 React Hook Form에 파일 설정
+    }
   };
 
-  // value 값은 input에 value?. 으로
+  const onSubmitReview: SubmitHandler<Review> = async (data: Review): Promise<void> => {
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("content", data.content);
+      if (profileImage) formData.append("profileImage", profileImage);
+
+      const response = await postReview(formData); // postReview가 FormData를 받을 수 있게 수정 필요
+      console.log("User signed up successfully:", response);
+    } catch (error) {
+      console.error("Error signing up user:", error);
+    }
+  };
   return (
     <div className="flex flex-col">
       <div className="mb-[14px] flex h-auto">
@@ -37,7 +50,14 @@ const ViewTemplate = () => {
           >
             <Plus width={100} height={100} />
           </div>
-          <input type="file" className="hidden" ref={fileRef} />
+          <input
+            type="file"
+            className="hidden"
+            name="profileImage"
+            ref={fileRef}
+            onChange={handleFileChange}
+            accept="image/*"
+          />
           <div>
             {isWrite ? (
               <ButtonPrimary value="등록" size="review" type="submit" className="border-none text-white" />
