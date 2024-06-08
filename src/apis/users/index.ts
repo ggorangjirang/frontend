@@ -24,7 +24,8 @@ export type DuplicateResponse = { data: boolean };
 export const loginUser = async (data: Login): Promise<Login> => {
   try {
     const response = await postAxios(`${API_URLS.users}/login`, data);
-    return response.data as Login;
+    console.log(response);
+    return response;
   } catch (error) {
     console.error("Error login:", error);
     throw error;

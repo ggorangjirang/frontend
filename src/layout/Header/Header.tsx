@@ -14,7 +14,10 @@ export default function Header() {
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();
+  const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN ?? "";
+  console.log(token);
 
+  window.localStorage.setItem("accessToken", token);
   const onMouseEnter = () => {
     setHover(true);
   };
@@ -32,7 +35,7 @@ export default function Header() {
 
     initCategories();
   }, []);
-
+  const myToken = window.localStorage.getItem("accessToken") ?? null;
   return (
     showHeader && (
       <>
@@ -66,20 +69,30 @@ export default function Header() {
               </Link>
               {/* 로그인 */}
               <div className="border border-l-0 border-r"></div>
-              <Link href="/users/login" className="flex cursor-pointer items-center justify-center gap-1">
-                <SVGIcon name="User" width={24} height={24}></SVGIcon>
-                <div className="flex w-full flex-col items-center justify-center">
-                  <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
+
+              {myToken ? (
+                <div className="flex cursor-pointer items-center justify-center gap-5">
+                  <span>강예정님 어서오세요!</span>
+                  <SVGIcon name="ArrowDown" size={23} color="secondary"></SVGIcon>
                 </div>
-              </Link>
-              <div className="border border-l-0 border-r"></div>
-              {/* 회원가입 */}
-              <Link href="users/signup" className="flex cursor-pointer items-center justify-center gap-1">
-                <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
-                <div className="flex w-full flex-col items-center justify-center">
-                  <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
-                </div>
-              </Link>
+              ) : (
+                <>
+                  <Link href="/users/login" className="flex cursor-pointer items-center justify-center gap-1">
+                    <SVGIcon name="User" width={24} height={24}></SVGIcon>
+                    <div className="flex w-full flex-col items-center justify-center">
+                      <span className="w-full text-[12px] text-text hover:text-primary">로그인</span>
+                    </div>
+                  </Link>
+                  <div className="border border-l-0 border-r"></div>
+                  {/* 회원가입 */}
+                  <Link href="users/signup" className="flex cursor-pointer items-center justify-center gap-1">
+                    <SVGIcon name="Signup" width={24} height={24}></SVGIcon>
+                    <div className="flex w-full flex-col items-center justify-center">
+                      <span className="w-full text-[12px] text-text hover:text-primary">회원가입</span>
+                    </div>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           <div className="flex w-full justify-center border-y border-gray-border">
