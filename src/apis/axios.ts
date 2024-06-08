@@ -29,6 +29,17 @@ export const getAxios = (url: string, options: AxiosRequestConfig = {}): Promise
     method: "GET",
   });
 };
+export const getEachAxios = (url: string, param: string, options: AxiosRequestConfig = {}): Promise<any> => {
+  return commonAxios(url, {
+    ...options,
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...options.headers,
+    },
+    data: JSON.stringify(param),
+  });
+};
 export const postAxios = (
   url: string,
   param: { [key: string]: any },
@@ -68,14 +79,14 @@ export const postAxiosFile = (
   });
 };
 
-export const putAxios = (
+export const patchAxios = (
   url: string,
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
   return commonAxios(url, {
     ...options,
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
@@ -83,7 +94,6 @@ export const putAxios = (
     data: JSON.stringify(param),
   });
 };
-
 export const deleteAxios = (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
   return commonAxios(url, {
     ...options,

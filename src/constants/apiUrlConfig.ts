@@ -10,4 +10,3 @@ export const API_URLS = {
   orderItem: "/api/orderitem",
   sale: "api/v1/sales",
 };
-// 추가
