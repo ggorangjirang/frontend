@@ -7,10 +7,12 @@ import { useRecoilState } from "recoil";
 import { isWriteState } from "@/recoil/atoms/authState";
 import ViewTemplate from "@/components/reviews";
 import Message from "@/components/common/message";
+import { useEffect, useState } from "react";
+import { getReview } from "@/apis/review";
 
 const ViewComponent = () => {
   const [isWrite] = useRecoilState(isWriteState);
-
+  const [reviews, setReviews] = useState();
   const buttons = [
     {
       href: "/mypage/write",
@@ -24,6 +26,21 @@ const ViewComponent = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getReview();
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const onClickChange = () => {
+
+  };
   return (
     <PageWrapper>
       <div className="absolute mt-[24px] flex h-auto w-[1440px]">

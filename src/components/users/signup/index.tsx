@@ -4,16 +4,14 @@ import Input from "@/components/common/input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ButtonPrimary, KakaoButton } from "@/components/common/Buttons/ButtonIcon";
 import { wrapFormAsync } from "@/utils/asyncFunc";
-import { isPhoneNumberValid } from "@/utils/validation";
 import UserWrapper from "@/layout/Wrapper/UserWrapper";
-import { postUser } from "@/apis/users";
+import { getDuplicate, postUser } from "@/apis/users";
 
 interface SignUpData {
   name: string;
   email: string;
   password: string;
   passwordAgain: string;
-  phoneNumber: string;
 }
 
 const SignUpComponent = () => {
@@ -22,27 +20,19 @@ const SignUpComponent = () => {
   const onSubmitSignUp: SubmitHandler<SignUpData> = async (data: SignUpData): Promise<void> => {
     console.log(data);
     // 아이디 중복 검사
+    const duplicateBoolean = await getDuplicate(data.email);
+    if (duplicateBoolean.data) return alert("중복된 아이디입니다.");
+
     // 비밀번호 일치 검사
     if (data.password !== data.passwordAgain) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    // 전화번호 형식 확인
-    if (!isPhoneNumberValid(data.phoneNumber)) {
-      alert("전화번호 형식이 올바르지 않습니다. 올바른 형식: 010-1234-5678 또는 02-123-4567");
-      return;
-    }
-    try {
-      const signin = await postUser({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        phoneNumber: data.phoneNumber,
-      });
-      console.log("User signed up successfully:", signin);
-    } catch (error) {
-      console.error("Error signing up user:", error);
-    }
+    const response = await postUser({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
   };
 
   const fields: { label: string; name: keyof SignUpData; type: string; placeholder: string }[] = [
@@ -50,7 +40,6 @@ const SignUpComponent = () => {
     { label: "아이디", name: "email", type: "text", placeholder: "아이디(이메일)를 입력해주세요." },
     { label: "비밀번호", name: "password", type: "password", placeholder: "비밀번호를 입력해주세요." },
     { label: "비밀번호 확인", name: "passwordAgain", type: "password", placeholder: "비밀번호를 다시 입력해주세요." },
-    { label: "전화번호", name: "phoneNumber", type: "text", placeholder: "전화번호를 입력해주세요." },
   ];
 
   return (
