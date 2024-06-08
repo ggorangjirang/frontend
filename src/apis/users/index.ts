@@ -61,14 +61,13 @@ const patchUser = async (userId: string, data: PatchUser) => {
   }
 };
 
-
 // 회원 조회
-export const getUser = async (userId: string): Promise<PutUser> => {
-  try {
-    const response = await getAxios(`${API_URLS.users}/${userId}`);
-    return response.data as PutUser;
-  } catch (error) {
-    console.error("Error getting User:", error);
-    throw error;
-  }
-};
+// export const getUser = async (userId: string): Promise<PutUser> => {
+//   try {
+//     const response = await getAxios(`${API_URLS.users}/${userId}`);
+//     return response.data as PutUser;
+//   } catch (error) {
+//     console.error("Error getting User:", error);
+//     throw error;
+//   }
+// };

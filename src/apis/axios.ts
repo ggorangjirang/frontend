@@ -5,11 +5,16 @@ const axiosInstance = axios.create({
 });
 
 const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
+  console.log("adasda");
+
+  console.log(options);
   try {
     const response = await axiosInstance({
       url,
       ...options,
     });
+
+    console.log("hit" + response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -23,7 +28,7 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
   }
 };
 
-export const getAxios = (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
+export const getAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
   return commonAxios(url, {
     ...options,
     method: "GET",
