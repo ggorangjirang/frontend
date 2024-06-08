@@ -14,7 +14,7 @@ deploy:
     - mv out html
     - rsync -avz --delete -e "ssh -i $SSH_KEY" html/ elice@34.64.229.17:/home/elice/nginx/html/
   tags:
-    - deploy
+    - juny
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
 
