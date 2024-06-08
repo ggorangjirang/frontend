@@ -21,10 +21,10 @@ export type PatchUser = SignUp & {
 
 export type DuplicateResponse = { data: boolean };
 // 로그인
-export const loginUser = async (data: Login): Promise<Login> => {
+export const loginUser = async (data: Login): Promise<any> => {
   try {
     const response = await postAxios(`${API_URLS.users}/login`, data);
-    console.log(response);
+  
     return response;
   } catch (error) {
     console.error("Error login:", error);
