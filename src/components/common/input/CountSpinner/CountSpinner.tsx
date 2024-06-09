@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface SpinnerSizeProps {
   buttonSize: string;
   inputSize: string;
@@ -8,8 +10,10 @@ interface sizeVariants {
 }
 
 interface Props {
+  productId: number;
   count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  setCount?: Dispatch<SetStateAction<number>>;
+  setCountHandler?: (productId: number, value: number) => void;
   maximum?: number;
   size?: keyof sizeVariants;
 }
@@ -22,7 +26,14 @@ interface Props {
 
 
 */
-export default function CountSpinner({ count, setCount, maximum = 99999, size = "big" }: Props) {
+export default function CountSpinner({
+  productId,
+  count,
+  setCount,
+  setCountHandler,
+  maximum = 99999,
+  size = "big",
+}: Props) {
   const sizeVariants = {
     medium: {
       buttonSize: "h-6 w-6",
@@ -35,11 +46,13 @@ export default function CountSpinner({ count, setCount, maximum = 99999, size = 
   };
 
   function onClickPlus() {
-    setCount((prev) => (prev >= maximum ? prev : prev + 1));
+    if (setCount) setCount((prev) => (prev >= maximum ? prev : prev + 1));
+    if (setCountHandler) setCountHandler(productId, count >= maximum ? count : count + 1); // setCountHandler 호출
   }
 
   function onClickMinus() {
-    setCount((prev) => (prev <= 1 ? prev : prev - 1));
+    if (setCount) setCount((prev) => (prev <= 1 ? prev : prev - 1));
+    if (setCountHandler) setCountHandler(productId, count <= 1 ? count : count - 1); // setCountHandler 호출
   }
 
   return (
