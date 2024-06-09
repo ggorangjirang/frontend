@@ -16,12 +16,14 @@ const LoginComponent = () => {
       password: data.password,
     });
 
-    const accessToken = response?.accessToken!.split(" ")[1];
-    const refreshToken = response?.refreshToken!.split(" ")[1];
-    window.localStorage.setItem("accessToken", accessToken);
-    window.localStorage.setItem("refreshToken", refreshToken);
+    if (response.status === 200) {
+      const accessToken = response?.data.accessToken!.split(" ")[1];
+      const refreshToken = response?.data.refreshToken!.split(" ")[1];
+      window.localStorage.setItem("accessToken", accessToken);
+      window.localStorage.setItem("refreshToken", refreshToken);
 
-    router.push("/");
+      router.push("/");
+    }
   };
 
   const fields: { label: string; name: keyof Login; type: string; placeholder: string }[] = [
