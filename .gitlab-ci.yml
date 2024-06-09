@@ -1,6 +1,6 @@
 deploy:
   before_script:
-    - export PATH="/home/ubuntu/.nvm/versions/node/v20.12.2/bin:$PATH"
+    - export PATH="/home/ubuntu/.nvm/versions/node/v20.14.0/bin:$PATH"
     - npm install next
     - chmod 400 $SSH_KEY
     - mkdir -p ~/.ssh
