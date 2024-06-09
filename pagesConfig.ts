@@ -46,7 +46,7 @@ export const pageConfig: Record<string, PageConfig> = {
     showHeader: true,
     title: "주문 완료 안내창 페이지",
   },
-  basket: {
+  cart: {
     showHeader: true,
     title: "장바구니 페이지",
   },

@@ -1,5 +1,5 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
-import { getAxios, postAxios, getEachAxios, patchAxios } from "../axios";
+import { postAxios, getEachAxios, patchAxios } from "../axios";
 
 // 회원가입
 export type Login = {
@@ -24,7 +24,7 @@ export type DuplicateResponse = { data: boolean };
 export const loginUser = async (data: Login): Promise<any> => {
   try {
     const response = await postAxios(`${API_URLS.users}/login`, data);
-  
+
     return response;
   } catch (error) {
     console.error("Error login:", error);

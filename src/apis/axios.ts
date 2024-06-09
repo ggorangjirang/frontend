@@ -5,17 +5,13 @@ const axiosInstance = axios.create({
 });
 
 const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
-  console.log("adasda");
-
-  console.log(options);
   try {
     const response = await axiosInstance({
       url,
       ...options,
     });
 
-    console.log("hit" + response.data);
-    return response.data;
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
@@ -50,11 +46,13 @@ export const postAxios = (
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
+  const token = window.localStorage.getItem("accessToken");
   return commonAxios(url, {
     ...options,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
       ...options.headers,
     },
     data: JSON.stringify(param),
