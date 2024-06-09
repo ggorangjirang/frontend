@@ -8,11 +8,17 @@ import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
+import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { cartItemSelector } from "@/recoil/selectors/cartCountState";
+import { cartState } from "@/recoil/atoms/cartState";
 
 export default function Header() {
   const pathName = usePathname().split("/")[1];
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
+  //TODO
+  const cart = useRecoilValue(cartState);
+  const [login, setIsLogin] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();
 
   const onMouseEnter = () => {
@@ -26,8 +32,10 @@ export default function Header() {
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-      console.log(categoriesData);
+      const isLogin = window.localStorage.getItem("accessToken") ? true : false;
+
       setCategories(categoriesData);
+      setIsLogin(isLogin);
     };
 
     initCategories();
@@ -61,11 +69,11 @@ export default function Header() {
             {/* 장바구니 */}
             <div className="flex justify-center gap-6 rounded">
               <div className="flex w-full justify-center gap-6 rounded">
-                <Link href="/basket" className="flex items-center justify-center gap-1 ">
-                  <SVGIcon name="Basket" width={24} height={24} color="secondary"></SVGIcon>
+                <Link href="/cart" className="flex items-center justify-center gap-1 ">
+                  <SVGIcon name="Cart" width={24} height={24} color="secondary"></SVGIcon>
                   <div className="flex w-full cursor-pointer flex-col items-center justify-center">
                     <div className="flex h-full w-5 cursor-pointer  items-center justify-center rounded bg-secondary text-[12px] text-white">
-                      0
+                      {cart.totalCount}
                     </div>
                     <span className="w-full cursor-pointer text-[12px] text-text hover:text-primary">장바구니</span>
                   </div>
@@ -83,9 +91,11 @@ export default function Header() {
                           <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                             배송조회
                           </li>
-                          <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
-                            마이페이지
-                          </li>
+                          <Link href="/mypage/purchased">
+                            <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                              마이페이지
+                            </li>
+                          </Link>
                           <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                             로그아웃
                           </li>
