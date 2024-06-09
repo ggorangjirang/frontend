@@ -5,12 +5,14 @@ import Image from "next/image";
 interface Props extends IconProps {
   children: ReactNode;
   bgColor: string;
+  onClickHandler?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 interface MediumButtonProps {
   children: ReactNode;
   type: "submit" | "reset" | "button";
   bgColor?: string;
+  onClickHandler?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface ButtonProps {
@@ -26,14 +28,22 @@ interface SizeVariants {
   edit: string;
 }
 
-export default function ButtonIcon({ children, name, size, color: iconColor, bgColor = "#6e6e69" }: Props) {
+export default function ButtonIcon({
+  children,
+  name,
+  size,
+  color: iconColor,
+  bgColor = "#6e6e69",
+  onClickHandler,
+}: Props) {
   return (
     <div
       className={
-        `justify-cente flex h-16 w-[340px] items-center justify-center gap-8 rounded-lg text-background-white ` +
+        `justify-cente flex h-16 w-[340px] cursor-pointer items-center justify-center gap-8 rounded-lg text-background-white ` +
         bgColor
       }
       style={{ backgroundColor: bgColor }}
+      onClick={onClickHandler}
     >
       <SVGIcon name={name} size={size} color={iconColor}></SVGIcon>
       <div className="text-[20px] font-bold">{children}</div>
@@ -58,11 +68,12 @@ export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, s
   );
 };
 
-export const ButtonMedium = ({ type, children, bgColor = "bg-primary" }: MediumButtonProps) => {
+export const ButtonMedium = ({ type, children, bgColor = "bg-primary", onClickHandler }: MediumButtonProps) => {
   return (
     <button
       type={type}
       className={`h-auto w-auto cursor-pointer rounded-[12px] ${bgColor} px-3 py-1 text-center text-base text-white hover:opacity-80`}
+      onClick={onClickHandler}
     >
       {children}
     </button>

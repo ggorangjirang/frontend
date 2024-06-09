@@ -27,7 +27,7 @@ export type subCategoriesRes = Category[];
 
 export const getSubCategories = async (): Promise<Categories[]> => {
   const categoriesData: Category[] = await getFetch(`${API_URLS.subcategories}`);
-
+  console.log(categoriesData);
   const rebuildedCategories: Array<Categories> = [];
 
   //set으로 중복되는 main 뽑음

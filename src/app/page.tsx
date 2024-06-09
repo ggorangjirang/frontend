@@ -12,8 +12,8 @@ export default function Page() {
 
   useEffect(() => {
     async function initProducts() {
-      const limitedSaledata = await getProductListLimitedSaleRandom({});
-      const bestSellingdata = await getProductListBestSellingRandom({});
+      const limitedSaledata = await getProductListLimitedSaleRandom();
+      const bestSellingdata = await getProductListBestSellingRandom();
 
       setLimitedData(limitedSaledata);
       setBestSellingData(bestSellingdata);

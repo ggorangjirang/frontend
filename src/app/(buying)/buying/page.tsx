@@ -1,5 +1,5 @@
 import BuyingComponent from "@/components/buying";
 
-export default function Buying() {
+export default function page() {
   return <BuyingComponent />;
 }

@@ -11,16 +11,58 @@ import { useEffect, useState } from "react";
 import TextBig from "@/components/common/labels/TextBig";
 import CountSpinner from "@/components/common/input/CountSpinner/CountSpinner";
 import ButtonIcon from "@/components/common/Buttons/ButtonIcon";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils/time";
 import { PropductDetail, Review, getProduct, getProductReview } from "@/apis/product";
 import ProductReview from "@/components/products/ProductReview";
+import { getCartItems, postCartItems } from "@/apis/cart/index";
+import { useRecoilRefresher_UNSTABLE, useRecoilValue, useRecoilState } from "recoil";
+import { cartItemSelector } from "@/recoil/selectors/cartCountState";
+import { cartState } from "@/recoil/atoms/cartState";
 
 export default function Page() {
   const [count, setCount] = useState(1);
+  const [cart, setCart] = useRecoilState(cartState);
+  //상태를 업데이트 해주기 위한 리프래쉬 훅
+  const cartReresh = useRecoilRefresher_UNSTABLE(cartItemSelector);
   const productId = useSearchParams().get("productId") ?? "";
+  const router = useRouter();
   const [productDetailInfo, setProductDetailInfo] = useState<PropductDetail>();
   const [productReviewsInfo, setProductReviewsInfo] = useState<Review[]>([]);
+
+  const onClickPurchaseButton = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    router.push(`/buying/${productId}`);
+  };
+
+  const onClickCartItemButton = async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    try {
+      //api호출로 장바구니에 상품추가
+
+      const res = await postCartItems({ productId: Number(productId), quantity: count });
+      if (true) {
+        const response = await getCartItems();
+        //응답이오면
+        if (response.status === 200) {
+          const totalElements = response.data.totalElements;
+          setCart((prev) => ({ ...prev, totalCount: totalElements }));
+        } else {
+          throw Error("장바구니 데이터 불러오기에서 에러가 발생했습니다.");
+        }
+      }
+
+      //cartReresh();
+      // 응답 코드가 200이면 최신 장바구니 데이터 업데이트
+
+      // 상품 추가 성공 메시지
+      alert("카트에 상품이 추가되었습니다.");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      alert("문제가 발생했습니다. 다시 시도해주세요");
+    }
+  };
 
   //리뷰 받아오기
   useEffect(() => {
@@ -86,7 +128,8 @@ export default function Page() {
               <div className="flex flex-col gap-6">
                 <TextMedium>수량</TextMedium>
                 <div className="flex flex-col items-center gap-3">
-                  <CountSpinner count={count} setCount={setCount} maximum={productDetailInfo.stock} />
+                  {/* //todo productId수정 */}
+                  <CountSpinner productId={100} count={count} setCount={setCount} maximum={productDetailInfo.stock} />
                   <div className="text-base font-bold text-primary">{`재고 ${productDetailInfo?.stock}개 남음`}</div>
                 </div>
               </div>
@@ -96,10 +139,22 @@ export default function Page() {
               </div>
             </div>
             <div className="mb-32 mt-16 flex flex-row justify-between align-middle">
-              <ButtonIcon bgColor="bg-primary" name="Basket" color="white" size={28}>
+              <ButtonIcon
+                bgColor="bg-primary"
+                name="Cart"
+                color="white"
+                size={28}
+                onClickHandler={onClickCartItemButton}
+              >
                 장바구니 담기
               </ButtonIcon>
-              <ButtonIcon bgColor="bg-secondary" name="ArrowRight" color="white" size={28}>
+              <ButtonIcon
+                bgColor="bg-secondary"
+                name="ArrowRight"
+                color="white"
+                size={28}
+                onClickHandler={onClickPurchaseButton}
+              >
                 바로 구매
               </ButtonIcon>
             </div>

@@ -11,11 +11,19 @@ const LoginComponent = () => {
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
   const onSubmitLogin: SubmitHandler<Login> = async (data: Login): Promise<void> => {
-    await loginUser({
+    const response = await loginUser({
       email: data.email,
       password: data.password,
     });
-    router.push("/");
+
+    if (response.status === 200) {
+      const accessToken = response?.data.accessToken!.split(" ")[1];
+      const refreshToken = response?.data.refreshToken!.split(" ")[1];
+      window.localStorage.setItem("accessToken", accessToken);
+      window.localStorage.setItem("refreshToken", refreshToken);
+
+      router.push("/");
+    }
   };
 
   const fields: { label: string; name: keyof Login; type: string; placeholder: string }[] = [

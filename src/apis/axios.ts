@@ -10,7 +10,8 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
       url,
       ...options,
     });
-    return response.data;
+
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
@@ -23,7 +24,7 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
   }
 };
 
-export const getAxios = (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
+export const getAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
   return commonAxios(url, {
     ...options,
     method: "GET",
@@ -45,11 +46,13 @@ export const postAxios = (
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
+  const token = window.localStorage.getItem("accessToken");
   return commonAxios(url, {
     ...options,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
       ...options.headers,
     },
     data: JSON.stringify(param),
