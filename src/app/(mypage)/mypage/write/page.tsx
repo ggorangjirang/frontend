@@ -7,6 +7,6 @@ export default function ReviewWrite() {
   const [isEdit, setIsWrite] = useRecoilState(isWriteState);
   useEffect(() => {
     setIsWrite(true);
-  }, []);
+  }, [setIsWrite]);
   return <ViewComponent />;
 }

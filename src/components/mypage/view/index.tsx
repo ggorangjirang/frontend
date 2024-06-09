@@ -38,9 +38,7 @@ const ViewComponent = () => {
 
     fetchData();
   }, []);
-  const onClickChange = () => {
-
-  };
+  const onClickChange = () => {};
   return (
     <PageWrapper>
       <div className="absolute mt-[24px] flex h-auto w-[1440px]">
