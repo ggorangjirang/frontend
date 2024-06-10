@@ -7,7 +7,11 @@ import { wrapFormAsync } from "@/utils/asyncFunc";
 import UserWrapper from "@/layout/Wrapper/UserWrapper";
 import { loginUser, Login } from "@/apis/users";
 import { useRouter } from "next/navigation";
+import { tokenState } from "@/recoil/atoms/authState";
+import { useSetRecoilState } from "recoil";
+
 const LoginComponent = () => {
+  const setRecoilToken = useSetRecoilState(tokenState);
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
   const onSubmitLogin: SubmitHandler<Login> = async (data: Login): Promise<void> => {
@@ -21,7 +25,7 @@ const LoginComponent = () => {
       const refreshToken = response?.data.refreshToken!.split(" ")[1];
       window.localStorage.setItem("accessToken", accessToken);
       window.localStorage.setItem("refreshToken", refreshToken);
-
+      setRecoilToken(accessToken);
       router.push("/");
     }
   };

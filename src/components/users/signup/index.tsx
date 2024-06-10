@@ -18,7 +18,6 @@ const SignUpComponent = () => {
   const { register, handleSubmit } = useForm<SignUpData>();
 
   const onSubmitSignUp: SubmitHandler<SignUpData> = async (data: SignUpData): Promise<void> => {
-    console.log(data);
     // 아이디 중복 검사
     const duplicateBoolean = await getDuplicate(data.email);
     if (duplicateBoolean.data) return alert("중복된 아이디입니다.");

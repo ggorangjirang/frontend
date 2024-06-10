@@ -1,5 +1,6 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
 import { postAxios, getEachAxios, patchAxios } from "../axios";
+import { jwtDecode } from "jwt-decode";
 
 // 회원가입
 export type Login = {
@@ -19,7 +20,10 @@ export type PatchUser = SignUp & {
   detailAddress: string;
 };
 
+export type JwtPayload = { email: string };
+
 export type DuplicateResponse = { data: boolean };
+
 // 로그인
 export const loginUser = async (data: Login): Promise<any> => {
   try {
@@ -44,7 +48,7 @@ export const postUser = async (data: SignUp): Promise<SignUp> => {
 // 중복 확인
 export const getDuplicate = async (email: string): Promise<DuplicateResponse> => {
   try {
-    const response = await getEachAxios(`${API_URLS.users}/duplicate`, email);
+    const response = await getEachAxios(`${API_URLS.users}/duplicate`, { email });
     return response.data;
   } catch (error) {
     console.error("Error getting User:", error);
@@ -62,13 +66,18 @@ const patchUser = async (userId: string, data: PatchUser) => {
   }
 };
 
-// 회원 조회
-// export const getUser = async (userId: string): Promise<PutUser> => {
-//   try {
-//     const response = await getAxios(`${API_URLS.users}/${userId}`);
-//     return response.data as PutUser;
-//   } catch (error) {
-//     console.error("Error getting User:", error);
-//     throw error;
-//   }
-// };
+// 내 정보 조회
+export const getUserInfoByEmail = async (token: string) => {
+  try {
+    const decodedToken: JwtPayload = jwtDecode(token);
+    const email = decodedToken.email;
+
+    const response = await getEachAxios(`${API_URLS}/userProfile`, {
+      params: { email },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info by email:", error);
+    throw error;
+  }
+};

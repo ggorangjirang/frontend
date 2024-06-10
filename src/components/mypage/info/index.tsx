@@ -6,6 +6,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
 import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
+import { userInfoSelector } from "@/recoil/selectors/userInfoSelector";
+import { constSelector, useRecoilState, useRecoilValueLoadable } from "recoil";
+import { userState } from "@/recoil/atoms/authState";
 
 interface ChangeInfoData {
   password: string;
@@ -19,11 +22,12 @@ declare global {
   }
 }
 const MyPageInfoComponent = () => {
+  const userInfoLoadable = useRecoilValueLoadable(userInfoSelector);
   const { register, handleSubmit } = useForm<ChangeInfoData>();
   const [address, setAddress] = useState("");
   const [zonecode, setZonecode] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
-
+  const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
     // 클라이언트 사이드에서만 실행되도록 보장
     if (typeof window !== "undefined") {
@@ -39,8 +43,6 @@ const MyPageInfoComponent = () => {
   }, []);
 
   const onSubmitChangeInfo: SubmitHandler<ChangeInfoData> = async (data: ChangeInfoData): Promise<void> => {
-    console.log(data);
-    console.log(address, zonecode, addressDetail);
     // 기존 비밀번호가 db 내부 비밀번호와 일치해야만 수정이 가능함
     if (true) {
       // true 수정 곧
@@ -67,6 +69,13 @@ const MyPageInfoComponent = () => {
       console.error("Daum Postcode API is not loaded.");
     }
   };
+
+  useEffect(() => {
+    if (userInfoLoadable.state === "hasValue") {
+      setUser(userInfoLoadable.contents);
+    }
+  }, [userInfoLoadable, setUser]);
+
   return (
     <PageWrapper>
       <div className="absolute mt-[24px] flex h-auto w-[1440px]">
