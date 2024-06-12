@@ -1,5 +1,5 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
-import { getAxios, postAxios } from "../axios";
+import { deleteAxios, getAxios, patchAxios, postAxios } from "../axios";
 import { Pageable, ProductDetail } from "../product";
 import { AxiosResponse } from "axios";
 import { OrderItemDetail } from "../orders";
@@ -38,6 +38,43 @@ export type getReviewableItemPageable = {
   first: boolean;
   last: boolean;
   empty: boolean;
+};
+
+
+//리뷰 삭제
+export const deleteReview = async (reviewId: number): Promise<any> => {
+  try {
+    let token = "";
+
+    if (typeof window !== "undefined") {
+      token = window.localStorage.getItem("accessToken") ?? "";
+    }
+    const response = await deleteAxios(`${API_URLS.users}/review/${reviewId}`, {
+      headers: { Authorization: token },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error posting Review:", error);
+    throw error;
+  }
+};
+
+//리뷰 쓰기
+export const patchReview = async (reviewId: number, data: FormData): Promise<any> => {
+  try {
+    let token = "";
+
+    if (typeof window !== "undefined") {
+      token = window.localStorage.getItem("accessToken") ?? "";
+    }
+    const response = await patchAxios(`${API_URLS.users}/review/${reviewId}`, data, {
+      headers: { Authorization: token, "Content-Type": "multipart/form-data" },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error posting Review:", error);
+    throw error;
+  }
 };
 
 //리뷰 쓰기

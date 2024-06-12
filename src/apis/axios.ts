@@ -55,7 +55,7 @@ export const postAxios = (
       Authorization: token,
       ...options.headers,
     },
-    data: param
+    data: param,
   });
 };
 
@@ -94,7 +94,7 @@ export const patchAxios = (
       "Content-Type": "application/json",
       ...options.headers,
     },
-    data: JSON.stringify(param),
+    data: param,
   });
 };
 export const deleteAxios = (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
