@@ -15,7 +15,7 @@ const useWebSocket = (userId: number, url: string) => {
         console.log("beforeConnect");
       },
       connectHeaders: {
-        Authorization: `Bearer ${token}`, // 우리 프로젝트의 경우 토큰이 없으면 보안에 걸려서 헤더 함께 보낸다
+        Authorization: `${token}`, // 우리 프로젝트의 경우 토큰이 없으면 보안에 걸려서 헤더 함께 보낸다
       },
       debug: (str) => {
         console.log(str);
@@ -38,7 +38,7 @@ const useWebSocket = (userId: number, url: string) => {
           (message) => {
             toast.info(`message Receive : ${message.body}`);
           },
-          { Authorization: `Bearer ${token}` }
+          { Authorization: `${token}` }
         );
       };
     }
