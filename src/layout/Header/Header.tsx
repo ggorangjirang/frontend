@@ -11,6 +11,7 @@ import { Categories, getSubCategories } from "@/apis/categories";
 import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { cartItemSelector } from "@/recoil/selectors/cartCountState";
 import { cartState } from "@/recoil/atoms/cartState";
+import useWebSocket from "@/hooks/useWebSocket";
 
 export default function Header() {
   const pathName = usePathname().split("/")[1];
@@ -20,6 +21,7 @@ export default function Header() {
   const cart = useRecoilValue(cartState);
   const [login, setIsLogin] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();
+  const data = useWebSocket(1, "");
 
   const onMouseEnter = () => {
     setHover(true);
@@ -31,12 +33,13 @@ export default function Header() {
 
   const onClickLogout = () => {
     window.localStorage.removeItem("accessToken");
+    data?.deactivate();
   };
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
       const isLogin = window.localStorage.getItem("accessToken") ? true : false;
-      console.log(isLogin)
+      console.log(isLogin);
       setCategories(categoriesData);
       setIsLogin(isLogin);
     };

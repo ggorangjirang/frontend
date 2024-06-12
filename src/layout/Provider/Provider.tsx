@@ -8,23 +8,12 @@ interface Props {
 }
 
 export default function Provider({ children }: Props) {
-  const data = useWebSocket("https://ggorangjirang.duckdns.org:8080/ws"); // Spring Boot 서버 URL
-  useEffect(() => {
-    if (data) {
-      data.activate();
-    }
-    return () => {
-      if (data) {
-        data.deactivate();
-      }
-    };
-  }, [data]);
+  const data = useWebSocket(1, "");
 
-  data;
   return (
     <RecoilRoot>
       <ToastContainer
-        position="top-center"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
