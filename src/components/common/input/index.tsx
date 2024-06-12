@@ -7,11 +7,13 @@ interface InputProps {
   register: any;
   required?: boolean;
   value?: string;
+  defaultValue?: string;
 }
 
-const Input: React.FC<InputProps> = ({ type, placeholder, className, register, required, value }) => {
+const Input: React.FC<InputProps> = ({ type, placeholder, className, register, required, value, defaultValue }) => {
   return (
     <input
+      defaultValue={defaultValue}
       required={required}
       {...register}
       type={type}

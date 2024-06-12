@@ -5,8 +5,9 @@ import { isWriteState } from "@/recoil/atoms/authState";
 import { useEffect } from "react";
 export default function ReviewView() {
   const [isEdit, setIsWrite] = useRecoilState(isWriteState);
+
   useEffect(() => {
     setIsWrite(false);
   }, [setIsWrite]);
-  return <ViewComponent />;
+  return <ViewComponent route="view"/>;
 }
