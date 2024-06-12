@@ -1,7 +1,7 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
 import { deleteAxios, getAxios, postAxios } from "../axios";
 import { AxiosResponse } from "axios";
-import { Pagable } from "../product";
+import { Pageable } from "../product";
 
 type CartItemRequest = {
   productId: number;
@@ -31,7 +31,7 @@ type getCartItemResponse = {
   size: number;
   content: CartItem[];
   number: number;
-  pageable: Pagable;
+  pageable: Pageable;
   numberOfElements: number;
   first: boolean;
   last: boolean;
@@ -44,15 +44,13 @@ export const postCartItems = (data: CartItemRequest): Promise<AxiosResponse<Cart
   return response;
 };
 
-export const getCartItems = async (
-  data: GetCartItemRequest = { page: 0, size: 5, sort: ["asc"] }
-): Promise<AxiosResponse<getCartItemResponse>> => {
+export const getCartItems = async (page = 0, size = 5, sort = ["asc"]): Promise<AxiosResponse<getCartItemResponse>> => {
   let token = "";
   if (typeof window !== "undefined") {
     token = window.localStorage.getItem("accessToken") ?? "";
   }
 
-  const response = await getAxios(`${API_URLS.cartItem}?page=${data.page}&size=${data.size}&sort=asc`, {
+  const response = await getAxios(`${API_URLS.cartItem}?page=${page}&size=${size}&sort=asc`, {
     headers: { Authorization: token },
   });
 
