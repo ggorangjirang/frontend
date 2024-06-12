@@ -14,7 +14,7 @@ export default function ProductCard({ imgSize = 250, cardInfo }: ProductCardProp
           height={imgSize}
           alt={cardInfo.name}
         ></Image>
-        <div className={` h-full px-2`} style={{ width: `${imgSize}px` }}>
+        <div className={`h-full px-2`} style={{ width: `${imgSize}px` }}>
           <div className="flex flex-wrap text-base font-bold leading-tight text-secondary">{cardInfo.name}</div>
           {cardInfo.discountRate !== 0 && (
             <div className="flex items-center justify-start gap-3 leading-tight">

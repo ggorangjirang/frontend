@@ -3,7 +3,7 @@ export const API_URLS = {
   subcategories: "/api/subcategories",
   carts: "/api/carts",
   cartItem: "/api/cart-items",
-  delivery: "/deliveries",
+  delivery: "/api/deliveries",
   users: "/api/users",
   review: "/review",
   order: "/api/orders",

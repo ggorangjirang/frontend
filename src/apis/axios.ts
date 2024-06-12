@@ -55,7 +55,7 @@ export const postAxios = (
       Authorization: token,
       ...options.headers,
     },
-    data: JSON.stringify(param),
+    data: param
   });
 };
 
