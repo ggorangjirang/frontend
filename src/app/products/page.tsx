@@ -13,26 +13,25 @@ import CountSpinner from "@/components/common/input/CountSpinner/CountSpinner";
 import ButtonIcon from "@/components/common/Buttons/ButtonIcon";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDate } from "@/utils/time";
-import { PropductDetail, Review, getProduct, getProductReview } from "@/apis/product";
+import { ProductDetail, Review, getProduct, getProductReview } from "@/apis/product";
 import ProductReview from "@/components/products/ProductReview";
 import { getCartItems, postCartItems } from "@/apis/cart/index";
-import { useRecoilRefresher_UNSTABLE, useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilRefresher_UNSTABLE, useRecoilState } from "recoil";
 import { cartItemSelector } from "@/recoil/selectors/cartCountState";
 import { cartState } from "@/recoil/atoms/cartState";
 
 export default function Page() {
   const [count, setCount] = useState(1);
   const [cart, setCart] = useRecoilState(cartState);
-  //상태를 업데이트 해주기 위한 리프래쉬 훅
   const cartReresh = useRecoilRefresher_UNSTABLE(cartItemSelector);
   const productId = useSearchParams().get("productId") ?? "";
   const router = useRouter();
-  const [productDetailInfo, setProductDetailInfo] = useState<PropductDetail>();
+  const [productDetailInfo, setProductDetailInfo] = useState<ProductDetail>();
   const [productReviewsInfo, setProductReviewsInfo] = useState<Review[]>([]);
 
   const onClickPurchaseButton = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    router.push(`/buying/${productId}`);
+    router.push(`/buying?route=product&productId=${productId}&count=${count}`);
   };
 
   const onClickCartItemButton = async (e: React.MouseEvent<HTMLDivElement>) => {

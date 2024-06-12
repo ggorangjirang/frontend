@@ -20,7 +20,7 @@ export type Product = {
   stock: number;
 };
 
-export type PropductDetail = {
+export type ProductDetail = {
   productImageUrl: string;
   expirationDate: null | string;
   subcategoryName: string;
@@ -30,7 +30,7 @@ export type PropductDetail = {
   soldOut: boolean;
 } & Product;
 
-export type Pagable = {
+export type Pageable = {
   offset: number;
   sort: Sort[];
   pageNumber: number;
@@ -47,18 +47,13 @@ type Sort = {
   ignoreCase: boolean;
 };
 
-type getProductListRequest = {
-  page?: number;
-  size?: number;
-};
-
 export type getProductListResponse = {
   totalPages: number;
   totalElements: number;
   size: number;
   content: Product[];
   number: number;
-  pageable: Pagable;
+  pageable: Pageable;
   numberOfElements: number;
   first: boolean;
   last: boolean;
@@ -71,7 +66,7 @@ export type getReviewByProductIdRes = {
   size: number;
   content: Review[];
   number: number;
-  pagable: Pagable;
+  pageable: Pageable;
   numberOfElements: number;
   first: boolean;
   last: boolean;
@@ -91,7 +86,7 @@ export const getProductListBestSellingRandom = async (): Promise<Product[]> => {
 };
 
 //상품 상세
-export const getProduct = async (productId: string): Promise<PropductDetail> => {
+export const getProduct = async (productId: string): Promise<ProductDetail> => {
   return getFetch(`${API_URLS.products}/${productId}`);
 };
 
