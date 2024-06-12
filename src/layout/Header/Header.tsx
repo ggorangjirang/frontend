@@ -29,11 +29,14 @@ export default function Header() {
     setHover(false);
   };
 
+  const onClickLogout = () => {
+    window.localStorage.removeItem("accessToken");
+  };
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
       const isLogin = window.localStorage.getItem("accessToken") ? true : false;
-
+      console.log(isLogin)
       setCategories(categoriesData);
       setIsLogin(isLogin);
     };
@@ -80,7 +83,7 @@ export default function Header() {
                 </Link>
                 {/* 로그인 */}
                 <div className="border border-l-0 border-r"></div>
-                {true ? (
+                {login ? (
                   <div className="group flex items-center justify-center">
                     <div className="relative flex cursor-pointer items-center justify-center gap-5">
                       <span className=" w-full text-[12px] text-text hover:text-primary">강예정님 어서오세요!</span>
@@ -96,7 +99,10 @@ export default function Header() {
                               마이페이지
                             </li>
                           </Link>
-                          <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                          <li
+                            className="flex cursor-pointer items-center justify-center py-2 hover:text-primary"
+                            onClick={onClickLogout}
+                          >
                             로그아웃
                           </li>
                         </ul>
