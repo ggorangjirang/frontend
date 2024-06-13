@@ -1,5 +1,5 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
-import { postAxios, getEachAxios, patchAxios } from "../axios";
+import { postAxios, getEachAxios, patchAxios, getAxios } from "../axios";
 
 // 회원가입
 export type Login = {
@@ -12,14 +12,23 @@ export type SignUp = {
   password: string;
   name: string;
 };
-export type PatchUser = SignUp & {
-  phoneNumber: string;
-  zipcode: string;
-  streetAddress: string;
-  detailAddress: string;
+export type PatchUser = {
+  name: string | undefined;
+  phoneNumber: string | undefined;
+  currentPassword: string;
+  newPassword?: string;
+  confirmPassword?: string;
+  address: {
+    zipcode: string | undefined;
+    streetAddress: string | undefined;
+    detailAddress: string | undefined;
+  };
 };
 
+export type JwtPayload = { email: string };
+
 export type DuplicateResponse = { data: boolean };
+
 // 로그인
 export const loginUser = async (data: Login): Promise<any> => {
   try {
@@ -44,7 +53,7 @@ export const postUser = async (data: SignUp): Promise<SignUp> => {
 // 중복 확인
 export const getDuplicate = async (email: string): Promise<DuplicateResponse> => {
   try {
-    const response = await getEachAxios(`${API_URLS.users}/duplicate`, email);
+    const response = await getEachAxios(`${API_URLS.users}/duplicate`, { email });
     return response.data;
   } catch (error) {
     console.error("Error getting User:", error);
@@ -53,22 +62,24 @@ export const getDuplicate = async (email: string): Promise<DuplicateResponse> =>
 };
 // 회원 정보 수정
 
-const patchUser = async (userId: string, data: PatchUser) => {
+export const patchUser = async (data: PatchUser) => {
   try {
-    const response = await patchAxios(`/users/${userId}`, data);
+    const response = await patchAxios(`${API_URLS.users}/mypage`, data);
     return response.data as PatchUser;
   } catch (error) {
     console.error("Error updating User:", error);
   }
 };
 
-// 회원 조회
-// export const getUser = async (userId: string): Promise<PutUser> => {
-//   try {
-//     const response = await getAxios(`${API_URLS.users}/${userId}`);
-//     return response.data as PutUser;
-//   } catch (error) {
-//     console.error("Error getting User:", error);
-//     throw error;
-//   }
-// };
+// 내 정보 조회
+export const getUserInfoByEmail = async (token: string) => {
+  try {
+    const response = await getAxios(`${API_URLS.users}/mypage`, {
+      headers: { Authorization: token },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user info by email:", error);
+    throw error;
+  }
+};

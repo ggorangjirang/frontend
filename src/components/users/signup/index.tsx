@@ -16,9 +16,11 @@ interface SignUpData {
 
 const SignUpComponent = () => {
   const { register, handleSubmit } = useForm<SignUpData>();
-
+  const kakaoOpt = {
+    clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY || "",
+    redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI || "",
+  };
   const onSubmitSignUp: SubmitHandler<SignUpData> = async (data: SignUpData): Promise<void> => {
-    console.log(data);
     // 아이디 중복 검사
     const duplicateBoolean = await getDuplicate(data.email);
     if (duplicateBoolean.data) return alert("중복된 아이디입니다.");
@@ -42,6 +44,15 @@ const SignUpComponent = () => {
     { label: "비밀번호 확인", name: "passwordAgain", type: "password", placeholder: "비밀번호를 다시 입력해주세요." },
   ];
 
+  const generateKakaoLoginURL = () => {
+    return `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.redirectUri}&response_type=code`;
+  };
+
+  const handleKakaoLogin = () => {
+    const kakaoLoginURL = generateKakaoLoginURL();
+    window.location.href = kakaoLoginURL;
+  };
+
   return (
     <Wrapper>
       <UserWrapper>
@@ -61,9 +72,9 @@ const SignUpComponent = () => {
           ))}
           <div className="flex w-full flex-col items-center justify-center">
             <ButtonPrimary value={"회원가입"} className="text-center text-white" type="submit" size="users" />
-            <KakaoButton />
           </div>
         </form>
+        <KakaoButton onClickHandler={handleKakaoLogin} />
       </UserWrapper>
     </Wrapper>
   );

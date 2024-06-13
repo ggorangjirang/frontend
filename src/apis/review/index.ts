@@ -40,7 +40,6 @@ export type getReviewableItemPageable = {
   empty: boolean;
 };
 
-
 //리뷰 삭제
 export const deleteReview = async (reviewId: number): Promise<any> => {
   try {

@@ -49,12 +49,14 @@ const ViewComponent = ({ route }: Props) => {
         setReviews(data);
       } catch (error) {
         console.log(error);
+
+        console.log(error);
       }
     };
 
     fetchData();
-    console.log(reviews);
   }, [pageInfo?.page]);
+
   const onClickChange = () => {};
   console.log(reviews);
   return (
