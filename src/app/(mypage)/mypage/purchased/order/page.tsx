@@ -1,6 +1,6 @@
 "use client";
 
-import { GetOrderByIdResponse, deleteOrderById, getOrderById } from "@/apis/orders";
+import { GetOrderByIdResponse, OrderCancelError, deleteOrderById, getOrderById } from "@/apis/orders";
 import { ButtonMedium } from "@/components/common/Buttons/ButtonIcon";
 import OrderDetailProductCard from "@/components/common/cards/OrderDetailProductCard";
 import TextMedium from "@/components/common/labels/TextMedium";
@@ -9,7 +9,8 @@ import Pagination, { PageInfo } from "@/layout/Pagenation/Pagination";
 import { formatDate } from "@/utils/time";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DELIVERY_STATUS } from "@/constants";
+import { DELIVERY_STATUS, ORDER_STATUS } from "@/constants";
+import axios from "axios";
 
 export default function Page() {
   const orderId = useSearchParams().get("orderId");
@@ -21,22 +22,31 @@ export default function Page() {
     try {
       const response = await deleteOrderById(Number(orderId));
 
-      console.log(response);
       setOrderInfo(response.data);
       alert("성공적으로 주문을 취소했습니다.");
     } catch (err) {
-      console.log(err);
-      alert("삭제하는 과정에서 오류가 발생했습니다.");
+      if (axios.isAxiosError(err)) {
+        // Axios 에러일 경우 처리
+        if (err.response) {
+          const data = err.response.data as OrderCancelError;
+          if (data.code.startsWith("EO")) {
+            alert(data.msg);
+          }
+        } else {
+          alert(`네트워크 오류 또는 기타 오류: ${err.message}`);
+        }
+      } else {
+        // Axios 에러가 아닌 경우 처리
+        alert("예상치 못한 오류가 발생했습니다.");
+      }
     }
   };
 
   useEffect(() => {
     const initOrder = async () => {
       const targetPage = pageInfo?.page ?? 0;
-      let data;
-
-      data = (await getOrderById(Number(orderId), targetPage)).data;
-      console.log(data);
+      const data = (await getOrderById(Number(orderId), targetPage)).data;
+      
       const targetPageInfo = {
         page: data!.orderItems.pageable.pageNumber,
         totalPages: data!.orderItems.totalPages,
@@ -71,15 +81,17 @@ export default function Page() {
             <div className="flex justify-center ">{orderInfo.totalAllPrice.toLocaleString()} 원</div>
             {/* <div className="flex justify-center ">무통장입금</div> */}
             <div className="flex justify-center ">{DELIVERY_STATUS[orderInfo.deliveryStatus]}</div>
-            <div className="flex justify-center ">{orderInfo.orderStatus}</div>
+            <div className="flex justify-center ">{ORDER_STATUS[orderInfo.orderStatus] ?? ""}</div>
           </div>
           {orderInfo.orderItems.content.map((item) => {
             return <OrderDetailProductCard key={item.productName} orderItem={item} />;
           })}
           <div className="mb-11 flex justify-end">
-            <ButtonMedium type="button" bgColor="bg-warning" onClickHandler={onClickCancel}>
-              주문 취소
-            </ButtonMedium>
+            {orderInfo.orderStatus !== "CANCEL" && (
+              <ButtonMedium type="button" bgColor="bg-warning" onClickHandler={onClickCancel}>
+                주문 취소
+              </ButtonMedium>
+            )}
           </div>
           {pageInfo && (
             <Pagination
