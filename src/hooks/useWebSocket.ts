@@ -18,7 +18,7 @@ const useWebSocket = (userId: number, url: string) => {
         Authorization: `${token}`, // 우리 프로젝트의 경우 토큰이 없으면 보안에 걸려서 헤더 함께 보낸다
       },
       debug: (str) => {
-        console.log(str);
+        // console.log(str);
       },
       reconnectDelay: 50000, // 자동 재연결
       heartbeatIncoming: 4000,

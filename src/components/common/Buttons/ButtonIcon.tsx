@@ -30,7 +30,7 @@ interface SizeVariants {
 }
 
 interface KakaoProps {
-  onClickHandler: () => void;
+  onClickHandler?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 export default function ButtonIcon({
   children,

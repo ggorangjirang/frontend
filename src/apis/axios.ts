@@ -1,7 +1,13 @@
+import { getAccessToken } from "@/utils/token";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 10000, //10초
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: getAccessToken(), //토큰이 있으면 토큰을 불러오고 아니면 null값
+  },
 });
 
 const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {

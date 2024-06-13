@@ -94,7 +94,7 @@ const MyPageInfoComponent = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const userInfo = await getUserInfoByEmail(token);
+      const userInfo = await getUserInfoByEmail(token!);
       setUser(userInfo);
       setZonecode(userInfo?.address.zipcode);
       setAddress(userInfo?.address.streetAddress);

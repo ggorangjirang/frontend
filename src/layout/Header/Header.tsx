@@ -8,20 +8,23 @@ import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { cartItemSelector } from "@/recoil/selectors/cartCountState";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
+import { getAccessToken } from "@/utils/token";
+import { tokenState } from "@/recoil/atoms/authState";
 
 export default function Header() {
   const pathName = usePathname().split("/")[1];
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
-  //TODO
   const cart = useRecoilValue(cartState);
-  const [login, setIsLogin] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();
   const data = useWebSocket(1, "");
+  const [token, setToken] = useRecoilState(tokenState);
+  const [login, setIsLogin] = useState(token ? true : false);
+
+  //recoilPersist
 
   const onMouseEnter = () => {
     setHover(true);
@@ -33,20 +36,31 @@ export default function Header() {
 
   const onClickLogout = () => {
     window.localStorage.removeItem("accessToken");
+    window.localStorage.removeItem("refreshToken");
     data?.deactivate();
+    setIsLogin(false);
   };
+
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-      const isLogin = window.localStorage.getItem("accessToken") ? true : false;
-      console.log(isLogin);
+
       setCategories(categoriesData);
-      setIsLogin(isLogin);
     };
 
     initCategories();
-  }, []);
+    console.log("render/cate");
+  }, [setToken, token]);
 
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    const isLogin = token ? true : false;
+    setToken(accessToken ?? "");
+    setIsLogin(isLogin);
+    setIsLogin(token ? true : false);
+  }, [setToken, token]);
+  //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
+  //커스텀 훅도 clientComponent
   return (
     showHeader && (
       <>

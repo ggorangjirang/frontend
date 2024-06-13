@@ -46,7 +46,7 @@ export default function Page() {
     const initOrder = async () => {
       const targetPage = pageInfo?.page ?? 0;
       const data = (await getOrderById(Number(orderId), targetPage)).data;
-      
+
       const targetPageInfo = {
         page: data!.orderItems.pageable.pageNumber,
         totalPages: data!.orderItems.totalPages,
