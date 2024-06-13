@@ -4,7 +4,7 @@ import { ButtonMedium } from "../Buttons/ButtonIcon";
 import { Order } from "@/apis/orders";
 import { formatDate } from "@/utils/time";
 import { usePathname, useRouter } from "next/navigation";
-import { DELIVERY_STATUS } from "@/constants";
+import { DELIVERY_STATUS, ORDER_STATUS } from "@/constants";
 
 type Props = {
   order: Order;
@@ -33,7 +33,7 @@ export default function OrderDetailCard({ order }: Props) {
           <div className="flex justify-center ">{order.totalAllPrice.toLocaleString()}원</div>
           {/* <div className="flex justify-center ">무통장입금</div> */}
           <div className="flex justify-center ">{DELIVERY_STATUS[order.deliveryStatus]}</div>
-          <div className="flex justify-center ">{order.orderStatus}</div>
+          <div className="flex justify-center ">{ORDER_STATUS[order.orderStatus]}</div>
         </div>
         <ButtonMedium type="button" onClickHandler={oncClickDetail}>
           주문서 보기

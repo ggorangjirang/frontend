@@ -6,4 +6,7 @@ export const DELIVERY_STATUS = {
   DELIVERY_CANCEL: "배송취소",
   Pending: "배송시작",
 };
-//TODO 추후 주문상태도
+export const ORDER_STATUS = {
+  CANCEL: "주문취소",
+  ORDER: "주문완료",
+};

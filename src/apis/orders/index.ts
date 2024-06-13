@@ -2,7 +2,7 @@ import { API_URLS } from "@/constants/apiUrlConfig";
 import { deleteAxios, getAxios, postAxios } from "../axios";
 import { AxiosResponse } from "axios";
 import { Pageable } from "../product";
-import { DELIVERY_STATUS } from "@/constants";
+import { DELIVERY_STATUS, ORDER_STATUS } from "@/constants";
 
 export type GetOrderResponse = {
   content: Order[];
@@ -20,7 +20,7 @@ export type GetOrderResponse = {
 export type GetOrderByIdPageableResponse = {
   id: number;
   orderDate: string;
-  orderStatus: string;
+  orderStatus: keyof typeof ORDER_STATUS;
   orderNumber: string;
   deliveryStatus: keyof typeof DELIVERY_STATUS;
   totalAllPrice: number;
@@ -41,7 +41,7 @@ export type GetOrderByIdPageableResponse = {
 export type GetOrderByIdResponse = {
   id: number;
   orderDate: string;
-  orderStatus: string;
+  orderStatus: keyof typeof ORDER_STATUS;
   orderNumber: string;
   deliveryStatus: keyof typeof DELIVERY_STATUS;
   totalAllPrice: number;
@@ -104,11 +104,16 @@ type PostOrderRequest = {
 export type Order = {
   id: number;
   orderDate: string;
-  orderStatus: string;
+  orderStatus: keyof typeof ORDER_STATUS;
   orderNumber: string;
   deliveryStatus: keyof typeof DELIVERY_STATUS;
   totalAllPrice: number;
   orderItems: OrderItemDetail[];
+};
+
+export type OrderCancelError = {
+  code: string;
+  msg: string;
 };
 
 export const postOrders = (data: PostOrderRequest) => {
