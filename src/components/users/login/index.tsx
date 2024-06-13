@@ -11,6 +11,7 @@ import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useLocation } from "react-router-dom";
 export const baseApiUrl = "https://ggorangjirang.duckdns.org/";
 
 // const onNaverLogin = () => {
@@ -60,7 +61,8 @@ const LoginComponent = () => {
   const setRecoilToken = useSetRecoilState(tokenState);
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -85,22 +87,42 @@ const LoginComponent = () => {
   };
   const getAccessToken = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent the form from submitting
+    e.stopPropagation();
     console.log("adsasdaaaaa");
 
     window.location.href = "https://ggorangjirang.duckdns.org/oauth2/authorization/kakao";
 
     console.log("adsasdaaaaa");
-    // const response = await axios.post(`https://ggorangjirang.duckdns.org/oauth2/authorization/kakao`, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // console.log(response);
-    // const accessToken = response.data.accessToken;
-    // console.log("accessToken:", accessToken);
-    // localStorage.setItem("token", accessToken);
-    // router.push("/");
+    setLoading(true);
   };
+
+  useEffect(() => {
+    const fetchTokens = async () => {
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      // 현재 URL의 쿼리 파라미터에서 인가 코드를 추출
+      const authorizationCode = searchParams.get("code");
+      console.log(authorizationCode);
+      // 인가 코드를 사용하여 백엔드에서 토큰을 요청
+      const response = await axios.get(
+        `https://ggorangjirang.duckdns.org/login/oauth2/code/kakao?code=${authorizationCode}`
+      );
+      const { accessToken, refreshToken, message } = response.data;
+
+      // 토큰을 로컬 스토리지에 저장
+      window.localStorage.setItem("accessToken", accessToken);
+      window.localStorage.setItem("refreshToken", refreshToken);
+
+      // 인증 성공 메시지 처리
+      console.log(message);
+
+      // 원하는 페이지로 리다이렉트
+    };
+
+    fetchTokens();
+  }, [searchParams, loading]);
+  useEffect(() => {
+    console.log(searchParams.get("code"));
+  }, [searchParams]);
 
   const fields: { label: string; name: keyof Login; type: string; placeholder: string }[] = [
     { label: "아이디", name: "email", type: "text", placeholder: "아이디(이메일)를 입력해주세요." },
