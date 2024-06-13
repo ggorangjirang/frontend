@@ -20,6 +20,7 @@ interface ButtonProps {
   value: string;
   type: "submit" | "reset" | "button";
   size: keyof SizeVariants;
+  onClickHandler?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 interface SizeVariants {
   mypage: string;
@@ -29,7 +30,7 @@ interface SizeVariants {
 }
 
 interface KakaoProps {
-  onClickHandler: () => void;
+  onClickHandler?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 export default function ButtonIcon({
   children,
@@ -54,7 +55,7 @@ export default function ButtonIcon({
   );
 }
 
-export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, size }) => {
+export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, size, onClickHandler }) => {
   const sizeVariants = {
     review: "w-[170px] h-[38px]",
     edit: "w-[79px] h-[38px]",
@@ -65,6 +66,7 @@ export const ButtonPrimary: React.FC<ButtonProps> = ({ value, className, type, s
     <button
       type={type}
       className={`${sizeVariants[size]} mb-[12px] cursor-pointer rounded-[12px] border bg-primary text-center text-texttitle font-semibold ${className}`}
+      onClick={onClickHandler}
     >
       <p>{value}</p>
     </button>

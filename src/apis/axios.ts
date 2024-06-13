@@ -1,7 +1,13 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { getAccessToken } from "@/utils/token";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 10000, //10초
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: getAccessToken(), //토큰이 있으면 토큰을 불러오고 아니면 null값
+  },
 });
 
 const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
@@ -15,11 +21,11 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
-      throw new Error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
+      throw error as AxiosError;
     } else {
       const err = error as Error;
       console.error(err.message);
-      throw error;
+      throw error as AxiosError;
     }
   }
 };
@@ -57,7 +63,7 @@ export const postAxios = (
       Authorization: token,
       ...options.headers,
     },
-    data: JSON.stringify(param),
+    data: param,
   });
 };
 
@@ -98,7 +104,7 @@ export const patchAxios = (
       Authorization: token,
       ...options.headers,
     },
-    data: JSON.stringify(param),
+    data: param,
   });
 };
 export const deleteAxios = (url: string, options: AxiosRequestConfig = {}): Promise<any> => {

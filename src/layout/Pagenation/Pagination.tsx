@@ -13,6 +13,7 @@ export type PageInfo = {
   page: number;
   totalPages: number;
   totalElements: number;
+  limit?: number;
 };
 
 const generateArray = ({ totalPage, limit }: { totalPage: number; limit: number }) => {

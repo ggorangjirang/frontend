@@ -1,5 +1,10 @@
 import LoginComponent from "@/components/users/login";
+import { Suspense } from "react";
 
 export default function Login() {
-  return <LoginComponent />;
+  return (
+    <Suspense>
+      <LoginComponent />
+    </Suspense>
+  );
 }

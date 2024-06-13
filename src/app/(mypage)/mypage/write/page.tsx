@@ -8,5 +8,5 @@ export default function ReviewWrite() {
   useEffect(() => {
     setIsWrite(true);
   }, [setIsWrite]);
-  return <ViewComponent />;
+  return <ViewComponent route="write" />;
 }

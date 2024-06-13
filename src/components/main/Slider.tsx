@@ -24,16 +24,16 @@ export default function Slider() {
       modules={[Navigation, Pagination, Autoplay]}
     >
       <SwiperSlide className="swiper-slide">
-        <Image src={"/slides/slide1.png"} alt="slide1" width={1140} height={420} />
+        <Image src={"/slides/slide1.jpg"} alt="slide1" width={1140} height={420} />
       </SwiperSlide>
       <SwiperSlide>
-        <Image src={"/slides/slide2.png"} alt="slide2" width={1140} height={420} />
+        <Image src={"/slides/slide2.jpg"} alt="slide2" width={1140} height={420} />
       </SwiperSlide>
       <SwiperSlide>
-        <Image src={"/slides/slide3.png"} alt="slide3" width={1140} height={420} />
+        <Image src={"/slides/slide3.jpg"} alt="slide3" width={1140} height={420} />
       </SwiperSlide>
       <SwiperSlide>
-        <Image src={"/slides/slide4.png"} alt="slide4" width={1140} height={420} />
+        <Image src={"/slides/slide4.jpg"} alt="slide4" width={1140} height={420} />
       </SwiperSlide>
     </Swiper>
   );
