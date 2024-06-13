@@ -7,12 +7,12 @@ export const authState = atom({
 
 export const tokenState = atom({
   key: "tokenState",
-  default: null, // 토큰의 기본값
+  default: "", // 토큰의 기본값
 });
 
 export const userState = atom({
   key: "userState",
-  default: null,
+  default: ".",
 });
 
 export const isWriteState = atom({ key: "isWriteState", default: false });

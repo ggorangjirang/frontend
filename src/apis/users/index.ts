@@ -1,6 +1,5 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
-import { postAxios, getEachAxios, patchAxios } from "../axios";
-import { jwtDecode } from "jwt-decode";
+import { postAxios, getEachAxios, patchAxios, getAxios } from "../axios";
 
 // 회원가입
 export type Login = {
@@ -13,11 +12,17 @@ export type SignUp = {
   password: string;
   name: string;
 };
-export type PatchUser = SignUp & {
-  phoneNumber: string;
-  zipcode: string;
-  streetAddress: string;
-  detailAddress: string;
+export type PatchUser = {
+  name: string | undefined;
+  phoneNumber: string | undefined;
+  currentPassword: string;
+  newPassword?: string;
+  confirmPassword?: string;
+  address: {
+    zipcode: string | undefined;
+    streetAddress: string | undefined;
+    detailAddress: string | undefined;
+  };
 };
 
 export type JwtPayload = { email: string };
@@ -57,9 +62,9 @@ export const getDuplicate = async (email: string): Promise<DuplicateResponse> =>
 };
 // 회원 정보 수정
 
-const patchUser = async (userId: string, data: PatchUser) => {
+export const patchUser = async (data: PatchUser) => {
   try {
-    const response = await patchAxios(`/users/${userId}`, data);
+    const response = await patchAxios(`${API_URLS.users}/mypage`, data);
     return response.data as PatchUser;
   } catch (error) {
     console.error("Error updating User:", error);
@@ -69,11 +74,8 @@ const patchUser = async (userId: string, data: PatchUser) => {
 // 내 정보 조회
 export const getUserInfoByEmail = async (token: string) => {
   try {
-    const decodedToken: JwtPayload = jwtDecode(token);
-    const email = decodedToken.email;
-
-    const response = await getEachAxios(`${API_URLS}/userProfile`, {
-      params: { email },
+    const response = await getAxios(`${API_URLS.users}/mypage`, {
+      headers: { Authorization: token },
     });
     return response.data;
   } catch (error) {

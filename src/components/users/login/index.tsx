@@ -17,7 +17,7 @@ const LoginComponent = () => {
   const onSubmitLogin: SubmitHandler<Login> = async (data: Login): Promise<void> => {
     const response = await loginUser({
       email: data.email,
-      password: data.password,
+      password: data.password ?? "",
     });
 
     if (response.status === 200) {
@@ -25,6 +25,7 @@ const LoginComponent = () => {
       const refreshToken = response?.data.refreshToken!.split(" ")[1];
       window.localStorage.setItem("accessToken", accessToken);
       window.localStorage.setItem("refreshToken", refreshToken);
+      console.log(accessToken);
       setRecoilToken(accessToken);
       router.push("/");
     }
@@ -54,7 +55,11 @@ const LoginComponent = () => {
           ))}
           <div className="flex w-full flex-col items-center justify-center">
             <ButtonPrimary value={"로그인"} className="text-white" type="submit" size="users" />
-            <KakaoButton />
+            <KakaoButton
+              onClickHandler={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
           </div>
         </form>
       </UserWrapper>
