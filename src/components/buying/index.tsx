@@ -66,7 +66,7 @@ const BuyingComponent = () => {
     if (route === "cart") initCart();
     if (route === "product") initProduct();
     //계산결과 업데이트
-  }, [route]);
+  }, [route, searchParams]);
 
   useEffect(() => {
     // 클라이언트 사이드에서만 실행되도록 보장
