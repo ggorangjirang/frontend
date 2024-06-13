@@ -45,9 +45,7 @@ export type GetOrderByIdResponse = {
   orderNumber: string;
   deliveryStatus: keyof typeof DELIVERY_STATUS;
   totalAllPrice: number;
-  orderItems: {
-    content: getOrderItemPageableResponse;
-  };
+  orderItems: getOrderItemPageableResponse;
 };
 
 export type getOrderPageableResponse = {
