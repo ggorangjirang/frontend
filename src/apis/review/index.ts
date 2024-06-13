@@ -8,6 +8,21 @@ export interface Review {
   profileImage?: File;
 }
 
+export interface canReviewRequest {
+  page: number;
+  size: number;
+}
+
+export interface canReviewResponse {
+  productId: number;
+  userId: number;
+  productName: string;
+  imageUrl: string;
+  orderPrice: number;
+  quantity: number;
+  totalPrice: number;
+}
+
 export const postReview = async (data: FormData): Promise<any> => {
   try {
     const response = await postAxios(`${API_URLS.users}/review`, data);
@@ -18,12 +33,25 @@ export const postReview = async (data: FormData): Promise<any> => {
   }
 };
 
-export const getReview = async (): Promise<any> => {
-  try {
-    const response = await getAxios(`${API_URLS.users}/my-reviews`);
-    return response;
-  } catch (error) {
-    console.error("Error getting Review:", error);
-    throw error;
+export const getReview = async (data: canReviewRequest = { page: 0, size: 5 }): Promise<any> => {
+  let token = "";
+  if (typeof window !== "undefined") {
+    token = window.localStorage.getItem("accessToken") ?? "";
   }
+  const response = await getAxios(`${API_URLS.users}/my-reviews?page=${data.page}&size=${data.size}`, {
+    headers: { Authorization: token },
+  });
+  return response.data;
+};
+
+// 배송완료된 상품이면서 기존에 리뷰가 작성되지 않은 주문 아이템만 표시
+export const canReview = async (data: canReviewRequest = { page: 0, size: 5 }): Promise<canReviewResponse> => {
+  let token = "";
+  if (typeof window !== "undefined") {
+    token = window.localStorage.getItem("accessToken") ?? "";
+  }
+  const response = await getAxios(`${API_URLS.users}/reviewable-items?page=${data.page}&size=${data.size}`, {
+    headers: { Authorization: token },
+  });
+  return response.data as canReviewResponse;
 };

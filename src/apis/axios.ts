@@ -30,17 +30,19 @@ export const getAxios = async (url: string, options: AxiosRequestConfig = {}): P
     method: "GET",
   });
 };
-export const getEachAxios = (url: string, param: string, options: AxiosRequestConfig = {}): Promise<any> => {
+export const getEachAxios = async (
+  url: string,
+  params: { [key: string]: any },
+  options: AxiosRequestConfig = {}
+): Promise<any> => {
+  console.log(params);
   return commonAxios(url, {
     ...options,
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-    data: JSON.stringify(param),
+    params,
   });
 };
+
 export const postAxios = (
   url: string,
   param: { [key: string]: any },
@@ -87,11 +89,13 @@ export const patchAxios = (
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
+  const token = window.localStorage.getItem("accessToken");
   return commonAxios(url, {
     ...options,
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Authorization: token,
       ...options.headers,
     },
     data: JSON.stringify(param),

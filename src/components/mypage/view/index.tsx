@@ -8,7 +8,7 @@ import { isWriteState } from "@/recoil/atoms/authState";
 import ViewTemplate from "@/components/reviews";
 import Message from "@/components/common/message";
 import { useEffect, useState } from "react";
-import { getReview } from "@/apis/review";
+import { canReview, getReview } from "@/apis/review";
 
 const ViewComponent = () => {
   const [isWrite] = useRecoilState(isWriteState);
@@ -25,17 +25,21 @@ const ViewComponent = () => {
       primary: !isWrite,
     },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
+  const fetchData = async () => {
+    try {
+      if (isWrite) {
+        const response = await canReview();
+        console.log(response);
+      } else {
         const response = await getReview();
         console.log(response);
-      } catch (error) {
-        console.log(error);
       }
-    };
-
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    console.log(isWrite);
     fetchData();
   }, []);
   const onClickChange = () => {};

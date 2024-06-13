@@ -28,6 +28,9 @@ interface SizeVariants {
   edit: string;
 }
 
+interface KakaoProps {
+  onClickHandler: () => void;
+}
 export default function ButtonIcon({
   children,
   name,
@@ -79,10 +82,13 @@ export const ButtonMedium = ({ type, children, bgColor = "bg-primary", onClickHa
     </button>
   );
 };
-export const KakaoButton = () => {
+export const KakaoButton = ({ onClickHandler }: KakaoProps) => {
   return (
-    <button className="mb-[12px] flex h-[46px] w-[327px] items-center justify-center rounded-[12px] bg-[#FFEB00] text-[16px] font-medium text-[#3C1E1E]">
-      <Image src="/kakao.png" alt={""} width={16} height={16} />
+    <button
+      className="mb-[12px] flex h-[46px] w-[327px] items-center justify-center rounded-[12px] bg-[#FFEB00] text-[16px] font-medium text-[#3C1E1E]"
+      onClick={onClickHandler}
+    >
+      <Image src="/kakao.png" alt="" width={16} height={16} />
       <span className="ml-[8px]">카카오 로그인</span>
     </button>
   );
