@@ -57,12 +57,10 @@ const ViewComponent = ({ route }: Props) => {
     fetchData();
   }, [pageInfo?.page, route]);
 
-  const onClickChange = () => {};
-  console.log(reviews);
   return (
     reviews &&
     reviews.content && (
-      <PageWrapper>
+      <>
         <div className="absolute mt-[24px] flex h-auto w-[1440px]">
           <MyPageTab />
           <div className="ml-[41px] w-[73%]">
@@ -101,7 +99,7 @@ const ViewComponent = ({ route }: Props) => {
             )}
           </div>
         </div>
-      </PageWrapper>
+      </>
     )
   );
 };

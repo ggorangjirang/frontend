@@ -25,7 +25,7 @@ const MyPageTab = () => {
       <div className=" mb-[5px] h-[1px] w-[222px] bg-gray-border " />
       <Link href={tabItems[3].path}>
         <p
-          className={`align-middle text-primary ${pathName.includes(tabItems[3].path) ? "text-warning" : ""} py-2 text-textmedium font-bold`}
+          className={`align-middle ${pathName.includes(tabItems[3].path) ? "text-warning" : "text-secondary"} py-2 text-textmedium font-bold`}
         >
           {tabItems[3].name}
         </p>
