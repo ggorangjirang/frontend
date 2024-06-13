@@ -25,7 +25,9 @@ export default function ProductCard({ imgSize = 250, cardInfo }: ProductCardProp
           <div className="text-base font-bold leading-tight text-price">
             {cardInfo.discountedPrice.toLocaleString()}원
           </div>
-          {cardInfo.stock === 0 && <span className="border p-[1px] align-middle text-[12px] leading-tight text-gray" />}
+          {cardInfo.stock === 0 && (
+            <span className="border p-[1px] px-[4px] align-middle text-[12px] leading-tight text-gray"> 품절 </span>
+          )}
         </div>
       </div>
     </Link>
