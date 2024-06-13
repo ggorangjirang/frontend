@@ -36,7 +36,7 @@ const useWebSocket = (userId: number, url: string) => {
         stompClient.subscribe(
           `/user/${userId}/queue/updateDeliveryStatus`,
           (message) => {
-            toast.info(`message Receive : ${message.body}`);
+            toast(`message Receive : ${message.body}`);
           },
           { Authorization: `${token}` }
         );
