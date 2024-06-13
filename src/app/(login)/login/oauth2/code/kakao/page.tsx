@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 const Redirection = () => {
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
