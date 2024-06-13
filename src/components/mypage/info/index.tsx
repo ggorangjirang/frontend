@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
 import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
-import { useRecoilState } from "recoil";
+import { constSelector, useRecoilState } from "recoil";
 import { tokenState } from "@/recoil/atoms/authState";
 import { getUserInfoByEmail, patchUser } from "@/apis/users";
 import { userInfo } from "os";
@@ -83,8 +83,9 @@ const MyPageInfoComponent = () => {
     if (window.daum && window.daum.Postcode) {
       new window.daum.Postcode({
         oncomplete: function (data: { address: string; zonecode: string }) {
-          setAddress(data.address);
+          console.log(data);
           setZonecode(data.zonecode);
+          setAddress(data.address);
         },
       }).open();
     } else {
@@ -96,7 +97,6 @@ const MyPageInfoComponent = () => {
     const getUser = async () => {
       const userInfo = await getUserInfoByEmail(token);
       setUser(userInfo);
-      console.log(userInfo);
       setZonecode(userInfo?.address.zipcode);
       setAddress(userInfo?.address.streetAddress);
       setAddressDetail(userInfo?.address.detailAddress);

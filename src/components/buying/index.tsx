@@ -34,7 +34,7 @@ const BuyingComponent = () => {
   const [selectedValue, setSelectedValue] = useState("x");
 
   const [address, setAddress] = useState("");
-  const [zipcode, setzipcode] = useState("");
+  const [zonecode, setZonecode] = useState("");
   const [detailAddress, setdetailAddress] = useState("");
 
   const [cart, setCart] = useState<CartItem[]>();
@@ -93,9 +93,9 @@ const BuyingComponent = () => {
   const onClickAddr = () => {
     if (window.daum && window.daum.Postcode) {
       new window.daum.Postcode({
-        oncomplete: function (data: { address: string; zipcode: string }) {
+        oncomplete: function (data: { address: string; zonecode: string }) {
           setAddress(data.address);
-          setzipcode(data.zipcode);
+          setZonecode(data.zonecode);
         },
       }).open();
     } else {
@@ -139,7 +139,7 @@ const BuyingComponent = () => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const formData = new FormData(form);
-      formData.append("zipcode", zipcode);
+      formData.append("zipcode", zonecode);
       formData.append("streetAddress", address);
       formData.append("detailAddress", detailAddress);
       formData.delete("pay");
@@ -224,8 +224,8 @@ const BuyingComponent = () => {
                       type="text"
                       disabled
                       required
-                      name="zipcode"
-                      value={zipcode}
+                      name="zonecode"
+                      value={zonecode}
                       className="placeholder-grayborder mb-[19px] mr-[17px] h-[26px] w-[100px] border border-gray-border text-center text-textmedium leading-[26px]"
                     />
                     <button
