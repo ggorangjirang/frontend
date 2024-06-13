@@ -3,7 +3,7 @@ import { Login } from "@/apis/users";
 import { tokenState } from "@/recoil/atoms/authState";
 import axios from "axios";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 
@@ -38,7 +38,7 @@ const Redirection = () => {
           console.log(message);
 
           // 원하는 페이지로 리다이렉트
-          router.push("/"); // 원하는 페이지로 변경
+          router.push("/desired-page"); // 원하는 페이지로 변경
         } else {
           console.error("Authorization code not found");
         }
@@ -54,19 +54,14 @@ const Redirection = () => {
   useEffect(() => {
     console.log(searchParams.get("code"));
   }, [searchParams, loading]);
-
+  useEffect(() => {
+    console.log("adasd");
+    setLoading(true);
+  }, []);
   if (loading) {
-    return (
-      <Suspense>
-        <div>로그인 중입니다.</div>
-      </Suspense>
-    );
+    return <div>로그인 중입니다.</div>;
   }
-  return (
-    <Suspense>
-      <div>로그인 됐슴</div>
-    </Suspense>
-  );
+  return <div>로그인 됐슴</div>;
 };
 
 export default Redirection;
