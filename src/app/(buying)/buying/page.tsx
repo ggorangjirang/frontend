@@ -1,5 +1,10 @@
 import BuyingComponent from "@/components/buying";
+import { Suspense } from "react";
 
 export default function page() {
-  return <BuyingComponent />;
+  return (
+    <Suspense>
+      <BuyingComponent />
+    </Suspense>
+  );
 }

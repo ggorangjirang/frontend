@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
 import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
-import { constSelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { tokenState } from "@/recoil/atoms/authState";
 import { getUserInfoByEmail, patchUser } from "@/apis/users";
 import { userInfo } from "os";

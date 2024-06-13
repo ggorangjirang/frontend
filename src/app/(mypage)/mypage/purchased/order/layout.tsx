@@ -1,5 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 export default function layout({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <Suspense>{children}</Suspense>
+    </div>
+  );
 }

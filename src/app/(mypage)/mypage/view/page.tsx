@@ -9,5 +9,5 @@ export default function ReviewView() {
   useEffect(() => {
     setIsWrite(false);
   }, [setIsWrite]);
-  return <ViewComponent route="view"/>;
+  return <ViewComponent route="view" />;
 }

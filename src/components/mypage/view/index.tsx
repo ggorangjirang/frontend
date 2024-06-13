@@ -55,7 +55,7 @@ const ViewComponent = ({ route }: Props) => {
     };
 
     fetchData();
-  }, [pageInfo?.page]);
+  }, [pageInfo?.page, route]);
 
   const onClickChange = () => {};
   console.log(reviews);
