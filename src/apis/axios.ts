@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -15,11 +15,11 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
-      throw new Error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
+      throw error as AxiosError;
     } else {
       const err = error as Error;
       console.error(err.message);
-      throw error;
+      throw error as AxiosError;
     }
   }
 };
