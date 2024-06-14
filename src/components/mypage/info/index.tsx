@@ -88,10 +88,9 @@ const MyPageInfoComponent = () => {
       console.error("Daum Postcode API is not loaded.");
     }
   };
-
+  const token = localStorage.getItem("accessToken");
   useEffect(() => {
     const getUser = async () => {
-      const token = localStorage.getItem("accessToken");
       const userInfo = await getUserInfoByEmail(token!);
       setUser(userInfo);
       setZonecode(userInfo?.address.zipcode);
