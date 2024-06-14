@@ -102,9 +102,7 @@ const MyPageInfoComponent = () => {
     };
     getUser();
   }, [token]);
-  // useEffect(() => {
 
-  // }, []);
   return (
     <>
       <div className="absolute mt-[24px] flex h-auto w-[1280px]">
