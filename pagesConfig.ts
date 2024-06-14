@@ -30,6 +30,10 @@ export const pageConfig: Record<string, PageConfig> = {
     showHeader: true,
     title: "내 리뷰 조회 페이지",
   },
+  "/mypage/info": {
+    showHeader: true,
+    title: "내 정보 조회 페이지",
+  },
   "/mypage/write": {
     showHeader: true,
     title: "내 리뷰 작성 페이지",
@@ -37,6 +41,10 @@ export const pageConfig: Record<string, PageConfig> = {
   "/mypage/purchased": {
     showHeader: true,
     title: "내 리뷰 작성 페이지",
+  },
+  "/mypage/purchased/order": {
+    showHeader: true,
+    title: "구매, 주문내역",
   },
   "/buying": {
     showHeader: true,
