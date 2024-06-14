@@ -52,7 +52,6 @@ export default function Header() {
     };
 
     initCategories();
-    console.log("render/cate");
   }, [setToken, token]);
 
   useEffect(() => {
@@ -117,7 +116,6 @@ export default function Header() {
                               배송조회
                             </li>
                           </Link>
-
                           <Link href="/mypage/info">
                             <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                               마이페이지
