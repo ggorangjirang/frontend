@@ -8,19 +8,22 @@ import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
-import { cartItemSelector } from "@/recoil/selectors/cartCountState";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
+import useWebSocket from "@/hooks/useWebSocket";
+import { getAccessToken } from "@/utils/token";
+import { tokenState } from "@/recoil/atoms/authState";
 
 export default function Header() {
   const pathName = usePathname().split("/")[1];
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
-  //TODO
   const cart = useRecoilValue(cartState);
-  const [login, setIsLogin] = useState(false);
   const [categories, setCategories] = useState<Categories[]>();
-
+  const [token, setToken] = useRecoilState(tokenState);
+  const [login, setIsLogin] = useState(token ? true : false);
+  const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
+  if (!login) data?.deactivate();
   const onMouseEnter = () => {
     setHover(true);
   };
@@ -29,18 +32,33 @@ export default function Header() {
     setHover(false);
   };
 
+  const onClickLogout = () => {
+    window.localStorage.removeItem("accessToken");
+    window.localStorage.removeItem("refreshToken");
+    setToken("");
+    setIsLogin(false);
+  };
+
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-      const isLogin = window.localStorage.getItem("accessToken") ? true : false;
 
       setCategories(categoriesData);
-      setIsLogin(isLogin);
     };
 
     initCategories();
-  }, []);
+    console.log("render/cate");
+  }, [setToken, token]);
 
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    const isLogin = token ? true : false;
+    setToken(accessToken ?? "");
+    setIsLogin(isLogin);
+    setIsLogin(token ? true : false);
+  }, [setToken, token]);
+  //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
+  //커스텀 훅도 clientComponent
   return (
     showHeader && (
       <>
@@ -80,7 +98,7 @@ export default function Header() {
                 </Link>
                 {/* 로그인 */}
                 <div className="border border-l-0 border-r"></div>
-                {true ? (
+                {login ? (
                   <div className="group flex items-center justify-center">
                     <div className="relative flex cursor-pointer items-center justify-center gap-5">
                       <span className=" w-full text-[12px] text-text hover:text-primary">강예정님 어서오세요!</span>
@@ -96,7 +114,10 @@ export default function Header() {
                               마이페이지
                             </li>
                           </Link>
-                          <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                          <li
+                            className="flex cursor-pointer items-center justify-center py-2 hover:text-primary"
+                            onClick={onClickLogout}
+                          >
                             로그아웃
                           </li>
                         </ul>

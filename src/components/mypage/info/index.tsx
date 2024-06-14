@@ -1,12 +1,11 @@
 "use client";
 import Input from "@/components/common/input";
 import MyPageTab from "@/components/common/tab";
-import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
 import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
-import { constSelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { tokenState } from "@/recoil/atoms/authState";
 import { getUserInfoByEmail, patchUser } from "@/apis/users";
 import { userInfo } from "os";
@@ -83,8 +82,9 @@ const MyPageInfoComponent = () => {
     if (window.daum && window.daum.Postcode) {
       new window.daum.Postcode({
         oncomplete: function (data: { address: string; zonecode: string }) {
-          setAddress(data.address);
+          console.log(data);
           setZonecode(data.zonecode);
+          setAddress(data.address);
         },
       }).open();
     } else {
@@ -94,9 +94,8 @@ const MyPageInfoComponent = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const userInfo = await getUserInfoByEmail(token);
+      const userInfo = await getUserInfoByEmail(token!);
       setUser(userInfo);
-      console.log(userInfo);
       setZonecode(userInfo?.address.zipcode);
       setAddress(userInfo?.address.streetAddress);
       setAddressDetail(userInfo?.address.detailAddress);
@@ -107,11 +106,11 @@ const MyPageInfoComponent = () => {
 
   // }, []);
   return (
-    <PageWrapper>
-      <div className="absolute mt-[24px] flex h-auto w-[1440px]">
+    <>
+      <div className="absolute mt-[24px] flex h-auto w-[1280px]">
         <MyPageTab />
-        <div className="ml-[44px] w-[73%]">
-          <p className="mb-[17px] text-texttitle  font-semibold text-primary">개인정보 변경</p>
+        <div className="ml-[41px] w-[73%] ">
+          <p className="mb-[26px] text-texttitle font-semibold text-primary">주문/배송</p>
           <form onSubmit={wrapFormAsync(handleSubmit(onSubmitChangeInfo))} className="block">
             <div className="h-auto w-full rounded-[12px] border border-gray-border p-[2%]">
               <div className="mb-[11px] flex h-[33px] w-full flex-row">
@@ -206,7 +205,7 @@ const MyPageInfoComponent = () => {
           </form>
         </div>
       </div>
-    </PageWrapper>
+    </>
   );
 };
 export default MyPageInfoComponent;

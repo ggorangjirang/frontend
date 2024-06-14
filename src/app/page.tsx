@@ -5,7 +5,7 @@ import ProductCardListSet from "@/components/common/cards/ProductCardListSet";
 import Slider from "@/components/main/Slider";
 import PageWrapper from "@/layout/Wrapper/PageWrapper";
 import { useEffect, useState } from "react";
-
+import "react-toastify/dist/ReactToastify.css";
 export default function Page() {
   const [limitedData, setLimitedData] = useState<Product[] | undefined>([]);
   const [bestSellingData, setBestSellingData] = useState<Product[] | undefined>([]);

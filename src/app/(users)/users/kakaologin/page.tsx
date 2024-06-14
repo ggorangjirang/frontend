@@ -13,21 +13,21 @@ export default function KakaoLogin() {
   const handleKakaoLogin = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.redirectUri}&response_type=code`;
   };
-  useEffect(() => {
-    const { code } = router.query;
+  // useEffect(() => {
+  //   const { code } = router.query;
 
-    if (code) {
+  //   if (code) {
 
-      // axios.post('/api/kakao/token', { code })
-      //   .then(response => {
-      //     console.log('Access token:', response.data.access_token);
-      //     // Handle further actions after getting access token
-      //   })
-      //   .catch(error => {
-      //     console.error('Failed to exchange Kakao code for token:', error);
-      //   });
-    }
-  }, [router.query]);
+  //     axios.post('/api/kakao/token', { code })
+  //       .then(response => {
+  //         console.log('Access token:', response.data.access_token);
+  //         // Handle further actions after getting access token
+  //       })
+  //       .catch(error => {
+  //         console.error('Failed to exchange Kakao code for token:', error);
+  //       });
+  //   }
+  // }, [router.query]);
   return (
     <Wrapper>
       <UserWrapper>

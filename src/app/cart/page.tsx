@@ -9,6 +9,7 @@ import { CartItem, getCartItems } from "@/apis/cart";
 import { useRecoilState } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 import { DELIVERY_FEE } from "@/constants";
+import { useRouter } from "next/navigation";
 
 const getAmountItems = (items: CartItem[]) => items.length;
 const getCartTotalPrice = (items: CartItem[]) =>
@@ -22,13 +23,14 @@ const getTotalFee = (items: CartItem[]) => {
 };
 
 export default function Page() {
+  const router = useRouter();
   const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
   const [cart, setCart] = useRecoilState(cartState);
 
-  //리뷰 받아오기
   useEffect(() => {
-    async function initCart() {
-      const cartResponse = await getCartItems();
+    const initCart = async () => {
+      const targetPage = pageInfo?.page ?? 0;
+      const cartResponse = await getCartItems(targetPage);
       const data = cartResponse.data;
 
       const targetPageInfo = {
@@ -37,18 +39,12 @@ export default function Page() {
         totalElements: data!.totalElements,
       };
 
-      const initialCounts: { [key: string]: number } = {};
-
-      data.content.forEach((cartItem) => {
-        initialCounts[cartItem.productId] = cartItem.quantity;
-      });
-
       setPageInfo(targetPageInfo);
       setCart({ totalCount: data.totalElements, cartItems: data.content });
-    }
+    };
 
     initCart();
-  }, [setCart]);
+  }, [setCart, pageInfo?.page]);
 
   // 수량 업데이트 함수
 
@@ -57,6 +53,11 @@ export default function Page() {
     const updatedData = cartItem?.map((item) => (item.productId === productId ? { ...item, quantity: value } : item));
 
     setCart((prev) => ({ ...prev, cartItems: updatedData }));
+  };
+
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.push(`/buying?route=cart`);
   };
 
   if (cart.cartItems.length === 0)
@@ -111,7 +112,9 @@ export default function Page() {
           총 결제금액 : <span className="text-price">{getTotalFee(cart.cartItems).toLocaleString()} 원</span>
         </p>
         <div className="my-4 h-[1px] w-[222px] bg-gray-border" />
-        <ButtonMedium type="button">결제하기</ButtonMedium>
+        <ButtonMedium type="button" onClickHandler={onClickHandler}>
+          결제하기
+        </ButtonMedium>
       </div>
     </div>
   );
