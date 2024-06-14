@@ -33,7 +33,7 @@ export const authState = atom({
 
 export const tokenState = atom({
   key: "accessToken",
-  default: "",
+  default: "null",
   // effects_UNSTABLE: [localStorageEffect("accessToken")],
 });
 
