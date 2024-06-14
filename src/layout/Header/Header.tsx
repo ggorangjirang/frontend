@@ -24,7 +24,8 @@ export default function Header() {
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
   const [token, setToken] = useRecoilState(tokenState);
-  const [login, setIsLogin] = useState(token ? true : false);
+  const [login, setIsLogin] = useState(!!token);
+
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
 
   if (!login) data?.deactivate();
