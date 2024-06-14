@@ -14,16 +14,23 @@ import useWebSocket from "@/hooks/useWebSocket";
 import { getAccessToken } from "@/utils/token";
 import { tokenState } from "@/recoil/atoms/authState";
 import { getUserInfoByEmail } from "@/apis/users";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const pathName = usePathname().split("/")[1];
+  const router = useRouter();
+  const pathName = usePathname();
+  console.log(pathName);
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
   const [token, setToken] = useRecoilState(tokenState);
+<<<<<<< src/layout/Header/Header.tsx
   const [login, setIsLogin] = useState(token ? true : false);
   const [name, setName] = useState<string>("");
+=======
+  const [login, setIsLogin] = useState(!!token);
+>>>>>>> src/layout/Header/Header.tsx
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
 
   if (!login) data?.deactivate();
@@ -40,6 +47,8 @@ export default function Header() {
     window.localStorage.removeItem("refreshToken");
     setToken("");
     setIsLogin(false);
+    router.push("/");
+    alert("로그아웃 되었습니다.");
   };
 
   useEffect(() => {
@@ -50,16 +59,16 @@ export default function Header() {
     };
 
     initCategories();
-    console.log("render/cate");
   }, [setToken, token]);
 
   useEffect(() => {
     const accessToken = getAccessToken();
     const isLogin = token ? true : false;
+    if (isLogin) data?.activate();
     setToken(accessToken ?? "");
     setIsLogin(isLogin);
     setIsLogin(token ? true : false);
-  }, [setToken, token]);
+  }, [data, setToken, token]);
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
 
@@ -118,10 +127,12 @@ export default function Header() {
                       <div className="absolute left-[50px] top-[30px] z-50 hidden h-auto w-[124px] rounded-lg border border-gray-border bg-white px-5 py-4 group-hover:block">
                         <div className="absolute right-[34px] top-[-16px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
                         <ul className="z-50 flex-col items-center justify-center">
-                          <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
-                            배송조회
-                          </li>
                           <Link href="/mypage/purchased">
+                            <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                              배송조회
+                            </li>
+                          </Link>
+                          <Link href="/mypage/info">
                             <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                               마이페이지
                             </li>

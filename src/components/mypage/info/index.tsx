@@ -99,10 +99,8 @@ const MyPageInfoComponent = () => {
       setAddressDetail(userInfo?.address.detailAddress);
     };
     getUser();
-  }, []);
-  // useEffect(() => {
+  }, [token]);
 
-  // }, []);
   return (
     <>
       <div className="absolute mt-[24px] flex h-auto w-[1280px]">

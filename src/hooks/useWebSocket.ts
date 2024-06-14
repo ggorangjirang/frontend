@@ -57,25 +57,19 @@ const useWebSocket = (url: string) => {
           heartbeatOutgoing: 4000,
         });
 
-        if (token) {
-          // const stompClient = new Client({
-
-          // });
-
-          //연결시
-          stompClient.onConnect = () => {
-            console.log("Connected");
-            if (id !== null) {
-              stompClient.subscribe(
-                `/user/${id}/queue/bellDeliveryStatus`,
-                (message) => {
-                  toast.info(`message Receive : ${message.body}`);
-                },
-                { Authorization: token || "" }
-              );
-            }
-          };
-        }
+        //연결시
+        stompClient.onConnect = () => {
+          console.log("Connected");
+          if (id !== null) {
+            stompClient.subscribe(
+              `/user/${id}/queue/bellDeliveryStatus`,
+              (message) => {
+                toast.info(`message Receive : ${message.body}`);
+              },
+              { Authorization: token || "" }
+            );
+          }
+        };
         //에러 수신시
         stompClient.onStompError = (frame) => {
           console.error("Broker reported error: " + frame.headers["message"]);
@@ -86,7 +80,6 @@ const useWebSocket = (url: string) => {
           console.log("disconeected");
         };
         //구독 활성화
-        stompClient.activate();
         //서버에 연결
         stompClientRef.current = stompClient;
         isInitialized.current = true; // WebSocket 초기화 완료 상태로 설정
@@ -108,6 +101,15 @@ const useWebSocket = (url: string) => {
       }
     };
     initializeWebSocket();
+
+    // 컴포넌트 언마운트 시 연결 해제
+    return () => {
+      if (stompClientRef.current) {
+        stompClientRef.current.deactivate();
+        stompClientRef.current = null;
+        isInitialized.current = false;
+      }
+    };
   }, [url]);
 
   return stompClientRef.current;

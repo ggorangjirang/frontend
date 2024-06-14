@@ -58,8 +58,7 @@ const ViewComponent = ({ route }: Props) => {
   }, [pageInfo?.page, route]);
 
   return (
-    reviews &&
-    reviews.content && (
+    reviews && (
       <>
         <div className="absolute mt-[24px] flex h-auto w-[1440px]">
           <MyPageTab />

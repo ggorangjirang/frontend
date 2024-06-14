@@ -5,6 +5,11 @@ import Wrapper from "@/layout/Wrapper/Wrapper";
 import Header from "@/layout/Header/Header";
 import { ReactNode, Suspense } from "react";
 
+export const metadata = {
+  title: "꼬랑지랑",
+  description: "elice 프로젝트 6팀",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className={pretendard.variable}>
