@@ -17,7 +17,8 @@ import { useRouter } from "next/navigation";
 
 export default function Header() {
   const router = useRouter();
-  const pathName = usePathname().split("/")[1];
+  const pathName = usePathname();
+  console.log(pathName);
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
@@ -61,7 +62,7 @@ export default function Header() {
     setToken(accessToken ?? "");
     setIsLogin(isLogin);
     setIsLogin(token ? true : false);
-  }, [setToken, token]);
+  }, [data, setToken, token]);
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
   return (
