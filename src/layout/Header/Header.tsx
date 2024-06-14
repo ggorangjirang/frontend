@@ -13,15 +13,17 @@ import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
 import { getAccessToken } from "@/utils/token";
 import { tokenState } from "@/recoil/atoms/authState";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const router = useRouter();
   const pathName = usePathname().split("/")[1];
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
   const [token, setToken] = useRecoilState(tokenState);
-  const [login, setIsLogin] = useState(token ? true : false);
+  const [login, setIsLogin] = useState(!!token);
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
   if (!login) data?.deactivate();
   const onMouseEnter = () => {
@@ -37,6 +39,8 @@ export default function Header() {
     window.localStorage.removeItem("refreshToken");
     setToken("");
     setIsLogin(false);
+    router.push("/");
+    alert("로그아웃 되었습니다.");
   };
 
   useEffect(() => {
@@ -53,6 +57,7 @@ export default function Header() {
   useEffect(() => {
     const accessToken = getAccessToken();
     const isLogin = token ? true : false;
+    if (isLogin) data?.activate();
     setToken(accessToken ?? "");
     setIsLogin(isLogin);
     setIsLogin(token ? true : false);

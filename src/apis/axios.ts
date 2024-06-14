@@ -1,14 +1,63 @@
 import { getAccessToken } from "@/utils/token";
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000, //10초
   headers: {
     "Content-Type": "application/json",
-    Authorization: getAccessToken(), //토큰이 있으면 토큰을 불러오고 아니면 null값
   },
 });
+
+axiosInstance.interceptors.request.use(
+  function (config: InternalAxiosRequestConfig) {
+    const token = getAccessToken();
+    if (token) {
+      config.headers.Authorization = `${token}`;
+    }
+    return config;
+  },
+  async function (error: AxiosError) {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  function (response: AxiosResponse) {
+    return response;
+  },
+  async function (error: AxiosError) {
+    if (!error.response) {
+      alert("네트워크 에러가 발생했습니다.");
+      console.error("Network Error", error.message);
+      if (typeof window !== undefined) window.history.back();
+    } else if (error.code === "ECONNABORTED") {
+      // Timeout error
+      alert("요청시간이 초과하였습니다.");
+      console.error("Timeout Error", error.message);
+      if (typeof window !== undefined) window.history.back();
+    } else if (error.response) {
+      if (error.response.status === 401) {
+        alert("로그인이 필요한 서비스입니다. 로그인해주세요");
+
+        if (typeof window !== undefined) window.location.href = "/login";
+      } else if (error.response.status === 403) {
+        console.error("Forbidden", error.response.data);
+
+        alert("권한이 없습니다.");
+
+        if (typeof window !== undefined) window.history.back();
+      } else {
+        console.error(`클라이언트 에러 ${error.response.status}`, error.response.data);
+      }
+
+      if (error.response.status >= 500) {
+        console.error(`server 에러입니다. ${error.response.status}`, error.response.data);
+      }
+    }
+    return Promise.reject;
+  }
+);
 
 const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promise<any> => {
   try {

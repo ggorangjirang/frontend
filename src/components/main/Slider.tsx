@@ -8,11 +8,18 @@ import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 // import required modules
 
 export default function Slider() {
+  const router = useRouter();
   SwiperCore.use([Navigation, Autoplay]);
+
+  const onClickHandler = (productId: number) => {
+    router.push(`/products?productId=${productId}`);
+  };
+
   return (
     <Swiper
       navigation={true}
@@ -24,15 +31,17 @@ export default function Slider() {
       modules={[Navigation, Pagination, Autoplay]}
     >
       <SwiperSlide className="swiper-slide">
-        <Image src={"/slides/slide1.jpg"} alt="slide1" width={1140} height={420} />
+        <div onClick={() => onClickHandler(48)}>
+          <Image src={"/slides/slide1.jpg"} alt="slide1" width={1140} height={420} />
+        </div>
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide onClick={() => onClickHandler(82)}>
         <Image src={"/slides/slide2.jpg"} alt="slide2" width={1140} height={420} />
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide onClick={() => onClickHandler(2)}>
         <Image src={"/slides/slide3.jpg"} alt="slide3" width={1140} height={420} />
       </SwiperSlide>
-      <SwiperSlide>
+      <SwiperSlide onClick={() => onClickHandler(71)}>
         <Image src={"/slides/slide4.jpg"} alt="slide4" width={1140} height={420} />
       </SwiperSlide>
     </Swiper>
