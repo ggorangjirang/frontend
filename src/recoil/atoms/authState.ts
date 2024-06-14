@@ -8,24 +8,24 @@ export const authState = atom({
 });
 
 // const localStorageEffect =
-//   <T>(key: string | null): AtomEffect<T> =>
+//   (key: string): AtomEffect<string> =>
 //   ({ setSelf, onSet }) => {
-//     if (typeof window !== "undefined" && T !== null) {
+//     if (typeof window !== "undefined") {
 //       const savedValue = window.localStorage.getItem(key);
 //       if (savedValue !== null) {
 //         setSelf(JSON.parse(savedValue));
 //       }
 //     }
 //     //onSet => atom의 변화를 감지하고 구독한다.
-//     onSet((newValue: T, _: T | DefaultValue, isReset: boolean) => {
-//       isReset ? localStorage.removeItem(key) : localStorage.setItem(key, JSON.stringify(newValue));
+//     onSet((newValue: string, _: string | DefaultValue, isReset: boolean) => {
+//       isReset ? window.localStorage.removeItem(key) : window.localStorage.setItem(key, JSON.stringify(newValue));
 //     });
 //   };
 
 export const tokenState = atom({
   key: "accessToken",
   default: "",
-  // effects_UNSTABLE: [localStorageEffect<string | null>("accessToken")],
+  // effects_UNSTABLE: [localStorageEffect("accessToken")],
 });
 
 export const userState = atom({

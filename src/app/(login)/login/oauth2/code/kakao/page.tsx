@@ -7,14 +7,14 @@ import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 
-const Redirection = () => {
+const Page = () => {
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
+  console.log("redirect");
   useEffect(() => {
     const fetchTokens = async () => {
       try {
@@ -28,6 +28,7 @@ const Redirection = () => {
             `https://ggorangjirang.duckdns.org/login/oauth2/code/kakao?code=${authorizationCode}`
           );
 
+          console.log(response);
           const { accessToken, refreshToken, message } = await response.data;
 
           // 토큰을 로컬 스토리지에 저장
@@ -69,4 +70,4 @@ const Redirection = () => {
   );
 };
 
-export default Redirection;
+export default Page;
