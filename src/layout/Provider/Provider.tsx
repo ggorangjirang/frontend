@@ -1,15 +1,14 @@
 "use client";
 import useWebSocket from "@/hooks/useWebSocket";
+import { tokenState } from "@/recoil/atoms/authState";
 import { ReactNode, useEffect } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 interface Props {
   children: ReactNode;
 }
 
 export default function Provider({ children }: Props) {
-  const data = useWebSocket(1, "");
-
   return (
     <RecoilRoot>
       <ToastContainer

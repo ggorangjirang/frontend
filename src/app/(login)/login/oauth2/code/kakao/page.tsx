@@ -24,7 +24,7 @@ const Page = () => {
 
         if (authorizationCode) {
           // 인가 코드를 사용하여 백엔드에서 토큰을 요청
-          const response = await axios.get(
+          const response = await axios.post(
             `https://ggorangjirang.duckdns.org/login/oauth2/code/kakao?code=${authorizationCode}`
           );
 
