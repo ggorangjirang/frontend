@@ -35,20 +35,25 @@ export default function Page() {
       <>
         <div className="absolute mt-[24px] flex h-auto w-[1280px]">
           <MyPageTab />
-          {/* size 헤더에 맞출지 고민하기 */}
           <div className="ml-[41px] w-[73%] ">
             <p className="mb-[26px] text-texttitle font-semibold text-primary">주문/배송</p>
-            {orderData.content.map((order) => (
-              <OrderDetailCard key={order.id} order={order} />
-            ))}
-            {pageInfo && (
-              <Pagination
-                limit={5}
-                pageInfo={pageInfo}
-                pageSize={size}
-                setPageInfo={setPageInfo}
-                totalPage={pageInfo?.totalPages}
-              />
+            {orderData && orderData.content.length <= 0 ? (
+              <>주문내역이 없습니다.</>
+            ) : (
+              <>
+                {orderData.content.map((order) => (
+                  <OrderDetailCard key={order.id} order={order} />
+                ))}
+                {pageInfo && (
+                  <Pagination
+                    limit={5}
+                    pageInfo={pageInfo}
+                    pageSize={size}
+                    setPageInfo={setPageInfo}
+                    totalPage={pageInfo?.totalPages}
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
