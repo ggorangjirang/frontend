@@ -40,7 +40,11 @@ axiosInstance.interceptors.response.use(
       if (error.response.status === 401) {
         alert("로그인이 필요한 서비스입니다. 로그인해주세요");
 
-        if (typeof window !== undefined) window.location.href = "/login";
+        if (typeof window !== undefined) {
+          window.localStorage.removeItem("accessToken");
+          window.localStorage.removeItem("refreshToken");
+          window.location.href = "/";
+        }
       } else if (error.response.status === 403) {
         console.error("Forbidden", error.response.data);
 

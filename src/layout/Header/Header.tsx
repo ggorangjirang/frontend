@@ -111,10 +111,13 @@ export default function Header() {
                       <div className="absolute left-[50px] top-[30px] z-50 hidden h-auto w-[124px] rounded-lg border border-gray-border bg-white px-5 py-4 group-hover:block">
                         <div className="absolute right-[34px] top-[-16px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
                         <ul className="z-50 flex-col items-center justify-center">
-                          <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
-                            배송조회
-                          </li>
                           <Link href="/mypage/purchased">
+                            <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                              배송조회
+                            </li>
+                          </Link>
+
+                          <Link href="/mypage/info">
                             <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                               마이페이지
                             </li>
