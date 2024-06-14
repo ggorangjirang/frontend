@@ -20,12 +20,10 @@ export default function Header() {
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
-  const data = useWebSocket(1, "");
   const [token, setToken] = useRecoilState(tokenState);
   const [login, setIsLogin] = useState(token ? true : false);
-
-  //recoilPersist
-
+  const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
+  if (!login) data?.deactivate();
   const onMouseEnter = () => {
     setHover(true);
   };
@@ -37,7 +35,7 @@ export default function Header() {
   const onClickLogout = () => {
     window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
-    data?.deactivate();
+    setToken("");
     setIsLogin(false);
   };
 
