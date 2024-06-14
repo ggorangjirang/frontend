@@ -23,8 +23,7 @@ const generateArray = ({ totalPage, limit }: { totalPage: number; limit: number 
     .map(() => arr.splice(0, limit));
 
   return slicedArray;
-};
-
+};;
 // page 넘버 0 을기준으로 합니다.
 
 export default function Pagination({ limit, totalPage, requestFn = () => {}, pageInfo, setPageInfo }: Props) {

@@ -1,5 +1,6 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
 import { postAxios, getEachAxios, patchAxios, getAxios } from "../axios";
+import axios from "axios";
 
 // 회원가입
 export type Login = {
@@ -27,7 +28,9 @@ export type PatchUser = {
 
 export type JwtPayload = { email: string };
 
-export type DuplicateResponse = { data: boolean };
+export type DuplicateResponse = {
+  isDuplicate: any;
+};
 
 // 로그인
 export const loginUser = async (data: Login): Promise<any> => {
@@ -50,15 +53,11 @@ export const postUser = async (data: SignUp): Promise<SignUp> => {
     throw error;
   }
 };
+
 // 중복 확인
 export const getDuplicate = async (email: string): Promise<DuplicateResponse> => {
-  try {
-    const response = await getEachAxios(`${API_URLS.users}/duplicate`, { email });
-    return response.data;
-  } catch (error) {
-    console.error("Error getting User:", error);
-    throw error;
-  }
+  const response = await getAxios(`${API_URLS.users}/duplicate/${email}`);
+  return response.data as DuplicateResponse;
 };
 // 회원 정보 수정
 

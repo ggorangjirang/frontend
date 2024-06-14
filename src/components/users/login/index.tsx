@@ -2,24 +2,19 @@
 import Wrapper from "@/layout/Wrapper/Wrapper";
 import Input from "@/components/common/input";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ButtonPrimary, KakaoButton } from "@/components/common/Buttons/ButtonIcon";
+import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import UserWrapper from "@/layout/Wrapper/UserWrapper";
 import { loginUser, Login } from "@/apis/users";
 import { tokenState } from "@/recoil/atoms/authState";
 import { useSetRecoilState } from "recoil";
-import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 export const baseApiUrl = "https://ggorangjirang.duckdns.org/";
 
 const LoginComponent = () => {
   const setRecoilToken = useSetRecoilState(tokenState);
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const onSubmitLogin: SubmitHandler<Login> = async (data: Login): Promise<void> => {
     const response = await loginUser({
@@ -37,16 +32,6 @@ const LoginComponent = () => {
       setRecoilToken(accessToken);
       router.push("/");
     }
-  };
-  const getAccessToken = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault(); // Prevent the form from submitting
-    e.stopPropagation();
-    console.log("adsasdaaaaa");
-
-    window.location.href = "https://ggorangjirang.duckdns.org/oauth2/authorization/kakao";
-
-    console.log("adsasdaaaaa");
-    setLoading(true);
   };
 
   const fields: { label: string; name: keyof Login; type: string; placeholder: string }[] = [
@@ -73,7 +58,6 @@ const LoginComponent = () => {
           ))}
           <div className="flex w-full flex-col items-center justify-center">
             <ButtonPrimary value={"로그인"} className="text-white" type="submit" size="users" />
-            <KakaoButton onClickHandler={getAccessToken} />
           </div>
         </form>
       </UserWrapper>

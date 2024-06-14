@@ -13,6 +13,7 @@ import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
 import { getAccessToken } from "@/utils/token";
 import { tokenState } from "@/recoil/atoms/authState";
+import { getUserInfoByEmail } from "@/apis/users";
 
 export default function Header() {
   const pathName = usePathname().split("/")[1];
@@ -22,7 +23,9 @@ export default function Header() {
   const [categories, setCategories] = useState<Categories[]>();
   const [token, setToken] = useRecoilState(tokenState);
   const [login, setIsLogin] = useState(token ? true : false);
+  const [name, setName] = useState<string>("");
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
+
   if (!login) data?.deactivate();
   const onMouseEnter = () => {
     setHover(true);
@@ -59,6 +62,15 @@ export default function Header() {
   }, [setToken, token]);
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
+
+  useEffect(() => {
+    const getUser = async () => {
+      const token = localStorage.getItem("accessToken");
+      const userInfo = await getUserInfoByEmail(token!);
+      setName(userInfo?.name);
+    };
+    getUser();
+  }, []);
   return (
     showHeader && (
       <>
@@ -101,7 +113,7 @@ export default function Header() {
                 {login ? (
                   <div className="group flex items-center justify-center">
                     <div className="relative flex cursor-pointer items-center justify-center gap-5">
-                      <span className=" w-full text-[12px] text-text hover:text-primary">강예정님 어서오세요!</span>
+                      <span className=" w-full text-[12px] text-text hover:text-primary">{name}님 어서오세요!</span>
                       <SVGIcon name="ArrowDown" size={23} color="secondary"></SVGIcon>
                       <div className="absolute left-[50px] top-[30px] z-50 hidden h-auto w-[124px] rounded-lg border border-gray-border bg-white px-5 py-4 group-hover:block">
                         <div className="absolute right-[34px] top-[-16px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
