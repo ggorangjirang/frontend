@@ -101,7 +101,7 @@ const MyPageInfoComponent = () => {
       setAddressDetail(userInfo?.address.detailAddress);
     };
     getUser();
-  }, []);
+  }, [token]);
   // useEffect(() => {
 
   // }, []);

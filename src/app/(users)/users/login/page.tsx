@@ -10,7 +10,6 @@ import { tokenState } from "@/recoil/atoms/authState";
 import { useSetRecoilState } from "recoil";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-export const baseApiUrl = "https://ggorangjirang.duckdns.org/";
 
 const Page = () => {
   const setRecoilToken = useSetRecoilState(tokenState);
