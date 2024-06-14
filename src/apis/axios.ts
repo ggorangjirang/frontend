@@ -15,6 +15,7 @@ const commonAxios = async (url: string, options: AxiosRequestConfig = {}): Promi
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
+      console.error("Response data:", error.response?.data);
       throw new Error(`HTTP ERROR: ${error.response?.status} - ${error.message}`);
     } else {
       const err = error as Error;
@@ -48,13 +49,11 @@ export const postAxios = (
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
-  const token = window.localStorage.getItem("accessToken");
   return commonAxios(url, {
     ...options,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
       ...options.headers,
     },
     data: JSON.stringify(param),

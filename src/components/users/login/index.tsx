@@ -55,11 +55,6 @@ const LoginComponent = () => {
           ))}
           <div className="flex w-full flex-col items-center justify-center">
             <ButtonPrimary value={"로그인"} className="text-white" type="submit" size="users" />
-            <KakaoButton
-              onClickHandler={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
           </div>
         </form>
       </UserWrapper>
