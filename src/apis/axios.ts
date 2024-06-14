@@ -94,7 +94,6 @@ export const getEachAxios = async (
   params: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
-  console.log(params);
   return commonAxios(url, {
     ...options,
     method: "GET",

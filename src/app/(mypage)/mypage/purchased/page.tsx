@@ -24,7 +24,7 @@ export default function Page() {
       setPageInfo(targetPageInfo);
       setOrderData(data);
 
-      console.log(orderData.data);
+      console.log(orderData);
     };
 
     initOrders();

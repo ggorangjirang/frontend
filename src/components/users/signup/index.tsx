@@ -6,7 +6,7 @@ import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import UserWrapper from "@/layout/Wrapper/UserWrapper";
 import { getDuplicate, postUser } from "@/apis/users";
-
+import { useRouter } from "next/navigation";
 interface SignUpData {
   name: string;
   email: string;
@@ -16,22 +16,27 @@ interface SignUpData {
 
 const SignUpComponent = () => {
   const { register, handleSubmit } = useForm<SignUpData>();
-
+  const router = useRouter();
   const onSubmitSignUp: SubmitHandler<SignUpData> = async (data: SignUpData): Promise<void> => {
-    // 아이디 중복 검사
-    // const duplicateBoolean = await getDuplicate(data.email);
-    // if (duplicateBoolean.data) return alert("중복된 아이디입니다.");
+    try {
+      const duplicateResponse = await getDuplicate(data.email);
+      if (duplicateResponse.isDuplicate) {
+        alert("중복된 아이디입니다.");
+        return;
+      }
 
-    // 비밀번호 일치 검사
-    if (data.password !== data.passwordAgain) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
+      // 비밀번호 일치 검사
+      if (data.password !== data.passwordAgain) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+      const { name, email, password } = data;
+      await postUser({ name, email, password });
+
+      router.push("/");
+    } catch (error) {
+      console.error("Error:", error);
     }
-    const response = await postUser({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    });
   };
 
   const fields: { label: string; name: keyof SignUpData; type: string; placeholder: string }[] = [
