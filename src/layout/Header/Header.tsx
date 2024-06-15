@@ -53,11 +53,11 @@ export default function Header() {
     };
 
     initCategories();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (token) data?.activate();
-  }, []);
+  }, [data, token]);
 
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
