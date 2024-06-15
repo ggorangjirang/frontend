@@ -181,7 +181,7 @@ const Page = () => {
                     onChange={(e) => {
                       setAddress(e.target.value);
                     }}
-                    placeholder="기본 주소가 입력됩니다."
+                    placeholder="기본 주소가 입력됩니다. "
                     className="placeholder-grayborder mb-[17px] h-[26px] w-full border border-gray-border pl-[18px] text-textmedium"
                   />
                   <input
