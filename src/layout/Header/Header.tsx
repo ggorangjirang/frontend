@@ -8,22 +8,21 @@ import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
 import { getAccessToken } from "@/utils/token";
-import { tokenState } from "@/recoil/atoms/authState";
 import { useRouter } from "next/navigation";
+import useLogin from "./../../hooks/useLogin";
 
 export default function Header() {
   const router = useRouter();
   const pathName = usePathname();
-  console.log(pathName);
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
-  const [token, setToken] = useRecoilState(tokenState);
+  const [token, setToken] = useLogin("");
   const [login, setIsLogin] = useState(!!token);
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
   if (!login) data?.deactivate();
@@ -47,21 +46,17 @@ export default function Header() {
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-
       setCategories(categoriesData);
+      setIsLogin(token ? true : false);
     };
 
     initCategories();
-  }, [setToken, token]);
+  }, []);
 
   useEffect(() => {
-    const accessToken = getAccessToken();
-    const isLogin = token ? true : false;
-    if (isLogin) data?.activate();
-    setToken(accessToken ?? "");
-    setIsLogin(isLogin);
-    setIsLogin(token ? true : false);
-  }, [data, setToken, token]);
+    if (token) data?.activate();
+  }, []);
+
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
   return (
@@ -103,7 +98,7 @@ export default function Header() {
                 </Link>
                 {/* 로그인 */}
                 <div className="border border-l-0 border-r"></div>
-                {login ? (
+                {token ? (
                   <div className="group flex items-center justify-center">
                     <div className="relative flex cursor-pointer items-center justify-center gap-5">
                       <span className=" w-full text-[12px] text-text hover:text-primary">강예정님 어서오세요!</span>

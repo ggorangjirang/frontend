@@ -43,15 +43,11 @@ const useWebSocket = (url: string) => {
         const stompClient = new Client({
           brokerURL: url,
 
-          beforeConnect: () => {
-            console.log("beforeConnect");
-          },
+          beforeConnect: () => {},
           connectHeaders: {
             Authorization: token || "", // token 값이 존재하지 않으면 빈 문자열 사용
           },
-          debug: (str) => {
-            console.log(str);
-          },
+          debug: (str) => {},
           reconnectDelay: 5000, // 자동 재연결
           heartbeatIncoming: 4000,
           heartbeatOutgoing: 4000,
@@ -59,7 +55,6 @@ const useWebSocket = (url: string) => {
 
         //연결시
         stompClient.onConnect = () => {
-          console.log("Connected");
           if (id !== null) {
             stompClient.subscribe(
               `/user/${id}/queue/bellDeliveryStatus`,
@@ -76,16 +71,13 @@ const useWebSocket = (url: string) => {
           console.error("Additional details: " + frame.body);
         };
 
-        stompClient.onDisconnect = () => {
-          console.log("disconeected");
-        };
+        stompClient.onDisconnect = () => {};
         //구독 활성화
         //서버에 연결
         stompClientRef.current = stompClient;
         isInitialized.current = true; // WebSocket 초기화 완료 상태로 설정
 
         if (!token) {
-          console.log("deactive");
           stompClient.deactivate();
         }
         // 컴포넌트 언마운트 시 소켓 연결 해제

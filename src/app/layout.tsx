@@ -8,6 +8,9 @@ import { ReactNode, Suspense } from "react";
 export const metadata = {
   title: "꼬랑지랑",
   description: "elice 프로젝트 6팀",
+  icons: {
+    icon: "ggrjrfavicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -16,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="h-full font-pretendard">
         <Provider>
           <Wrapper>
-            <Suspense fallback={""}>
+            <Suspense fallback={<div>로딩중입니다.. 잠시만 기다려주세요</div>}>
               <Header />
             </Suspense>
             {children}

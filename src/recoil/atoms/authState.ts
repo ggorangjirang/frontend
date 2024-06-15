@@ -14,8 +14,8 @@ const localStorageEffect =
       const savedValue = window.localStorage.getItem(key);
       if (savedValue !== null) {
         try {
-          const parsedValue = JSON.parse(savedValue);
-          if (typeof parsedValue === "string") {
+          const parsedValue = savedValue;
+          if (typeof parsedValue === "string" && parsedValue.length > 5) {
             setSelf(parsedValue);
           } else {
             console.error(`Expected a string value for ${key} in localStorage, but got:`, parsedValue);
@@ -27,13 +27,25 @@ const localStorageEffect =
     }
     //onSet => atom의 변화를 감지하고 구독한다.
     onSet((newValue: string, _: string | DefaultValue, isReset: boolean) => {
-      isReset ? window.localStorage.removeItem(key) : window.localStorage.setItem(key, newValue);
+      if (isReset) {
+        window.localStorage.removeItem(key);
+      } else {
+        if (typeof window !== "undefined") {
+          const stringValue = JSON.stringify(newValue);
+          if (stringValue.length > 5000) {
+            // Adjust the size limit as needed
+            console.warn("Data size exceeds the limit for localStorage:", stringValue.length);
+          } else {
+            window.localStorage.setItem(key, stringValue);
+          }
+        }
+      }
     });
   };
 
 export const tokenState = atom({
   key: "accessToken",
-  default: "",
+  default: "" as string,
   effects_UNSTABLE: [localStorageEffect("accessToken")],
 });
 

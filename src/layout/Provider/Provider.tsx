@@ -1,16 +1,24 @@
 "use client";
-import useWebSocket from "@/hooks/useWebSocket";
+
 import { tokenState } from "@/recoil/atoms/authState";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot } from "recoil";
 interface Props {
   children: ReactNode;
 }
 
 export default function Provider({ children }: Props) {
   return (
-    <RecoilRoot>
+    <RecoilRoot
+      initializeState={({ set }) => {
+        let token = null;
+        if (typeof window !== "undefined") token = window.localStorage.getItem("accessToken");
+        if (token) {
+          set(tokenState, token);
+        }
+      }}
+    >
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
