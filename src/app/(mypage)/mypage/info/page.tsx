@@ -46,10 +46,6 @@ const Page = () => {
       script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
       script.async = true;
       document.body.appendChild(script);
-
-      script.onload = () => {
-        console.log("Daum Postcode script loaded");
-      };
     }
   }, []);
 
@@ -65,7 +61,6 @@ const Page = () => {
       alert("전화번호 형식이 올바르지 않습니다. 올바른 형식: 010-1234-5678 또는 02-123-4567");
       return;
     }
-    console.log(zonecode);
     const response = await patchUser({
       ...data,
       name: user?.name,
@@ -76,19 +71,16 @@ const Page = () => {
         detailAddress: addressDetail,
       },
     });
-    console.log(response);
   };
   const onClickAddr = () => {
     if (window.daum && window.daum.Postcode) {
       new window.daum.Postcode({
         oncomplete: function (data: { address: string; zonecode: string }) {
-          console.log(data);
           setZonecode(data.zonecode);
           setAddress(data.address);
         },
       }).open();
     } else {
-      console.error("Daum Postcode API is not loaded.");
     }
   };
 

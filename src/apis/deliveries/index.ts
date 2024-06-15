@@ -12,6 +12,5 @@ type DeliveryInfo = {
 
 export const postDeliveries = (data: DeliveryInfo) => {
   const response = postAxios(`${API_URLS.delivery}`, data);
-  console.log(response);
   return response;
 };

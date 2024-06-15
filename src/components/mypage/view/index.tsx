@@ -48,9 +48,7 @@ const ViewComponent = ({ route }: Props) => {
         setPageInfo(targetPageInfo);
         setReviews(data);
       } catch (error) {
-        console.log(error);
-
-        console.log(error);
+        console.error(error);
       }
     };
 

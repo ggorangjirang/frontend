@@ -11,7 +11,7 @@ const Redirection = () => {
   const { register, handleSubmit } = useForm<Login>();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [token, setToken] = useState();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -20,7 +20,6 @@ const Redirection = () => {
       try {
         // 현재 URL의 쿼리 파라미터에서 인가 코드를 추출
         const authorizationCode = searchParams.get("code");
-        console.log(`Authorization code: ${authorizationCode}`);
 
         if (authorizationCode) {
           // 인가 코드를 사용하여 백엔드에서 토큰을 요청
@@ -35,7 +34,7 @@ const Redirection = () => {
           window.localStorage.setItem("refreshToken", refreshToken);
 
           // 인증 성공 메시지 처리
-          console.log(message);
+          setToken(accessToken);
 
           // 원하는 페이지로 리다이렉트
           router.push("/desired-page"); // 원하는 페이지로 변경
@@ -51,11 +50,8 @@ const Redirection = () => {
 
     fetchTokens();
   }, [searchParams, router]);
+  useEffect(() => {}, [searchParams, loading]);
   useEffect(() => {
-    console.log(searchParams.get("code"));
-  }, [searchParams, loading]);
-  useEffect(() => {
-    console.log("adasd");
     setLoading(true);
   }, []);
   if (loading) {

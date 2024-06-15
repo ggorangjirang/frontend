@@ -61,7 +61,6 @@ const BuyingComponent = () => {
       setCart([
         { id: -1, discountedPrice, discountRate, productId, price, productImageUrl, productName: name, quantity },
       ]);
-      console.log(productResponse);
     };
     if (route === "cart") initCart();
     if (route === "product") initProduct();
@@ -76,9 +75,7 @@ const BuyingComponent = () => {
       script.async = true;
       document.body.appendChild(script);
 
-      script.onload = () => {
-        console.log("Daum Postcode script loaded");
-      };
+      script.onload = () => {};
     }
   }, []);
 
@@ -157,7 +154,6 @@ const BuyingComponent = () => {
 
       router.push("/bought");
     } catch (err) {
-      console.log(err);
       alert("결제과정에 문제가 생겼습니다.");
     }
   };

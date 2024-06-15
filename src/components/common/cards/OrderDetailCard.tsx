@@ -14,7 +14,6 @@ export default function OrderDetailCard({ order }: Props) {
   const router = useRouter();
   const pathName = usePathname();
   const oncClickDetail = () => router.push(`${pathName}/order?orderId=${order.id}`);
-  console.log(order);
   return (
     order && (
       <div className="mb-6 flex h-[150px] flex-row items-center justify-between gap-5 rounded-lg border border-gray-border p-5">
