@@ -7,7 +7,7 @@ export default function ProductCard({ imgSize = 250, cardInfo }: ProductCardProp
     <Link href={`products?productId=${cardInfo.productId}`}>
       <div className={`w-[${imgSize}px] z-0 flex cursor-pointer flex-col justify-center gap-y-2 align-middle`}>
         <Image
-          priority
+          loading="lazy"
           className="rounded-lg border border-gray-border"
           src={cardInfo.imageUrl === "url" ? "/testImg.png" : cardInfo.imageUrl} //TODO 추후 수정
           width={imgSize}

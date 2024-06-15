@@ -8,20 +8,22 @@ import { usePathname } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
 import { getAccessToken } from "@/utils/token";
-import { tokenState } from "@/recoil/atoms/authState";
+import { useRouter } from "next/navigation";
+import useLogin from "./../../hooks/useLogin";
 
 export default function Header() {
-  const pathName = usePathname().split("/")[1];
+  const router = useRouter();
+  const pathName = usePathname();
   const showHeader = pageConfig[pathName]?.showHeader ?? false;
   const [hover, setHover] = useState(false);
   const cart = useRecoilValue(cartState);
   const [categories, setCategories] = useState<Categories[]>();
-  const [token, setToken] = useRecoilState(tokenState);
-  const [login, setIsLogin] = useState(token ? true : false);
+  const [token, setToken] = useLogin("");
+  const [login, setIsLogin] = useState(!!token);
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
   if (!login) data?.deactivate();
   const onMouseEnter = () => {
@@ -37,26 +39,24 @@ export default function Header() {
     window.localStorage.removeItem("refreshToken");
     setToken("");
     setIsLogin(false);
+    router.push("/");
+    alert("로그아웃 되었습니다.");
   };
 
   useEffect(() => {
     const initCategories = async () => {
       const categoriesData = await getSubCategories();
-
       setCategories(categoriesData);
+      setIsLogin(token ? true : false);
     };
 
     initCategories();
-    console.log("render/cate");
-  }, [setToken, token]);
+  }, []);
 
   useEffect(() => {
-    const accessToken = getAccessToken();
-    const isLogin = token ? true : false;
-    setToken(accessToken ?? "");
-    setIsLogin(isLogin);
-    setIsLogin(token ? true : false);
-  }, [setToken, token]);
+    if (token) data?.activate();
+  }, []);
+
   //커스텀훅으로 => 리코일에 토큰넣는 로직 정의, 컴포넌트에서 useEffect가 된 시점에, 돌린다.
   //커스텀 훅도 clientComponent
   return (
@@ -98,7 +98,7 @@ export default function Header() {
                 </Link>
                 {/* 로그인 */}
                 <div className="border border-l-0 border-r"></div>
-                {login ? (
+                {token ? (
                   <div className="group flex items-center justify-center">
                     <div className="relative flex cursor-pointer items-center justify-center gap-5">
                       <span className=" w-full text-[12px] text-text hover:text-primary">강예정님 어서오세요!</span>
@@ -106,10 +106,12 @@ export default function Header() {
                       <div className="absolute left-[50px] top-[30px] z-50 hidden h-auto w-[124px] rounded-lg border border-gray-border bg-white px-5 py-4 group-hover:block">
                         <div className="absolute right-[34px] top-[-16px] z-50 hidden transform border-8 border-solid border-transparent border-b-primary group-hover:block" />
                         <ul className="z-50 flex-col items-center justify-center">
-                          <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
-                            배송조회
-                          </li>
                           <Link href="/mypage/purchased">
+                            <li className="z-50 flex cursor-pointer items-center justify-center py-2 hover:text-primary">
+                              배송조회
+                            </li>
+                          </Link>
+                          <Link href="/mypage/info">
                             <li className="flex cursor-pointer items-center justify-center py-2 hover:text-primary">
                               마이페이지
                             </li>

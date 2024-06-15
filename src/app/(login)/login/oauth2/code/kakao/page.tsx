@@ -14,13 +14,11 @@ const Page = () => {
   const [error, setError] = useState(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  console.log("redirect");
   useEffect(() => {
     const fetchTokens = async () => {
       try {
         // 현재 URL의 쿼리 파라미터에서 인가 코드를 추출
         const authorizationCode = searchParams.get("code");
-        console.log(`Authorization code: ${authorizationCode}`);
 
         if (authorizationCode) {
           // 인가 코드를 사용하여 백엔드에서 토큰을 요청
@@ -32,7 +30,6 @@ const Page = () => {
             }
           );
 
-          console.log(response);
           const { accessToken, refreshToken, message } = await response.data;
 
           // 토큰을 로컬 스토리지에 저장
@@ -40,7 +37,6 @@ const Page = () => {
           window.localStorage.setItem("refreshToken", refreshToken);
 
           // 인증 성공 메시지 처리
-          console.log(message);
 
           // 원하는 페이지로 리다이렉트
           router.push("/"); // 원하는 페이지로 변경
@@ -57,7 +53,6 @@ const Page = () => {
     fetchTokens();
   }, [searchParams, router]);
   useEffect(() => {
-    console.log(searchParams.get("code"));
   }, [searchParams, loading]);
 
   if (loading) {

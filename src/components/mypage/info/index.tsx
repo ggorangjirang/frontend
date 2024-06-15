@@ -47,9 +47,7 @@ const MyPageInfoComponent = () => {
       script.async = true;
       document.body.appendChild(script);
 
-      script.onload = () => {
-        console.log("Daum Postcode script loaded");
-      };
+      script.onload = () => {};
     }
   }, []);
 
@@ -65,7 +63,6 @@ const MyPageInfoComponent = () => {
       alert("전화번호 형식이 올바르지 않습니다. 올바른 형식: 010-1234-5678 또는 02-123-4567");
       return;
     }
-    console.log(zonecode);
     const response = await patchUser({
       ...data,
       name: user?.name,
@@ -76,13 +73,11 @@ const MyPageInfoComponent = () => {
         detailAddress: addressDetail,
       },
     });
-    console.log(response);
   };
   const onClickAddr = () => {
     if (window.daum && window.daum.Postcode) {
       new window.daum.Postcode({
         oncomplete: function (data: { address: string; zonecode: string }) {
-          console.log(data);
           setZonecode(data.zonecode);
           setAddress(data.address);
         },
@@ -101,10 +96,8 @@ const MyPageInfoComponent = () => {
       setAddressDetail(userInfo?.address.detailAddress);
     };
     getUser();
-  }, []);
-  // useEffect(() => {
+  }, [token]);
 
-  // }, []);
   return (
     <>
       <div className="absolute mt-[24px] flex h-auto w-[1280px]">

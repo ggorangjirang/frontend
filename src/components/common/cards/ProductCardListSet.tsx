@@ -18,9 +18,9 @@ export default function ProductCardListSet({ title, data }: Props) {
           {content.map((cardInfo) => {
             return <ProductCard cardInfo={cardInfo} key={cardInfo.productId}></ProductCard>;
           })}
-          <div className="mb-12 flex h-12 w-60 cursor-pointer items-center justify-center rounded-full border border-gray-border text-gray hover:opacity-55">
+          {/* <div className="mb-12 flex h-12 w-60 cursor-pointer items-center justify-center rounded-full border border-gray-border text-gray hover:opacity-55">
             상품 전체보기
-          </div>
+          </div> */}
         </div>
       </div>
     )

@@ -35,7 +35,6 @@ const ViewTemplate = ({ product }: Props) => {
 
   const onSubmitReview: SubmitHandler<postReviewRequest> = async (data: postReviewRequest): Promise<void> => {
     try {
-      console.log(data);
       const review = {
         title: data.title,
         content: data.content,
@@ -48,7 +47,6 @@ const ViewTemplate = ({ product }: Props) => {
       if (profileImage) formData.append("imageFile", profileImage);
 
       const response = await postReview(formData); // postReview가 FormData를 받을 수 있게 수정 필요
-      console.log("User signed up successfully:", response);
     } catch (error) {
       console.error("Error signing up user:", error);
     }
@@ -56,22 +54,18 @@ const ViewTemplate = ({ product }: Props) => {
 
   const onPatchReview: SubmitHandler<postReviewRequest> = async (data: postReviewRequest): Promise<void> => {
     try {
-      console.log(data);
       const { reviewId } = product as getReviewResponse;
       const review = {
         title: data.title,
         content: data.content,
       };
 
-      console.log(review);
       const formData = new FormData();
 
       formData.append("review", JSON.stringify(review));
       if (profileImage) formData.append("imageFile", profileImage);
 
       const response = await patchReview(reviewId, formData); // postReview가 FormData를 받을 수 있게 수정 필요
-      console.log(response);
-      console.log("User signed up successfully:", response);
     } catch (error) {
       console.error("Error signing up user:", error);
     }
@@ -86,8 +80,6 @@ const ViewTemplate = ({ product }: Props) => {
         // 사용자가 No를 선택한 경우
         const { reviewId } = product as getReviewResponse;
         const response = await deleteReview(reviewId);
-
-        console.log(response);
 
         return;
       }

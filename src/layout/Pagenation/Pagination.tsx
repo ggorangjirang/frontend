@@ -53,7 +53,6 @@ export default function Pagination({ limit, totalPage, requestFn = () => {}, pag
 
   const onClickNumber = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const value = Number(e.currentTarget.textContent) - 1;
-    console.log(value);
     setPageInfo((pageInfo) => {
       if (pageInfo !== null) return { ...pageInfo, page: value };
       return pageInfo;

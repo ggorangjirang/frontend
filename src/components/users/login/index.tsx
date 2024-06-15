@@ -10,7 +10,6 @@ import { tokenState } from "@/recoil/atoms/authState";
 import { useSetRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-export const baseApiUrl = "https://ggorangjirang.duckdns.org/";
 
 const LoginComponent = () => {
   const setRecoilToken = useSetRecoilState(tokenState);
@@ -33,7 +32,6 @@ const LoginComponent = () => {
 
       window.localStorage.setItem("accessToken", accessToken);
       window.localStorage.setItem("refreshToken", refreshToken);
-      console.log(accessToken);
       setRecoilToken(accessToken);
       router.push("/");
     }
@@ -41,11 +39,9 @@ const LoginComponent = () => {
   const getAccessToken = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent the form from submitting
     e.stopPropagation();
-    console.log("adsasdaaaaa");
 
     window.location.href = "https://ggorangjirang.duckdns.org/oauth2/authorization/kakao";
 
-    console.log("adsasdaaaaa");
     setLoading(true);
   };
 

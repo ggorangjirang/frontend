@@ -48,9 +48,7 @@ const ViewComponent = ({ route }: Props) => {
         setPageInfo(targetPageInfo);
         setReviews(data);
       } catch (error) {
-        console.log(error);
-
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -58,8 +56,7 @@ const ViewComponent = ({ route }: Props) => {
   }, [pageInfo?.page, route]);
 
   return (
-    reviews &&
-    reviews.content && (
+    reviews && (
       <>
         <div className="absolute mt-[24px] flex h-auto w-[1440px]">
           <MyPageTab />

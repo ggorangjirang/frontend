@@ -43,56 +43,41 @@ const useWebSocket = (url: string) => {
         const stompClient = new Client({
           brokerURL: url,
 
-          beforeConnect: () => {
-            console.log("beforeConnect");
-          },
+          beforeConnect: () => {},
           connectHeaders: {
             Authorization: token || "", // token 값이 존재하지 않으면 빈 문자열 사용
           },
-          debug: (str) => {
-            console.log(str);
-          },
+          debug: (str) => {},
           reconnectDelay: 5000, // 자동 재연결
           heartbeatIncoming: 4000,
           heartbeatOutgoing: 4000,
         });
 
-        if (token) {
-          // const stompClient = new Client({
-
-          // });
-
-          //연결시
-          stompClient.onConnect = () => {
-            console.log("Connected");
-            if (id !== null) {
-              stompClient.subscribe(
-                `/user/${id}/queue/bellDeliveryStatus`,
-                (message) => {
-                  toast.info(`message Receive : ${message.body}`);
-                },
-                { Authorization: token || "" }
-              );
-            }
-          };
-        }
+        //연결시
+        stompClient.onConnect = () => {
+          if (id !== null) {
+            stompClient.subscribe(
+              `/user/${id}/queue/bellDeliveryStatus`,
+              (message) => {
+                toast.info(`message Receive : ${message.body}`);
+              },
+              { Authorization: token || "" }
+            );
+          }
+        };
         //에러 수신시
         stompClient.onStompError = (frame) => {
           console.error("Broker reported error: " + frame.headers["message"]);
           console.error("Additional details: " + frame.body);
         };
 
-        stompClient.onDisconnect = () => {
-          console.log("disconeected");
-        };
+        stompClient.onDisconnect = () => {};
         //구독 활성화
-        stompClient.activate();
         //서버에 연결
         stompClientRef.current = stompClient;
         isInitialized.current = true; // WebSocket 초기화 완료 상태로 설정
 
         if (!token) {
-          console.log("deactive");
           stompClient.deactivate();
         }
         // 컴포넌트 언마운트 시 소켓 연결 해제
@@ -108,6 +93,15 @@ const useWebSocket = (url: string) => {
       }
     };
     initializeWebSocket();
+
+    // 컴포넌트 언마운트 시 연결 해제
+    return () => {
+      if (stompClientRef.current) {
+        stompClientRef.current.deactivate();
+        stompClientRef.current = null;
+        isInitialized.current = false;
+      }
+    };
   }, [url]);
 
   return stompClientRef.current;
