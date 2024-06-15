@@ -58,4 +58,8 @@ export const pageConfig: Record<string, PageConfig> = {
     showHeader: true,
     title: "장바구니 페이지",
   },
+  "/categories/search": {
+    showHeader: true,
+    title: "검색창 화면",
+  },
 };

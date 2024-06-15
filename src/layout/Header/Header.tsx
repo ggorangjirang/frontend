@@ -2,17 +2,18 @@
 //추후 ISR로 변환..!
 import SVGIcon from "@/components/common/icon/SVGIcon";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { SubCategory } from "./SubCategory";
 import { usePathname, useRouter } from "next/navigation";
 import { pageConfig } from "../../../pagesConfig";
 import Link from "next/link";
 import { Categories, getSubCategories } from "@/apis/categories";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 import useWebSocket from "@/hooks/useWebSocket";
 import useLogin from "./../../hooks/useLogin";
 import { getUserInfoByEmail } from "@/apis/users";
+import { searchState } from "@/recoil/atoms/searchState";
 
 export default function Header() {
   const router = useRouter();
@@ -24,7 +25,8 @@ export default function Header() {
   const [categories, setCategories] = useState<Categories[]>();
   const [token, setToken] = useLogin("");
   const [login, setIsLogin] = useState(!!token);
-
+  const [search, setSearch] = useRecoilState(searchState);
+  const [searchText, setSearchText] = useState("");
   const data = useWebSocket("wss://ggorangjirang.duckdns.org/ws");
 
   if (!login) data?.deactivate();
@@ -72,6 +74,11 @@ export default function Header() {
     };
     getUser();
   }, [token]);
+
+  const onChangeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
   return (
     showHeader && (
       <>
@@ -91,10 +98,18 @@ export default function Header() {
             {/* search바 */}
             <div>
               <div className="flex">
-                <input className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"></input>
-                <div className="flex h-9 w-[60px] cursor-pointer items-center justify-center rounded-r-md bg-secondary hover:opacity-80">
+                <input
+                  className="h-9 w-[400px] rounded-l-md border-2 border-secondary px-2 focus:outline-none"
+                  value={searchText}
+                  onChange={onChangeSearchHandler}
+                ></input>
+                <Link
+                  href={`/categories/search?search=${searchText}`}
+                  onClick={() => setSearch(search)}
+                  className="flex h-9 w-[60px] cursor-pointer items-center justify-center rounded-r-md bg-secondary hover:opacity-80"
+                >
                   <SVGIcon name="Search" width={32} height={32} color={"white"}></SVGIcon>
-                </div>
+                </Link>
               </div>
             </div>
             {/* 장바구니 */}

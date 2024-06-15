@@ -9,4 +9,5 @@ export const API_URLS = {
   order: "/api/orders",
   orderItem: "/api/orderitem",
   sale: "api/v1/sales",
+  search: "api/products/search",
 };
