@@ -1,5 +1,7 @@
 import { API_URLS } from "@/constants/apiUrlConfig";
 import { getFetch } from "../common";
+import { getAxios } from "../axios";
+import { AxiosResponse } from "axios";
 
 export type Review = {
   reviewId: number;
@@ -113,4 +115,15 @@ export const getSubProductList = async (
   size: number = 16
 ): Promise<getProductListResponse> => {
   return getFetch(`${API_URLS.products}/subcategory/${subCategoryId}?page=${page}&size=${size}`);
+};
+
+//프로젝트 서치
+
+export const getProductSearch = async (
+  keyword: string,
+  page: number = 0,
+  size: number = 16
+): Promise<AxiosResponse<getProductListResponse>> => {
+  const response = getAxios(`${API_URLS.products}/search?keyword=${keyword}&page=${page}&size=${size}`);
+  return response;
 };
