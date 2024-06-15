@@ -55,7 +55,7 @@ export default function Page() {
         {<SideBar categoryData={sideBarList} selected={Number(subCategoryId)}></SideBar>}
         <div>
           <div className="mb-8 flex w-[1000px] cursor-pointer flex-col items-end border-b border-b-gray-border pb-3 text-[14px] text-text ">
-            <ul className="bg-gray-100 flex ">
+            {/* <ul className="bg-gray-100 flex ">
               {FILTERS.map((item, index) => (
                 <li
                   key={index}
@@ -64,7 +64,7 @@ export default function Page() {
                   {item}
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
           <ProductCardList productList={productList} imgSize={200} gapX={56} w={1000}></ProductCardList>
           {pageInfo !== null && (
