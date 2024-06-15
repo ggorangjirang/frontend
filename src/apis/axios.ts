@@ -106,13 +106,11 @@ export const postAxios = (
   param: { [key: string]: any },
   options: AxiosRequestConfig = {}
 ): Promise<any> => {
-  const token = window.localStorage.getItem("accessToken");
   return commonAxios(url, {
     ...options,
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
       ...options.headers,
     },
     data: param,

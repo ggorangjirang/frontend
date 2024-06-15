@@ -5,8 +5,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { wrapFormAsync } from "@/utils/asyncFunc";
 import { useEffect, useState } from "react";
 import { ButtonPrimary } from "@/components/common/Buttons/ButtonIcon";
-import { useRecoilState } from "recoil";
-import { tokenState } from "@/recoil/atoms/authState";
 import { getUserInfoByEmail, patchUser } from "@/apis/users";
 import { userInfo } from "os";
 
@@ -37,8 +35,6 @@ const MyPageInfoComponent = () => {
   const [zonecode, setZonecode] = useState<string | undefined>("");
   const [addressDetail, setAddressDetail] = useState<string | undefined>("");
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
-  const [token, setToken] = useRecoilState(tokenState);
-
   const [user, setUser] = useState<userInfo>();
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -52,6 +48,7 @@ const MyPageInfoComponent = () => {
   }, []);
 
   const onSubmitChangeInfo: SubmitHandler<ChangeInfoData> = async (data: ChangeInfoData): Promise<void> => {
+    console.log(data);
     // 기존 비밀번호 맞는지 검증하는 로직 백에서만
     if (data.newPassword !== data.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
@@ -86,7 +83,7 @@ const MyPageInfoComponent = () => {
       console.error("Daum Postcode API is not loaded.");
     }
   };
-
+  const token = localStorage.getItem("accessToken");
   useEffect(() => {
     const getUser = async () => {
       const userInfo = await getUserInfoByEmail(token!);
@@ -117,7 +114,7 @@ const MyPageInfoComponent = () => {
               <div className="mb-[11px] flex h-[33px] w-full flex-row items-center">
                 <div className="w-[13.5%] text-texttitle font-semibold text-primary">기존 비밀번호</div>
                 <Input // 개인정보 수정할 때마다 비밀번호 확인
-                  required={true}
+                  required={false}
                   type="password"
                   placeholder="기존의 비밀번호를 입력하세요."
                   register={register("currentPassword")}
@@ -190,7 +187,7 @@ const MyPageInfoComponent = () => {
                   type="string"
                   placeholder="전화번호를 입력하세요."
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="placeholder-grayborder mb-[17px] h-[26px] w-full rounded-none border border-gray-border pl-[18px] text-textmedium"
+                  className="placeholder-grayborder mb-[17px] mt-[17px] h-[26px] w-[82.5%] rounded-none border border-gray-border pl-[18px] text-textmedium"
                 />
               </div>
             </div>
