@@ -65,11 +65,13 @@ export default function Header() {
   useEffect(() => {
     const getUser = async () => {
       const token = localStorage.getItem("accessToken");
-      const userInfo = await getUserInfoByEmail(token!);
-      setName(userInfo?.name);
+      if (token) {
+        const userInfo = await getUserInfoByEmail(token!);
+        setName(userInfo?.name);
+      }
     };
     getUser();
-  }, []);
+  }, [token]);
   return (
     showHeader && (
       <>
