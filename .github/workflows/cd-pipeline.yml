@@ -1,0 +1,46 @@
+name: CD Pipeline
+run-name: ${{ github.actor }} is currently deploying 🚀
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+       node-version: 20
+       cache: 'npm'
+    - run: echo ${{ secrets.ENV_LOCAL }} > .env.local
+    - run: npm ci
+
+    - name: Next cache build
+      id: next-build-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          .next/cache
+        key: ${{ runner.os }}-next-build-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-next-build-
+    - run: npm run build
+    
+    - name: Sending out/
+      run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_SECRET_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
+          cat ~/.ssh/id_rsa
+          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa" out/ elice@34.64.229.17://home/elice/nginx/html/
+
