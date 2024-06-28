@@ -32,17 +32,17 @@ export default function Slider() {
     >
       <SwiperSlide className="swiper-slide">
         <div onClick={() => onClickHandler(48)}>
-          <Image src={"/slides/slide1.jpg"} alt="slide1" width={1140} height={420} />
+          <Image src={"/slides/slide1.avif"} alt="slide1" width={1140} height={420} />
         </div>
       </SwiperSlide>
       <SwiperSlide onClick={() => onClickHandler(82)}>
-        <Image src={"/slides/slide2.jpg"} alt="slide2" width={1140} height={420} />
+        <Image src={"/slides/slide2.avif"} alt="slide2" width={1140} height={420} />
       </SwiperSlide>
       <SwiperSlide onClick={() => onClickHandler(2)}>
-        <Image src={"/slides/slide3.jpg"} alt="slide3" width={1140} height={420} />
+        <Image src={"/slides/slide3.avif"} alt="slide3" width={1140} height={420} />
       </SwiperSlide>
       <SwiperSlide onClick={() => onClickHandler(71)}>
-        <Image src={"/slides/slide4.jpg"} alt="slide4" width={1140} height={420} />
+        <Image src={"/slides/slide4.avif"} alt="slide4" width={1140} height={420} />
       </SwiperSlide>
     </Swiper>
   );
