@@ -12,7 +12,7 @@ env:
   IMAGE_NAME: jinyhehe/nextjs-spacestory
   IMAGE_TAG: "1.0"
   DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
-  DOCKER_REGISTRY_PASS: ${{ secrets.DOCKER_REGISTRY_PASS }
+  DOCKER_REGISTRY_PASS: ${{ secrets.DOCKER_REGISTRY_PASS }}
 
 jobs:
   Build:
@@ -44,4 +44,4 @@ jobs:
           ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
 
       - name: Deploy image
-        run: ssh -i ~/.ssh/id_rsa elice@34.64.229.17 "echo $DOCKER_REGISTRY_PASS | docker login --username $DOCKER_REGISTRY_USER --password-stdin && docker rm nextjs-app -f || true && docker pull $IMAGE_NAME:$IMAGE_TAG && docker run -d -p 3000:3000 --name nextjs-app --network juny $IMAGE_NAME:$IMAGE_TAG"
+        run: ssh -i ~/.ssh/id_rsa elice@34.64.229.17 "echo $DOCKER_REGISTRY_PASS | docker login --username $DOCKER_REGISTRY_USER --password-stdin && docker rm nextjs-app -f || true && docker pull $IMAGE_NAME:$IMAGE_TAG && docker run -d -p 3000:3000 --name nextjs-app --network elice $IMAGE_NAME:$IMAGE_TAG"
