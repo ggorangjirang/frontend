@@ -28,9 +28,8 @@ jobs:
           docker build -t $IMAGE_NAME:$IMAGE_TAG .
           docker push $IMAGE_NAME:$IMAGE_TAG
 
-jobs:
   Deploy:
-    needs: build
+    needs: Build
     runs-on: ubuntu-24.04
 
     steps:
