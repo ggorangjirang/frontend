@@ -8,35 +8,40 @@ on:
       - dev
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: jinyhehe/nextjs-spacestory
+  IMAGE_TAG: "1.0"
+  DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
+  DOCKER_REGISTRY_PASS: ${{ secrets.DOCKER_REGISTRY_PASS }
+
+jobs:
+  Build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: |
+          echo "${{ secrets.ENV_LOCAL }}" > .env.local
+          echo $DOCKER_REGISTRY_PASS | docker login --username $DOCKER_REGISTRY_USER --password-stdin
+          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+          docker push $IMAGE_NAME:$IMAGE_TAG
+
 jobs:
   Deploy:
+    needs: build
     runs-on: ubuntu-24.04
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-       node-version: 20
-       cache: 'npm'
-    - run: echo ${{ secrets.ENV_LOCAL }} > .env.local
-    - run: npm ci
 
-    - name: Next cache build
-      id: next-build-cache
-      uses: actions/cache@v4
-      with:
-        path: |
-          .next/cache
-        key: ${{ runner.os }}-next-build-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-next-build-
-    - run: npm run build
-    
-    - name: Sending out/
-      run: |
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup ssh
+        run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 34.64.229.17 >> ~/.ssh/known_hosts
-          cat ~/.ssh/id_rsa
-          rsync -avz --delete -e "ssh -i ~/.ssh/id_rsa" out/ elice@34.64.229.17://home/elice/nginx/html/
 
+      - name: Deploy image
+        run: ssh -i ~/.ssh/id_rsa elice@34.64.229.17 "echo $DOCKER_REGISTRY_PASS | docker login --username $DOCKER_REGISTRY_USER --password-stdin && docker rm nextjs-app -f || true && docker pull $IMAGE_NAME:$IMAGE_TAG && docker run -d -p 3000:3000 --name nextjs-app --network juny $IMAGE_NAME:$IMAGE_TAG"
