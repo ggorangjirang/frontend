@@ -26,7 +26,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
   },
   env: {
     API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
