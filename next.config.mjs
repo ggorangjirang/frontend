@@ -26,7 +26,21 @@ const nextConfig = {
     return config;
   },
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ggorangjirang-s3.s3.ap-northeast-2.amazonaws.com",
+        port: "",
+        pathname: "/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "ggorangjirang-s3.s3.amazonaws.com",
+        port: "",
+        pathname: "/images/**",
+      },
+    ],
   },
   env: {
     API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
