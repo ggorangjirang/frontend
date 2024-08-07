@@ -35,7 +35,8 @@ https://ggorangjirang.duckdns.org/
 
 ## 2️⃣ 시연영상
 
-https://www.youtube.com/watch?v=zfbEuNrcr0M
+https://github.com/user-attachments/assets/8e177c0d-71c0-476e-8142-ac02d46a5bf2
+
 
 ## 3️⃣ 기술스택
 
