@@ -22,8 +22,8 @@ import { cartState } from "@/recoil/atoms/cartState";
 
 export default function Page() {
   const [count, setCount] = useState(1);
+  const [showDetail, setShowDeatil] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
-  const cartReresh = useRecoilRefresher_UNSTABLE(cartItemSelector);
   const productId = useSearchParams().get("productId") ?? "";
   const router = useRouter();
   const [productDetailInfo, setProductDetailInfo] = useState<ProductDetail>();
@@ -178,23 +178,31 @@ export default function Page() {
           <div className="flex w-full flex-col items-start justify-center px-4">
             <Image src={"/imgs/logos/logo2.png"} width={250} height={100} alt={"로고"} />
             <div className="mt-4 w-full border-t pt-4">
-              <TextMedium style={{ fontWeight: "bold" }}>상품설명</TextMedium>
+              <TextMedium style={{ fontWeight: "bold" }}>상품설명!</TextMedium>
               <div id={"description"} className="">
                 {productDetailInfo?.description}
               </div>
             </div>
-            <div
-              className={"flex items-center justify-center py-8"}
-              style={{ width: "100%", height: "100%", position: "relative" }}
+            <button
+              onClick={() => {
+                setShowDeatil(!showDetail);
+              }}
             >
+              더보기
+            </button>
+            <div className={`flex h-1/4 w-full justify-center py-8 ${showDetail ? "" : "overflow-hidden"}`}>
               <Image
-                src={productDetailInfo?.descriptionImageUrl!}
                 width={0}
                 height={0}
-                loading="lazy"
+                quality={100}
+                sizes="100"
+                src={productDetailInfo?.descriptionImageUrl!}
                 alt={"상품설명 이미지"}
-                objectFit="cover"
-                style={{ width: "auto", height: "100%" }} // optional
+                style={{
+                  objectFit: "cover",
+                  width: "80%",
+                  height: showDetail ? "300px" : "auto",
+                }} // optional
               />
             </div>
           </div>
