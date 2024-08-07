@@ -20,7 +20,7 @@ https://ggorangjirang.duckdns.org/
 
 <table>
   <tr>
-    <td><img src="public/readme/ggorange.png" width="120" height="180"></td>
+    <td align="center" valign="middle"><img src="public/readme/ggorange.png" width="120" height="180"></td>
     <td>
       <strong> 🗓️ 사랑스러운 반려동물을 위한 쇼핑몰 웹 서비스</strong><br>
       <ul>
