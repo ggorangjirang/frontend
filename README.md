@@ -17,10 +17,10 @@ https://ggorangjirang.duckdns.org/
 </aside>
 
 ## 2️⃣ 페르소나
-<table>
+<table >
   <tr>
-    <td><img src="public/readme/ggorange.png" width="120" height="180"></td>
-    <td>
+    <td style="border: none;"><img src="public/readme/ggorange.png" width="120" height="180"></td>
+    <td style="border: none;">
       <strong> 🗓️ 사랑스러운 반려동물을 위한 쇼핑몰 웹 서비스</strong><br>
       <ul>
         <li>집에서 주로 쇼핑하며, 다양한 제품을 비교하여 최적의 상품을 찾는 사람들</li>
