@@ -34,9 +34,9 @@ https://ggorangjirang.duckdns.org/
 </table>
 
 ## 2️⃣ 시연영상
-
+<div align="center">
 https://github.com/user-attachments/assets/8e177c0d-71c0-476e-8142-ac02d46a5bf2
-
+<div>
 
 ## 3️⃣ 기술스택
 
