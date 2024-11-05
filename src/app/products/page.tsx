@@ -16,13 +16,12 @@ import { formatDate } from "@/utils/time";
 import { ProductDetail, Review, getProduct, getProductReview } from "@/apis/product";
 import ProductReview from "@/components/products/ProductReview";
 import { getCartItems, postCartItems } from "@/apis/cart/index";
-import { useRecoilRefresher_UNSTABLE, useRecoilState } from "recoil";
-import { cartItemSelector } from "@/recoil/selectors/cartCountState";
+import { useRecoilState } from "recoil";
 import { cartState } from "@/recoil/atoms/cartState";
 
 export default function Page() {
   const [count, setCount] = useState(1);
-  const [showDetail, setShowDeatil] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
   const productId = useSearchParams().get("productId") ?? "";
   const router = useRouter();
@@ -159,10 +158,10 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-14 " id="description">
+        <div className={`flex flex-col items-center gap-14`}>
           {/* 상품상세 블록 */}
-          <div className="mb-10 flex h-12 w-full flex-row">
-            <div className="color flex w-1/2 border-collapse items-center justify-center border-l border-t border-gray">
+          <div className="sticky top-0 mb-10 flex h-12 w-full flex-row bg-white">
+            <div className="color flex min-h-12 w-1/2 border-collapse items-center justify-center border-l border-t border-gray">
               <a href="#description">
                 <TextMedium color={true} style={{ fontWeight: "bold" }}>
                   상품정보
@@ -175,22 +174,15 @@ export default function Page() {
               </a>
             </div>
           </div>
-          <div className="flex w-full flex-col items-start justify-center px-4">
+          <div className={`flex w-full flex-col items-start justify-center px-4 `} id="description">
             <Image src={"/imgs/logos/logo2.png"} width={250} height={100} alt={"로고"} />
             <div className="mt-4 w-full border-t pt-4">
-              <TextMedium style={{ fontWeight: "bold" }}>상품설명!</TextMedium>
+              <TextMedium style={{ fontWeight: "bold" }}>상품설명</TextMedium>
               <div id={"description"} className="">
                 {productDetailInfo?.description}
               </div>
             </div>
-            <button
-              onClick={() => {
-                setShowDeatil(!showDetail);
-              }}
-            >
-              더보기
-            </button>
-            <div className={`flex h-1/4 w-full justify-center py-8 ${showDetail ? "" : "overflow-hidden"}`}>
+            <div className={`flex w-full justify-center py-8 ${!showDetail ? "" : "overflow-hidden"}`}>
               <Image
                 width={0}
                 height={0}
@@ -199,36 +191,36 @@ export default function Page() {
                 src={productDetailInfo?.descriptionImageUrl!}
                 alt={"상품설명 이미지"}
                 style={{
+                  objectPosition: "top",
                   objectFit: "cover",
                   width: "80%",
-                  height: showDetail ? "300px" : "auto",
+                  height: !showDetail ? "300px" : "auto",
                 }} // optional
               />
             </div>
           </div>
-        </div>
-
-        <div className="items-align mt-24 flex flex-col justify-center">
-          {/* 상품후기 블록 */}
-          <div className="mb-10 flex h-12 w-full flex-row" id="review">
-            <div className="color flex w-1/2 items-center justify-center border border-gray ">
-              <a href="#description">
-                <TextMedium>상품정보</TextMedium>
-              </a>
-            </div>
-            <div className="flex w-1/2 items-center justify-center border-r border-t border-gray">
-              <a href="#review">
-                <TextMedium color={true} style={{ fontWeight: "bold" }}>
-                  상품후기
-                </TextMedium>
-              </a>
-            </div>
+          <div className="flex h-7 items-center justify-center text-xl">
+            <button
+              className="rounded-xl border-2 border-primary px-8 py-2 font-bold text-primary"
+              onClick={() => {
+                setShowDetail(!showDetail);
+              }}
+            >
+              더보기
+            </button>
           </div>
-          <div className="items-align flex flex-col justify-center  gap-6 ">
+          <div className="my-24 flex w-full flex-col justify-center gap-6 py-1" id="review">
             {/* 후기블록 table로 구현하면 더 좋을듯*/}
-            {productReviewsInfo.map((review) => {
-              return <ProductReview key={review.reviewId} review={review}></ProductReview>;
-            })}
+            <div className="my-4 w-full border-t py-4">
+              <TextMedium style={{ fontWeight: "bold" }}>상품후기</TextMedium>
+            </div>
+            {productReviewsInfo.length > 0 ? (
+              productReviewsInfo.map((review) => {
+                return <ProductReview key={review.reviewId} review={review}></ProductReview>;
+              })
+            ) : (
+              <div>상품 후기가 없습니다.</div>
+            )}
           </div>
         </div>
       </PageWrapper>

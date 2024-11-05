@@ -22,7 +22,7 @@ export default function CategorySideBar({ categoryData, selected = 0 }: Category
           }}
         >
           <li
-            className={`flex h-fit w-full justify-center py-1 align-middle hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold ${selected === 0 ? "bg-gray-border bg-opacity-50" : ""}`}
+            className={`flex h-fit w-full justify-center py-1 hover:rounded-md hover:bg-gray-border hover:bg-opacity-50 hover:font-bold ${selected === 0 ? "bg-gray-border bg-opacity-50" : ""}`}
           >
             전체
           </li>
